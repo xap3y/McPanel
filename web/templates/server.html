@@ -1,0 +1,180 @@
+{{define "title"}}{{.Name}} — MCPanel{{end}}
+{{define "sidebar-servers"}}
+{{range .AllServers}}
+<a href="/servers/{{.Name}}" class="nav-item status-{{lower .Status}} {{if eq .Name $.Name}}active{{end}}">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+    <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+  </svg>
+  <span class="truncate">{{.Name}}</span>
+  <span class="nav-dot"></span>
+</a>
+{{end}}
+{{end}}
+{{define "content"}}
+<!-- Topbar -->
+<div class="topbar">
+  <div>
+    <div class="topbar-title">{{.Name}}</div>
+    <div class="topbar-sub" id="server-subtitle">Loading…</div>
+  </div>
+  <div class="topbar-actions" id="topbar-actions">
+    <!-- dynamically rendered -->
+  </div>
+</div>
+
+<!-- Tabs bar -->
+<div class="tabs-bar">
+  <button class="tab-btn active" data-tab="console" id="tab-console-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+    Console
+  </button>
+  <button class="tab-btn" data-tab="files" id="tab-files-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+    Files
+  </button>
+  <button class="tab-btn" data-tab="plugins" id="tab-plugins-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>
+    Plugins
+  </button>
+  <button class="tab-btn" data-tab="settings" id="tab-settings-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    Settings
+  </button>
+</div>
+
+<!-- Tab: Console -->
+<div class="tab-pane active" id="tab-console">
+  <div class="tab-content-inner" style="padding-bottom:0">
+    <div class="console-wrap">
+      <div class="console-output" id="console-output"></div>
+      <div class="console-input-row">
+        <span class="console-prompt">›</span>
+        <input class="console-input" id="cmd-input" placeholder="Type a command and press Enter…" autocomplete="off" spellcheck="false">
+        <button class="btn btn-ghost btn-sm console-scroll-btn" id="autoscroll-btn" title="Toggle autoscroll">⬇ Auto</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tab: Files -->
+<div class="tab-pane" id="tab-files">
+  <div class="tab-content-inner" style="padding-bottom:0">
+    <div class="file-manager" id="file-manager">
+      <div class="fm-toolbar">
+        <button class="btn-icon" id="fm-up-btn" title="Parent directory">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="fm-breadcrumb" id="fm-breadcrumb">
+          <span class="fm-breadcrumb-item" data-path="">root</span>
+        </div>
+        <div class="fm-toolbar-actions">
+          <button class="btn btn-secondary btn-sm" id="fm-upload-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+            Upload
+          </button>
+          <button class="btn btn-secondary btn-sm" id="fm-mkdir-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+            New Folder
+          </button>
+          <button class="btn btn-secondary btn-sm" id="fm-newfile-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+            New File
+          </button>
+        </div>
+      </div>
+      <div class="fm-list" id="fm-list"></div>
+    </div>
+    <!-- hidden file input -->
+    <input type="file" id="fm-file-input" style="display:none" multiple>
+  </div>
+</div>
+
+<!-- Tab: Plugins -->
+<div class="tab-pane" id="tab-plugins">
+  <div class="tab-content-inner">
+    <div class="section-header">
+      <div class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/></svg>
+        Plugins
+      </div>
+      <span class="text-muted text-sm" id="plugin-count"></span>
+    </div>
+    <p class="text-muted text-sm mb-4">Enabling or disabling takes effect after server restart.</p>
+    <div class="plugin-list" id="plugin-list"></div>
+  </div>
+</div>
+
+<!-- Tab: Settings -->
+<div class="tab-pane" id="tab-settings">
+  <div class="tab-content-inner">
+    <div class="inline-section">
+      <form id="settings-form">
+        <div class="section-header">
+          <div class="section-title">JVM Configuration</div>
+          <button type="submit" class="btn btn-primary btn-sm">Save Settings</button>
+        </div>
+        <div class="settings-grid">
+          <div class="field field-full">
+            <label for="s-java">Java executable</label>
+            <input id="s-java" name="JavaPath" type="text" placeholder="/usr/bin/java">
+            <div class="field-hint">Full path to the java binary</div>
+          </div>
+          <div class="field">
+            <label for="s-xms">Minimum memory (Xms)</label>
+            <input id="s-xms" name="Xms" type="text" placeholder="512M">
+          </div>
+          <div class="field">
+            <label for="s-xmx">Maximum memory (Xmx)</label>
+            <input id="s-xmx" name="Xmx" type="text" placeholder="4G">
+          </div>
+          <div class="field field-full">
+            <label for="s-jvmargs">Additional JVM arguments</label>
+            <textarea id="s-jvmargs" name="JVMArgsText" placeholder="-XX:+UseG1GC&#10;-XX:+ParallelRefProcEnabled&#10;-Dfile.encoding=UTF-8"></textarea>
+            <div class="field-hint">One argument per line</div>
+          </div>
+          <div class="field">
+            <label for="s-jar">Server JAR</label>
+            <input id="s-jar" name="ServerJar" type="text" placeholder="paper.jar">
+          </div>
+          <div class="field">
+            <label for="s-serverargs">Server arguments</label>
+            <textarea id="s-serverargs" name="ServerArgsText" placeholder="nogui" style="min-height:60px"></textarea>
+          </div>
+        </div>
+      </form>
+
+      <div class="divider" style="margin:24px 0"></div>
+
+      <!-- Velocity -->
+      <div class="section-title mb-4">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;color:var(--text-muted)"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Velocity Proxy
+      </div>
+      <div class="toggle-row velocity-toggle-row">
+        <div>
+          <div class="toggle-label">Velocity support</div>
+          <div class="toggle-desc">Updates <code>config/paper-global.yml</code></div>
+        </div>
+        <div>
+          <span id="velocity-status-text" class="text-muted text-sm" style="margin-right:10px">Loading…</span>
+          <label class="toggle">
+            <input type="checkbox" id="velocity-toggle">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+      </div>
+      <div id="velocity-restart-hint" class="text-sm text-muted mt-2" style="display:none">
+        ⚠ Restart the server for Velocity changes to take effect.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.SERVER_NAME = {{.Name}};
+const CSRF = window.CSRF;
+</script>
+<script src="/static/js/console.js"></script>
+<script src="/static/js/server.js?v=3"></script>
+{{end}}

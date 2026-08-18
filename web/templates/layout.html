@@ -1,0 +1,142 @@
+{{define "layout"}}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{block "title" .}}MCPanel{{end}}</title>
+  <meta name="description" content="Minecraft Plugin Development Control Panel">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/static/css/style.css?v=4">
+  <script>window.CSRF = {{.CSRF}};</script>
+</head>
+<body>
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+        <path d="M7 7h.01M11 7h2M7 11h2M13 11h.01"/>
+      </svg>
+      <span class="sidebar-brand-name">MC<span>Panel</span></span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Servers</div>
+      {{block "sidebar-servers" .}}{{end}}
+
+      <div class="divider"></div>
+      <div class="sidebar-section">Development</div>
+      <a href="/projects" class="nav-item {{if eq .ActiveNav "projects"}}active{{end}}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+        </svg>
+        <span>Plugin Projects</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <form method="post" action="/logout" style="margin:0">
+        <input type="hidden" name="_csrf" value="{{.CSRF}}">
+        <button type="submit" class="btn btn-ghost btn-sm w-full" style="justify-content:center;gap:6px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span>Sign out</span>
+        </button>
+      </form>
+    </div>
+  </aside>
+
+  <div class="main">
+    {{template "content" .}}
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- File Editor Modal -->
+<div class="editor-modal" id="editor-modal">
+  <div class="editor-dialog">
+    <div class="editor-header">
+      <span class="editor-filename" id="editor-filename">file.yml</span>
+      <div class="editor-actions">
+        <button class="btn btn-primary btn-sm" id="editor-save-btn">Save</button>
+        <button class="btn btn-ghost btn-sm" id="editor-close-btn">Cancel</button>
+      </div>
+    </div>
+    <textarea class="editor-textarea" id="editor-textarea" spellcheck="false"></textarea>
+  </div>
+</div>
+
+<script>
+// ── Global utilities ──────────────────────────────────────────
+
+function toast(msg, type='info') {
+  const icons = {
+    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    error:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+    info:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+  };
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `${icons[type]||icons.info} <span>${msg}</span>`;
+  document.getElementById('toast-container').appendChild(el);
+  setTimeout(() => el.remove(), 4000);
+}
+
+async function api(url, method='GET', body=null) {
+  const opts = { method, headers: {} };
+  if (body !== null) {
+    opts.headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(body);
+  }
+  return await fetch(url, opts);
+}
+
+// Editor modal
+let editorPath = null;
+let editorServerName = null;
+
+function openEditor(serverName, path, content, filename) {
+  editorServerName = serverName;
+  editorPath = path;
+  document.getElementById('editor-filename').textContent = filename || path.split('/').pop();
+  document.getElementById('editor-textarea').value = content;
+  document.getElementById('editor-modal').classList.add('open');
+  document.getElementById('editor-textarea').focus();
+}
+
+document.getElementById('editor-close-btn').addEventListener('click', () => {
+  document.getElementById('editor-modal').classList.remove('open');
+});
+
+document.getElementById('editor-modal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) document.getElementById('editor-modal').classList.remove('open');
+});
+
+document.getElementById('editor-save-btn').addEventListener('click', async () => {
+  const content = document.getElementById('editor-textarea').value;
+  const r = await api(`/api/servers/${editorServerName}/files/write`, 'POST', {path: editorPath, content});
+  if (r.ok) {
+    toast('File saved', 'success');
+    document.getElementById('editor-modal').classList.remove('open');
+  } else {
+    toast('Save failed: ' + await r.text(), 'error');
+  }
+});
+
+// Ctrl+S to save
+document.getElementById('editor-textarea').addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();
+    document.getElementById('editor-save-btn').click();
+  }
+});
+</script>
+</body>
+</html>
+{{end}}

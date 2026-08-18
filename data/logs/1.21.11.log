@@ -1,0 +1,1403 @@
+Starting org.bukkit.craftbukkit.Main
+[23:36:50 INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Amazon.com Inc. Corretto-21.0.11.10.1) on Mac OS X 15.7.7 (aarch64)
+[23:36:50 INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[23:36:51 INFO]: [PluginInitializerManager] Initializing plugins...
+[23:36:51 INFO]: [PluginInitializerManager] Initialized 3 plugins
+[23:36:51 INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - Mentions (1.4.0), Vault (1.7.3-CMI), XaLib (1.2.2)
+[23:36:54 INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[23:36:55 INFO]: Loaded 1470 recipes
+[23:36:55 INFO]: Loaded 1584 advancements
+[23:36:55 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[23:36:55 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 270.5ms
+[23:36:55 INFO]: Starting minecraft server version 1.21.11
+[23:36:55 INFO]: Loading properties
+[23:36:55 INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[23:36:55 INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[23:36:55 INFO]: Server Ping Player Sample Count: 12
+[23:36:55 INFO]: Using 4 threads for Netty based IO
+[23:36:56 INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[23:36:56 INFO]: Default game type: SURVIVAL
+[23:36:56 INFO]: Generating keypair
+[?1h=[?2004h> [K[23:36:56 INFO]: Starting Minecraft server on *:25567
+> [K[23:36:57 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.
+> [K[23:36:57 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.
+> [K[23:36:57 INFO]: [XaLib] Loading server plugin XaLib v1.2.2
+> [K[23:36:57 INFO]: [Mentions] Loading server plugin Mentions v1.4.0
+> [K[23:36:57 INFO]: [Vault] Loading server plugin Vault v1.7.3-CMI
+> [K[23:36:57 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[23:36:57 INFO]: [Vault] Enabling Vault v1.7.3-CMI
+> [K[23:36:57 INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+> [K[23:36:57 INFO]: [Vault] Enabled Version 1.7.3-CMI
+> [K[33;1m[23:36:57 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[m> [K[33;1m[23:36:57 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[m> [K[33;1m[23:36:57 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[m> [K[33;1m[23:36:57 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[m> [K[23:36:57 INFO]: Preparing level "world"
+> [K[23:36:57 INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+> [K[23:36:57 INFO]: Preparing spawn area: 100%
+> [K[23:36:57 INFO]: Prepared spawn area in 1 ms
+> [K[23:36:57 INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+> [K[23:36:57 INFO]: Prepared spawn area in 0 ms
+> [K[23:36:57 INFO]: Done preparing level "world" (0.286s)
+> [K[23:36:57 INFO]: [XaLib] Enabling XaLib v1.2.2
+> [K[23:36:57 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mLoaded XaLib v1.2.2 (4a2442c)[0m
+> [K[23:36:57 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui as plugin..[0m
+> [K[23:36:57 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui v1.5.1...[0m
+> [K[23:36:57 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mChecking for Kyori Adventure...[0m
+> [K[23:36:57 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mXaGui registered successfully![0m
+> [K[23:36:57 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mInjecting XaGui commands..[0m
+> [K[23:36:57 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mFinished loading XaLib![0m
+> [K[23:36:57 INFO]: [Mentions] Enabling Mentions v1.4.0
+> [K[23:36:57 INFO]: [spark] Starting background profiler...
+> [K[23:36:59 INFO]: Running delayed init tasks
+> [K[23:36:59 INFO]: Done (9.685s)! For help, type "help"
+> [K[33;1m[23:36:59 WARN]: *************************************************************************************
+[m> [K[33;1m[23:36:59 WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[m> [K[33;1m[23:36:59 WARN]: However, you are 4 release(s) behind the latest stable release (26.2)!
+[m> [K[33;1m[23:36:59 WARN]: It is recommended that you update as soon as possible
+[m> [K[33;1m[23:36:59 WARN]: https://papermc.io/downloads/paper
+[m> [K[33;1m[23:36:59 WARN]: *************************************************************************************
+[m> [31m>[0m
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:37:49 INFO]: [38;2;255;85;85mUnknown or incomplete command. See below for error
+[38;2;170;170;170m[4m[38;2;255;85;85m>[0m[3m[38;2;255;85;85m<--[HERE][0m
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:39:37 INFO]: Stopping the server
+> [K[23:39:37 INFO]: Stopping server
+> [K[23:39:37 INFO]: [Vault] Disabling Vault v1.7.3-CMI
+> [K[23:39:37 INFO]: [Mentions] Disabling Mentions v1.4.0
+> [K[23:39:37 INFO]: [XaLib] Disabling XaLib v1.2.2
+> [K[23:39:37 INFO]: Saving players
+> [K[23:39:37 INFO]: Saving worlds
+> [K[23:39:37 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+> [K[23:39:38 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+> [K[23:39:38 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+> [K[23:39:38 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+> [K[23:39:38 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world' in 0.00s
+> [K[23:39:38 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+> [K[23:39:38 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+> [K[23:39:38 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+> [K[23:39:38 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+> [K[23:39:38 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+> [K[23:39:38 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+> [K[23:39:38 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0.00s
+> [K[23:39:38 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+> [K[23:39:38 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+> [K[23:39:38 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+> [K[23:39:38 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+> [K[23:39:38 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+> [K[23:39:38 INFO]: Waiting for all RegionFile I/O tasks to complete...
+> [K[23:39:38 INFO]: All RegionFile I/O tasks to complete
+> [K[23:39:38 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+> [K[23:39:38 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...
+> Starting org.bukkit.craftbukkit.Main
+[23:39:39 INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Amazon.com Inc. Corretto-21.0.11.10.1) on Mac OS X 15.7.7 (aarch64)
+[23:39:39 INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[23:39:40 INFO]: [PluginInitializerManager] Initializing plugins...
+[23:39:40 INFO]: [PluginInitializerManager] Initialized 3 plugins
+[23:39:40 INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - Mentions (1.4.0), Vault (1.7.3-CMI), XaLib (1.2.2)
+[23:39:43 INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[23:39:44 INFO]: Loaded 1470 recipes
+[23:39:44 INFO]: Loaded 1584 advancements
+[23:39:44 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[23:39:44 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 243.0ms
+[23:39:44 INFO]: Starting minecraft server version 1.21.11
+[23:39:44 INFO]: Loading properties
+[23:39:44 INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[23:39:44 INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[23:39:44 INFO]: Server Ping Player Sample Count: 12
+[23:39:44 INFO]: Using 4 threads for Netty based IO
+[23:39:45 INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[23:39:45 INFO]: Default game type: SURVIVAL
+[23:39:45 INFO]: Generating keypair
+[?1h=[?2004h> [K[23:39:45 INFO]: Starting Minecraft server on *:25567
+> [K[23:39:45 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.
+> [K[23:39:45 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.
+> [K[23:39:45 INFO]: [XaLib] Loading server plugin XaLib v1.2.2
+> [K[23:39:45 INFO]: [Mentions] Loading server plugin Mentions v1.4.0
+> [K[23:39:45 INFO]: [Vault] Loading server plugin Vault v1.7.3-CMI
+> [K[23:39:45 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[23:39:45 INFO]: [Vault] Enabling Vault v1.7.3-CMI
+> [K[23:39:45 INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+> [K[23:39:45 INFO]: [Vault] Enabled Version 1.7.3-CMI
+> [K[33;1m[23:39:45 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[m> [K[33;1m[23:39:45 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[m> [K[33;1m[23:39:45 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[m> [K[33;1m[23:39:45 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[m> [K[23:39:45 INFO]: Preparing level "world"
+> [K[23:39:46 INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+> [K[23:39:46 INFO]: Prepared spawn area in 0 ms
+> [K[23:39:46 INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+> [K[23:39:46 INFO]: Prepared spawn area in 0 ms
+> [K[23:39:46 INFO]: Done preparing level "world" (0.281s)
+> [K[23:39:46 INFO]: [XaLib] Enabling XaLib v1.2.2
+> [K[23:39:46 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mLoaded XaLib v1.2.2 (4a2442c)[0m
+> [K[23:39:46 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui as plugin..[0m
+> [K[23:39:46 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui v1.5.1...[0m
+> [K[23:39:46 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mChecking for Kyori Adventure...[0m
+> [K[23:39:46 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mXaGui registered successfully![0m
+> [K[23:39:46 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mInjecting XaGui commands..[0m
+> [K[23:39:46 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mFinished loading XaLib![0m
+> [K[23:39:46 INFO]: [Mentions] Enabling Mentions v1.4.0
+> [K[23:39:46 INFO]: [spark] Starting background profiler...
+> [K[23:39:47 INFO]: Running delayed init tasks
+> [K[23:39:47 INFO]: Done (8.345s)! For help, type "help"
+> [K[33;1m[23:39:47 WARN]: *************************************************************************************
+[m> [K[33;1m[23:39:47 WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[m> [K[33;1m[23:39:47 WARN]: However, you are 4 release(s) behind the latest stable release (26.2)!
+[m> [K[33;1m[23:39:47 WARN]: It is recommended that you update as soon as possible
+[m> [K[33;1m[23:39:47 WARN]: https://papermc.io/downloads/paper
+[m> [K[33;1m[23:39:47 WARN]: *************************************************************************************
+[m> [31mp[0mpl[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:39:54 INFO]: [38;2;52;159;218mℹ [38;2;255;255;255mServer Plugins (3):[0m
+> [K[23:39:54 INFO]: [38;2;237;129;6mBukkit Plugins:[0m
+> [K[23:39:54 INFO]:  [38;2;85;85;85m- [0m[38;2;85;255;85mMentions[0m, [38;2;85;255;85mVault[0m, [38;2;85;255;85mXaLib[0m
+> [31mp[0mpl[K[31mplu[0m[K[31mg[0m[31mi[0m[31mn[0m[6Dplugins[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:40:26 INFO]: [38;2;52;159;218mℹ [38;2;255;255;255mServer Plugins (3):[0m
+> [K[23:40:26 INFO]: [38;2;237;129;6mBukkit Plugins:[0m
+> [K[23:40:27 INFO]:  [38;2;85;85;85m- [0m[38;2;85;255;85mMentions[0m, [38;2;85;255;85mVault[0m, [38;2;85;255;85mXaLib[0m
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:42:02 INFO]: Stopping the server
+> [K[23:42:02 INFO]: Stopping server
+> [K[23:42:02 INFO]: [Vault] Disabling Vault v1.7.3-CMI
+> [K[23:42:02 INFO]: [Mentions] Disabling Mentions v1.4.0
+> [K[23:42:02 INFO]: [XaLib] Disabling XaLib v1.2.2
+> [K[23:42:02 INFO]: Saving players
+> [K[23:42:02 INFO]: Saving worlds
+> [K[23:42:02 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+> [K[23:42:02 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+> [K[23:42:02 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+> [K[23:42:02 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+> [K[23:42:02 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world' in 0.00s
+> [K[23:42:02 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+> [K[23:42:02 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+> [K[23:42:02 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+> [K[23:42:02 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+> [K[23:42:02 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+> [K[23:42:02 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+> [K[23:42:02 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0.00s
+> [K[23:42:02 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+> [K[23:42:02 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+> [K[23:42:02 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+> [K[23:42:02 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+> [K[23:42:02 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+> [K[23:42:02 INFO]: Waiting for all RegionFile I/O tasks to complete...
+> [K[23:42:02 INFO]: All RegionFile I/O tasks to complete
+> [K[23:42:02 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+> [K[23:42:02 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...
+> Starting org.bukkit.craftbukkit.Main
+[23:42:04 INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Amazon.com Inc. Corretto-21.0.11.10.1) on Mac OS X 15.7.7 (aarch64)
+[23:42:04 INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[23:42:05 INFO]: [PluginInitializerManager] Initializing plugins...
+[23:42:05 INFO]: [PluginInitializerManager] Initialized 3 plugins
+[23:42:05 INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - Mentions (1.4.0), Vault (1.7.3-CMI), XaLib (1.2.2)
+[23:42:07 INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[23:42:08 INFO]: Loaded 1470 recipes
+[23:42:08 INFO]: Loaded 1584 advancements
+[23:42:08 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[23:42:09 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 208.9ms
+[23:42:09 INFO]: Starting minecraft server version 1.21.11
+[23:42:09 INFO]: Loading properties
+[23:42:09 INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[23:42:09 INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[23:42:09 INFO]: Using 4 threads for Netty based IO
+[23:42:09 INFO]: Server Ping Player Sample Count: 12
+[23:42:09 INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[23:42:09 INFO]: Default game type: SURVIVAL
+[23:42:09 INFO]: Generating keypair
+[23:42:09 INFO]: Starting Minecraft server on *:25567
+[?1h=[?2004h> [K[23:42:10 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.
+> [K[23:42:10 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.
+> [K[23:42:10 INFO]: [XaLib] Loading server plugin XaLib v1.2.2
+> [K[23:42:10 INFO]: [Mentions] Loading server plugin Mentions v1.4.0
+> [K[23:42:10 INFO]: [Vault] Loading server plugin Vault v1.7.3-CMI
+> [K[23:42:10 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[23:42:10 INFO]: [Vault] Enabling Vault v1.7.3-CMI
+> [K[23:42:10 INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+> [K[23:42:10 INFO]: [Vault] Enabled Version 1.7.3-CMI
+> [K[33;1m[23:42:10 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[m> [K[33;1m[23:42:10 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[m> [K[33;1m[23:42:10 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[m> [K[33;1m[23:42:10 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[m> [K[23:42:10 INFO]: Preparing level "world"
+> [K[23:42:10 INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+> [K[23:42:10 INFO]: Preparing spawn area: 100%
+> [K[23:42:10 INFO]: Prepared spawn area in 1 ms
+> [K[23:42:10 INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+> [K[23:42:10 INFO]: Prepared spawn area in 0 ms
+> [K[23:42:10 INFO]: Done preparing level "world" (0.277s)
+> [K[23:42:10 INFO]: [XaLib] Enabling XaLib v1.2.2
+> [K[23:42:10 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mLoaded XaLib v1.2.2 (4a2442c)[0m
+> [K[23:42:10 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui as plugin..[0m
+> [K[23:42:10 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui v1.5.1...[0m
+> [K[23:42:10 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mChecking for Kyori Adventure...[0m
+> [K[23:42:10 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mXaGui registered successfully![0m
+> [K[23:42:10 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mInjecting XaGui commands..[0m
+> [K[23:42:10 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mFinished loading XaLib![0m
+> [K[23:42:10 INFO]: [Mentions] Enabling Mentions v1.4.0
+> [K[23:42:11 INFO]: [spark] Starting background profiler...
+> [K[23:42:12 INFO]: Running delayed init tasks
+> [K[23:42:12 INFO]: Done (8.516s)! For help, type "help"
+> [K[33;1m[23:42:12 WARN]: *************************************************************************************
+[m> [K[33;1m[23:42:12 WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[m> [K[33;1m[23:42:12 WARN]: However, you are 4 release(s) behind the latest stable release (26.2)!
+[m> [K[33;1m[23:42:12 WARN]: It is recommended that you update as soon as possible
+[m> [K[33;1m[23:42:12 WARN]: https://papermc.io/downloads/paper
+[m> [K[33;1m[23:42:12 WARN]: *************************************************************************************
+[m> [31mp[0mpl[K[31mplu[0m[K[31mg[0m[31mi[0m[31mn[0m[6Dplugins[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:42:14 INFO]: [38;2;52;159;218mℹ [38;2;255;255;255mServer Plugins (3):[0m
+> [K[23:42:14 INFO]: [38;2;237;129;6mBukkit Plugins:[0m
+> [K[23:42:14 INFO]:  [38;2;85;85;85m- [0m[38;2;85;255;85mMentions[0m, [38;2;85;255;85mVault[0m, [38;2;85;255;85mXaLib[0m
+> [31ms[0m[31ma[0msay[K[31m [0m [36m&[0m[K[36m6[0m[36mt[0m[36me[0m[36ms[0m[36mt[0m
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:42:52 INFO]: [Not Secure] [Server] &6test
+> [31ms[0m[31ma[0msay[K[31m [0m [36m&[0m[K[36m7[0m[36mt[0m[36me[0m[36ms[0m[36mt[0m
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:42:56 INFO]: [Not Secure] [Server] &7test
+> [31ms[0m[31ma[0msay[K[31m [0m [36m&[0m[K[36me[0m[36me[0m
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:43:00 INFO]: [Not Secure] [Server] &ee
+> [31mp[0mpl[K[31mplu[0m[K[31mg[0m[31mi[0m[31mn[0m[6Dplugins[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:43:41 INFO]: [38;2;52;159;218mℹ [38;2;255;255;255mServer Plugins (3):[0m
+> [K[23:43:41 INFO]: [38;2;237;129;6mBukkit Plugins:[0m
+> [K[23:43:41 INFO]:  [38;2;85;85;85m- [0m[38;2;85;255;85mMentions[0m, [38;2;85;255;85mVault[0m, [38;2;85;255;85mXaLib[0m
+> [31mp[0mpl[K[31mplu[0m[K[31mg[0m[31mi[0m[31mn[0m[6Dplugins[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:43:52 INFO]: [38;2;52;159;218mℹ [38;2;255;255;255mServer Plugins (3):[0m
+> [K[23:43:52 INFO]: [38;2;237;129;6mBukkit Plugins:[0m
+> [K[23:43:52 INFO]:  [38;2;85;85;85m- [0m[38;2;85;255;85mMentions[0m, [38;2;85;255;85mVault[0m, [38;2;85;255;85mXaLib[0m
+> [31mv[0m[31me[0mver[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:43:59 INFO]: [3m[38;2;255;255;255mChecking version, please wait...[0m
+> [K[23:43:59 INFO]: [38;2;255;255;255mThis server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)[0m
+[38;2;85;255;85mYou are running the latest version[0m
+> [31mp[0mpl[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:44:05 INFO]: [38;2;52;159;218mℹ [38;2;255;255;255mServer Plugins (3):[0m
+> [K[23:44:05 INFO]: [38;2;237;129;6mBukkit Plugins:[0m
+> [K[23:44:05 INFO]:  [38;2;85;85;85m- [0m[38;2;85;255;85mMentions[0m, [38;2;85;255;85mVault[0m, [38;2;85;255;85mXaLib[0m
+> [31mm[0mme[K[31mmen[0m[K[31mt[0m[31mi[0m[31mo[0m[31mn[0m[7Dmentions[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:44:08 INFO]: [38;2;85;85;85m[[1m[38;2;85;255;85mMentions[0m[38;2;85;85;85m] [38;2;255;85;85mThis command can only be executed by a player![0m
+> [31mp[0mpl[K[31mplu[0m[K[31mg[0m[31mi[0m[31mn[0m[6Dplugins[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:44:52 INFO]: [38;2;52;159;218mℹ [38;2;255;255;255mServer Plugins (3):[0m
+> [K[23:44:52 INFO]: [38;2;237;129;6mBukkit Plugins:[0m
+> [K[23:44:52 INFO]:  [38;2;85;85;85m- [0m[38;2;85;255;85mMentions[0m, [38;2;85;255;85mVault[0m, [38;2;85;255;85mXaLib[0m
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:45:39 INFO]: Stopping the server
+> [K[23:45:39 INFO]: Stopping server
+> [K[23:45:39 INFO]: [Vault] Disabling Vault v1.7.3-CMI
+> [K[23:45:39 INFO]: [Mentions] Disabling Mentions v1.4.0
+> [K[23:45:39 INFO]: [XaLib] Disabling XaLib v1.2.2
+> [K[23:45:39 INFO]: Saving players
+> [K[23:45:39 INFO]: Saving worlds
+> [K[23:45:39 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+> [K[23:45:39 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+> [K[23:45:39 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+> [K[23:45:39 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+> [K[23:45:39 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world' in 0.01s
+> [K[23:45:39 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+> [K[23:45:39 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+> [K[23:45:40 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+> [K[23:45:40 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+> [K[23:45:40 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+> [K[23:45:40 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+> [K[23:45:40 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0.00s
+> [K[23:45:40 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+> [K[23:45:40 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+> [K[23:45:40 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+> [K[23:45:40 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+> [K[23:45:40 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+> [K[23:45:40 INFO]: Waiting for all RegionFile I/O tasks to complete...
+> [K[23:45:40 INFO]: All RegionFile I/O tasks to complete
+> [K[23:45:40 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+> [K[23:45:40 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...
+> Starting org.bukkit.craftbukkit.Main
+[23:45:41 INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Amazon.com Inc. Corretto-21.0.11.10.1) on Mac OS X 15.7.7 (aarch64)
+[23:45:41 INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[23:45:42 INFO]: [PluginInitializerManager] Initializing plugins...
+[23:45:42 INFO]: [PluginInitializerManager] Initialized 3 plugins
+[23:45:42 INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - Mentions (1.4.0), Vault (1.7.3-CMI), XaLib (1.2.2)
+[23:45:45 INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[23:45:46 INFO]: Loaded 1470 recipes
+[23:45:46 INFO]: Loaded 1584 advancements
+[23:45:46 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[23:45:46 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 310.9ms
+[23:45:46 INFO]: Starting minecraft server version 1.21.11
+[23:45:46 INFO]: Loading properties
+[23:45:47 INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[23:45:47 INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[23:45:47 INFO]: Server Ping Player Sample Count: 12
+[23:45:47 INFO]: Using 4 threads for Netty based IO
+[23:45:47 INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[23:45:47 INFO]: Default game type: SURVIVAL
+[23:45:47 INFO]: Generating keypair
+[?1h=[?2004h> [K[23:45:47 INFO]: Starting Minecraft server on *:25567
+> [K[23:45:48 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.
+> [K[23:45:48 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.
+> [K[23:45:48 INFO]: [XaLib] Loading server plugin XaLib v1.2.2
+> [K[23:45:48 INFO]: [Mentions] Loading server plugin Mentions v1.4.0
+> [K[23:45:48 INFO]: [Vault] Loading server plugin Vault v1.7.3-CMI
+> [K[23:45:48 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[23:45:48 INFO]: [Vault] Enabling Vault v1.7.3-CMI
+> [K[23:45:48 INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+> [K[23:45:48 INFO]: [Vault] Enabled Version 1.7.3-CMI
+> [K[33;1m[23:45:48 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[m> [K[33;1m[23:45:48 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[m> [K[33;1m[23:45:48 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[m> [K[33;1m[23:45:48 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[m> [K[23:45:48 INFO]: Preparing level "world"
+> [K[23:45:48 INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+> [K[23:45:48 INFO]: Preparing spawn area: 100%
+> [K[23:45:48 INFO]: Prepared spawn area in 1 ms
+> [K[23:45:48 INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+> [K[23:45:48 INFO]: Prepared spawn area in 0 ms
+> [K[23:45:48 INFO]: Done preparing level "world" (0.282s)
+> [K[23:45:48 INFO]: [XaLib] Enabling XaLib v1.2.2
+> [K[23:45:48 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mLoaded XaLib v1.2.2 (4a2442c)[0m
+> [K[23:45:48 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui as plugin..[0m
+> [K[23:45:48 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui v1.5.1...[0m
+> [K[23:45:48 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mChecking for Kyori Adventure...[0m
+> [K[23:45:48 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mXaGui registered successfully![0m
+> [K[23:45:48 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mInjecting XaGui commands..[0m
+> [K[23:45:48 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mFinished loading XaLib![0m
+> [K[23:45:48 INFO]: [Mentions] Enabling Mentions v1.4.0
+> [K[23:45:49 INFO]: [spark] Starting background profiler...
+> [K[23:45:50 INFO]: Running delayed init tasks
+> [K[23:45:50 INFO]: Done (9.554s)! For help, type "help"
+> [K[33;1m[23:45:50 WARN]: *************************************************************************************
+[m> [K[33;1m[23:45:50 WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[m> [K[33;1m[23:45:50 WARN]: However, you are 4 release(s) behind the latest stable release (26.2)!
+[m> [K[33;1m[23:45:50 WARN]: It is recommended that you update as soon as possible
+[m> [K[33;1m[23:45:50 WARN]: https://papermc.io/downloads/paper
+[m> [K[33;1m[23:45:50 WARN]: *************************************************************************************
+[m> [31mt[0m[31me[0m[31ms[0mtest[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:45:53 INFO]: [38;2;255;85;85mUnknown or incomplete command. See below for error
+[38;2;170;170;170mtest[3m[38;2;255;85;85m<--[HERE][0m
+> [31mt[0m[31me[0m[31ms[0mtest[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:45:58 INFO]: [38;2;255;85;85mUnknown or incomplete command. See below for error
+[38;2;170;170;170mtest[3m[38;2;255;85;85m<--[HERE][0m
+> [31mt[0m[31me[0m[31ms[0mtest[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:46:00 INFO]: [38;2;255;85;85mUnknown or incomplete command. See below for error
+[38;2;170;170;170mtest[3m[38;2;255;85;85m<--[HERE][0m
+> [31mp[0mpl[K[31mplu[0m[K[31mg[0m[31mi[0m[31mn[0m[6Dplugins[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:46:02 INFO]: [38;2;52;159;218mℹ [38;2;255;255;255mServer Plugins (3):[0m
+> [K[23:46:02 INFO]: [38;2;237;129;6mBukkit Plugins:[0m
+> [K[23:46:02 INFO]:  [38;2;85;85;85m- [0m[38;2;85;255;85mMentions[0m, [38;2;85;255;85mVault[0m, [38;2;85;255;85mXaLib[0m
+> [31mn[0m[31mi[0m[31mg[0m[31mg[0m[31me[0m[31mr[0m
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:46:37 INFO]: [38;2;255;85;85mUnknown or incomplete command. See below for error
+[38;2;170;170;170m[4m[38;2;255;85;85mnigger[0m[3m[38;2;255;85;85m<--[HERE][0m
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:47:29 INFO]: Stopping the server
+> [K[23:47:29 INFO]: Stopping server
+> [K[23:47:29 INFO]: [Vault] Disabling Vault v1.7.3-CMI
+> [K[23:47:29 INFO]: [Mentions] Disabling Mentions v1.4.0
+> [K[23:47:29 INFO]: [XaLib] Disabling XaLib v1.2.2
+> [K[23:47:29 INFO]: Saving players
+> [K[23:47:29 INFO]: Saving worlds
+> [K[23:47:29 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+> [K[23:47:29 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+> [K[23:47:29 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+> [K[23:47:29 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+> [K[23:47:29 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world' in 0.00s
+> [K[23:47:29 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+> [K[23:47:29 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+> [K[23:47:29 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+> [K[23:47:29 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+> [K[23:47:29 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+> [K[23:47:29 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+> [K[23:47:29 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0.00s
+> [K[23:47:29 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+> [K[23:47:29 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+> [K[23:47:29 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+> [K[23:47:29 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+> [K[23:47:29 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+> [K[23:47:29 INFO]: Waiting for all RegionFile I/O tasks to complete...
+> [K[23:47:29 INFO]: All RegionFile I/O tasks to complete
+> [K[23:47:29 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+> [K[23:47:29 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...
+> Starting org.bukkit.craftbukkit.Main
+[23:47:31 INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Amazon.com Inc. Corretto-21.0.11.10.1) on Mac OS X 15.7.7 (aarch64)
+[23:47:31 INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[23:47:31 INFO]: [PluginInitializerManager] Initializing plugins...
+[23:47:32 INFO]: [PluginInitializerManager] Initialized 3 plugins
+[23:47:32 INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - Mentions (1.4.0), Vault (1.7.3-CMI), XaLib (1.2.2)
+[23:47:34 INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[23:47:35 INFO]: Loaded 1470 recipes
+[23:47:35 INFO]: Loaded 1584 advancements
+[23:47:35 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[23:47:35 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 257.9ms
+[23:47:35 INFO]: Starting minecraft server version 1.21.11
+[23:47:35 INFO]: Loading properties
+[23:47:35 INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[23:47:36 INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[23:47:36 INFO]: Server Ping Player Sample Count: 12
+[23:47:36 INFO]: Using 4 threads for Netty based IO
+[23:47:36 INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[23:47:36 INFO]: Default game type: SURVIVAL
+[23:47:36 INFO]: Generating keypair
+[?1h=[?2004h> [K[23:47:36 INFO]: Starting Minecraft server on *:25567
+> [K[23:47:37 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.
+> [K[23:47:37 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.
+> [K[23:47:37 INFO]: [XaLib] Loading server plugin XaLib v1.2.2
+> [K[23:47:37 INFO]: [Mentions] Loading server plugin Mentions v1.4.0
+> [K[23:47:37 INFO]: [Vault] Loading server plugin Vault v1.7.3-CMI
+> [K[23:47:37 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[23:47:37 INFO]: [Vault] Enabling Vault v1.7.3-CMI
+> [K[23:47:37 INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+> [K[23:47:37 INFO]: [Vault] Enabled Version 1.7.3-CMI
+> [K[33;1m[23:47:37 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[m> [K[33;1m[23:47:37 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[m> [K[33;1m[23:47:37 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[m> [K[33;1m[23:47:37 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[m> [K[23:47:37 INFO]: Preparing level "world"
+> [K[23:47:37 INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+> [K[23:47:37 INFO]: Prepared spawn area in 0 ms
+> [K[23:47:37 INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+> [K[23:47:37 INFO]: Prepared spawn area in 0 ms
+> [K[23:47:37 INFO]: Done preparing level "world" (0.238s)
+> [K[23:47:37 INFO]: [XaLib] Enabling XaLib v1.2.2
+> [K[23:47:37 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mLoaded XaLib v1.2.2 (4a2442c)[0m
+> [K[23:47:37 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui as plugin..[0m
+> [K[23:47:37 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui v1.5.1...[0m
+> [K[23:47:37 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mChecking for Kyori Adventure...[0m
+> [K[23:47:37 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mXaGui registered successfully![0m
+> [K[23:47:37 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mInjecting XaGui commands..[0m
+> [K[23:47:37 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mFinished loading XaLib![0m
+> [K[23:47:37 INFO]: [Mentions] Enabling Mentions v1.4.0
+> [K[23:47:37 INFO]: [spark] Starting background profiler...
+> [K[23:47:39 INFO]: Running delayed init tasks
+> [K[23:47:39 INFO]: Done (8.445s)! For help, type "help"
+> [K[33;1m[23:47:39 WARN]: *************************************************************************************
+[m> [K[33;1m[23:47:39 WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[m> [K[33;1m[23:47:39 WARN]: However, you are 4 release(s) behind the latest stable release (26.2)!
+[m> [K[33;1m[23:47:39 WARN]: It is recommended that you update as soon as possible
+[m> [K[33;1m[23:47:39 WARN]: https://papermc.io/downloads/paper
+[m> [K[33;1m[23:47:39 WARN]: *************************************************************************************
+[m> [31mp[0mpl[K[31mplu[0m[K[31mg[0m[31mi[0m[31mn[0m[6Dplugins[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:47:46 INFO]: [38;2;52;159;218mℹ [38;2;255;255;255mServer Plugins (3):[0m
+> [K[23:47:46 INFO]: [38;2;237;129;6mBukkit Plugins:[0m
+> [K[23:47:46 INFO]:  [38;2;85;85;85m- [0m[38;2;85;255;85mMentions[0m, [38;2;85;255;85mVault[0m, [38;2;85;255;85mXaLib[0m
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:49:40 INFO]: Stopping the server
+> [K[23:49:40 INFO]: Stopping server
+> [K[23:49:40 INFO]: [Vault] Disabling Vault v1.7.3-CMI
+> [K[23:49:40 INFO]: [Mentions] Disabling Mentions v1.4.0
+> [K[23:49:40 INFO]: [XaLib] Disabling XaLib v1.2.2
+> [K[23:49:40 INFO]: Saving players
+> [K[23:49:40 INFO]: Saving worlds
+> [K[23:49:40 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+> [K[23:49:40 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+> [K[23:49:40 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+> [K[23:49:40 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+> [K[23:49:40 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world' in 0.00s
+> [K[23:49:40 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+> [K[23:49:40 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+> [K[23:49:40 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+> [K[23:49:40 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+> [K[23:49:40 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+> [K[23:49:40 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+> [K[23:49:40 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0.00s
+> [K[23:49:40 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+> [K[23:49:40 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+> [K[23:49:40 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+> [K[23:49:40 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+> [K[23:49:40 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+> [K[23:49:40 INFO]: Waiting for all RegionFile I/O tasks to complete...
+> [K[23:49:40 INFO]: All RegionFile I/O tasks to complete
+> [K[23:49:40 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+> [K[23:49:40 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...
+> Starting org.bukkit.craftbukkit.Main
+[23:49:42 INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Amazon.com Inc. Corretto-21.0.11.10.1) on Mac OS X 15.7.7 (aarch64)
+[23:49:42 INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[23:49:43 INFO]: [PluginInitializerManager] Initializing plugins...
+[23:49:43 INFO]: [PluginInitializerManager] Initialized 3 plugins
+[23:49:43 INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - Mentions (1.4.0), Vault (1.7.3-CMI), XaLib (1.2.2)
+[23:49:46 INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[23:49:46 INFO]: Loaded 1470 recipes
+[23:49:46 INFO]: Loaded 1584 advancements
+[23:49:47 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[23:49:47 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 248.3ms
+[23:49:47 INFO]: Starting minecraft server version 1.21.11
+[23:49:47 INFO]: Loading properties
+[23:49:47 INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[23:49:47 INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[23:49:47 INFO]: Using 4 threads for Netty based IO
+[23:49:47 INFO]: Server Ping Player Sample Count: 12
+[23:49:47 INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[23:49:47 INFO]: Default game type: SURVIVAL
+[23:49:47 INFO]: Generating keypair
+[?1h=[?2004h> [K[23:49:48 INFO]: Starting Minecraft server on *:25567
+> [K[23:49:48 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.
+> [K[23:49:48 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.
+> [K[23:49:48 INFO]: [XaLib] Loading server plugin XaLib v1.2.2
+> [K[23:49:48 INFO]: [Mentions] Loading server plugin Mentions v1.4.0
+> [K[23:49:48 INFO]: [Vault] Loading server plugin Vault v1.7.3-CMI
+> [K[23:49:48 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[23:49:48 INFO]: [Vault] Enabling Vault v1.7.3-CMI
+> [K[23:49:48 INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+> [K[23:49:48 INFO]: [Vault] Enabled Version 1.7.3-CMI
+> [K[33;1m[23:49:48 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[m> [K[33;1m[23:49:48 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[m> [K[33;1m[23:49:48 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[m> [K[33;1m[23:49:48 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[m> [K[23:49:48 INFO]: Preparing level "world"
+> [K[23:49:48 INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+> [K[23:49:48 INFO]: Prepared spawn area in 1 ms
+> [K[23:49:48 INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+> [K[23:49:48 INFO]: Prepared spawn area in 0 ms
+> [K[23:49:48 INFO]: Done preparing level "world" (0.287s)
+> [K[23:49:48 INFO]: [XaLib] Enabling XaLib v1.2.2
+> [K[23:49:48 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mLoaded XaLib v1.2.2 (4a2442c)[0m
+> [K[23:49:48 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui as plugin..[0m
+> [K[23:49:48 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui v1.5.1...[0m
+> [K[23:49:48 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mChecking for Kyori Adventure...[0m
+> [K[23:49:48 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mXaGui registered successfully![0m
+> [K[23:49:48 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mInjecting XaGui commands..[0m
+> [K[23:49:48 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mFinished loading XaLib![0m
+> [K[23:49:48 INFO]: [Mentions] Enabling Mentions v1.4.0
+> [K[23:49:49 INFO]: [spark] Starting background profiler...
+> [K[23:49:50 INFO]: Running delayed init tasks
+> [K[23:49:50 INFO]: Done (8.777s)! For help, type "help"
+> [K[33;1m[23:49:50 WARN]: *************************************************************************************
+[m> [K[33;1m[23:49:50 WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[m> [K[33;1m[23:49:50 WARN]: However, you are 4 release(s) behind the latest stable release (26.2)!
+[m> [K[33;1m[23:49:50 WARN]: It is recommended that you update as soon as possible
+[m> [K[33;1m[23:49:50 WARN]: https://papermc.io/downloads/paper
+[m> [K[33;1m[23:49:50 WARN]: *************************************************************************************
+[m> [31mp[0mpl[K[31mplu[0m[K[31mg[0m[31mi[0m[31mn[0m[6Dplugins[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:49:56 INFO]: [38;2;52;159;218mℹ [38;2;255;255;255mServer Plugins (3):[0m
+> [K[23:49:56 INFO]: [38;2;237;129;6mBukkit Plugins:[0m
+> [K[23:49:56 INFO]:  [38;2;85;85;85m- [0m[38;2;85;255;85mMentions[0m, [38;2;85;255;85mVault[0m, [38;2;85;255;85mXaLib[0m
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[23:59:25 INFO]: Stopping the server
+> [K[23:59:25 INFO]: Stopping server
+> [K[23:59:25 INFO]: [Vault] Disabling Vault v1.7.3-CMI
+> [K[23:59:25 INFO]: [Mentions] Disabling Mentions v1.4.0
+> [K[23:59:25 INFO]: [XaLib] Disabling XaLib v1.2.2
+> [K[23:59:25 INFO]: Saving players
+> [K[23:59:25 INFO]: Saving worlds
+> [K[23:59:25 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+> [K[23:59:25 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+> [K[23:59:25 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+> [K[23:59:25 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+> [K[23:59:25 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world' in 0.01s
+> [K[23:59:25 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+> [K[23:59:25 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+> [K[23:59:25 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+> [K[23:59:25 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+> [K[23:59:25 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+> [K[23:59:25 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+> [K[23:59:25 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0.00s
+> [K[23:59:25 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+> [K[23:59:25 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+> [K[23:59:25 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+> [K[23:59:25 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+> [K[23:59:25 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+> [K[23:59:25 INFO]: Waiting for all RegionFile I/O tasks to complete...
+> [K[23:59:25 INFO]: All RegionFile I/O tasks to complete
+> [K[23:59:25 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+> [K[23:59:25 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...
+> Starting org.bukkit.craftbukkit.Main
+[23:59:27 INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Amazon.com Inc. Corretto-21.0.11.10.1) on Mac OS X 15.7.7 (aarch64)
+[23:59:27 INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[23:59:28 INFO]: [PluginInitializerManager] Initializing plugins...
+[23:59:28 INFO]: [PluginInitializerManager] Initialized 3 plugins
+[23:59:28 INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - Mentions (1.4.0), Vault (1.7.3-CMI), XaLib (1.2.2)
+[23:59:31 INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[23:59:32 INFO]: Loaded 1470 recipes
+[23:59:32 INFO]: Loaded 1584 advancements
+[23:59:32 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[23:59:33 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 563.1ms
+[23:59:33 INFO]: Starting minecraft server version 1.21.11
+[23:59:33 INFO]: Loading properties
+[23:59:33 INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[23:59:33 INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[23:59:33 INFO]: Server Ping Player Sample Count: 12
+[23:59:33 INFO]: Using 4 threads for Netty based IO
+[23:59:33 INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[23:59:34 INFO]: Default game type: SURVIVAL
+[23:59:34 INFO]: Generating keypair
+[?1h=[?2004h> [K[23:59:34 INFO]: Starting Minecraft server on *:25567
+> [K[23:59:34 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.
+> [K[23:59:34 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.
+> [K[23:59:34 INFO]: [XaLib] Loading server plugin XaLib v1.2.2
+> [K[23:59:34 INFO]: [Mentions] Loading server plugin Mentions v1.4.0
+> [K[23:59:34 INFO]: [Vault] Loading server plugin Vault v1.7.3-CMI
+> [K[23:59:34 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[23:59:34 INFO]: [Vault] Enabling Vault v1.7.3-CMI
+> [K[23:59:34 INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+> [K[23:59:34 INFO]: [Vault] Enabled Version 1.7.3-CMI
+> [K[33;1m[23:59:34 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[m> [K[33;1m[23:59:34 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[m> [K[33;1m[23:59:34 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[m> [K[33;1m[23:59:34 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[m> [K[23:59:34 INFO]: Preparing level "world"
+> [K[23:59:35 INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+> [K[23:59:35 INFO]: Preparing spawn area: 100%
+> [K[23:59:35 INFO]: Prepared spawn area in 1 ms
+> [K[23:59:35 INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+> [K[23:59:35 INFO]: Prepared spawn area in 0 ms
+> [K[23:59:35 INFO]: Done preparing level "world" (0.267s)
+> [K[23:59:35 INFO]: [XaLib] Enabling XaLib v1.2.2
+> [K[23:59:35 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mLoaded XaLib v1.2.2 (4a2442c)[0m
+> [K[23:59:35 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui as plugin..[0m
+> [K[23:59:35 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui v1.5.1...[0m
+> [K[23:59:35 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mChecking for Kyori Adventure...[0m
+> [K[23:59:35 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mXaGui registered successfully![0m
+> [K[23:59:35 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mInjecting XaGui commands..[0m
+> [K[23:59:35 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mFinished loading XaLib![0m
+> [K[23:59:35 INFO]: [Mentions] Enabling Mentions v1.4.0
+> [K[23:59:35 INFO]: [spark] Starting background profiler...
+> [K[23:59:37 INFO]: Running delayed init tasks
+> [K[23:59:37 INFO]: Done (10.602s)! For help, type "help"
+> [K[33;1m[23:59:37 WARN]: *************************************************************************************
+[m> [K[33;1m[23:59:37 WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[m> [K[33;1m[23:59:37 WARN]: However, you are 4 release(s) behind the latest stable release (26.2)!
+[m> [K[33;1m[23:59:37 WARN]: It is recommended that you update as soon as possible
+[m> [K[33;1m[23:59:37 WARN]: https://papermc.io/downloads/paper
+[m> [K[33;1m[23:59:37 WARN]: *************************************************************************************
+[m> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[00:05:28 INFO]: Stopping the server
+> [K[00:05:28 INFO]: Stopping server
+> [K[00:05:28 INFO]: [Vault] Disabling Vault v1.7.3-CMI
+> [K[00:05:28 INFO]: [Mentions] Disabling Mentions v1.4.0
+> [K[00:05:28 INFO]: [XaLib] Disabling XaLib v1.2.2
+> [K[00:05:28 INFO]: Saving players
+> [K[00:05:28 INFO]: Saving worlds
+> [K[00:05:28 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+> [K[00:05:28 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+> [K[00:05:28 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+> [K[00:05:28 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+> [K[00:05:28 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world' in 0.01s
+> [K[00:05:28 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+> [K[00:05:28 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+> [K[00:05:28 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+> [K[00:05:28 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+> [K[00:05:28 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+> [K[00:05:28 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+> [K[00:05:28 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0.00s
+> [K[00:05:28 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+> [K[00:05:28 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+> [K[00:05:28 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+> [K[00:05:28 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+> [K[00:05:28 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+> [K[00:05:28 INFO]: Waiting for all RegionFile I/O tasks to complete...
+> [K[00:05:28 INFO]: All RegionFile I/O tasks to complete
+> [K[00:05:28 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+> [K[00:05:28 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...
+> Starting org.bukkit.craftbukkit.Main
+[00:10:00 INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Amazon.com Inc. Corretto-21.0.11.10.1) on Mac OS X 15.7.7 (aarch64)
+[00:10:00 INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[00:10:00 INFO]: [PluginInitializerManager] Initializing plugins...
+[00:10:00 INFO]: [PluginInitializerManager] Initialized 3 plugins
+[00:10:00 INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - Mentions (1.4.0), Vault (1.7.3-CMI), XaLib (1.2.2)
+[00:10:03 INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+plugins
+[00:10:04 INFO]: Loaded 1470 recipes
+[00:10:04 INFO]: Loaded 1584 advancements
+[00:10:04 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[00:10:04 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 218.8ms
+[00:10:04 INFO]: Starting minecraft server version 1.21.11
+[00:10:04 INFO]: Loading properties
+[00:10:04 INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[00:10:04 INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[00:10:04 INFO]: Server Ping Player Sample Count: 12
+[00:10:04 INFO]: Using 4 threads for Netty based IO
+[00:10:05 INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[00:10:05 INFO]: Default game type: SURVIVAL
+[00:10:05 INFO]: Generating keypair
+[?1h=[?2004h> [31mp[0m[31ml[0m[31mu[0m[31mg[0m[31mi[0m[31mn[0m[31ms[0m
+[?1l>[?1000l[?2004l[00:10:05 INFO]: Starting Minecraft server on *:25567
+[?1h=[?2004h> [K[00:10:05 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.
+> [K[00:10:05 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.
+> [K[00:10:05 INFO]: [XaLib] Loading server plugin XaLib v1.2.2
+> [K[00:10:05 INFO]: [Mentions] Loading server plugin Mentions v1.4.0
+> [K[00:10:05 INFO]: [Vault] Loading server plugin Vault v1.7.3-CMI
+> [K[00:10:05 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[00:10:05 INFO]: [Vault] Enabling Vault v1.7.3-CMI
+> [K[00:10:05 INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+> [K[00:10:05 INFO]: [Vault] Enabled Version 1.7.3-CMI
+> [K[33;1m[00:10:05 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[m> [K[33;1m[00:10:05 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[m> [K[33;1m[00:10:05 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[m> [K[33;1m[00:10:05 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[m> [K[00:10:05 INFO]: Preparing level "world"
+> [K[00:10:06 INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+> [K[00:10:06 INFO]: Prepared spawn area in 0 ms
+> [K[00:10:06 INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+> [K[00:10:06 INFO]: Prepared spawn area in 0 ms
+> [K[00:10:06 INFO]: Done preparing level "world" (0.248s)
+> [K[00:10:06 INFO]: [XaLib] Enabling XaLib v1.2.2
+> [K[00:10:06 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mLoaded XaLib v1.2.2 (4a2442c)[0m
+> [K[00:10:06 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui as plugin..[0m
+> [K[00:10:06 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui v1.5.1...[0m
+> [K[00:10:06 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mChecking for Kyori Adventure...[0m
+> [K[00:10:06 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mXaGui registered successfully![0m
+> [K[00:10:06 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mInjecting XaGui commands..[0m
+> [K[00:10:06 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mFinished loading XaLib![0m
+> [K[00:10:06 INFO]: [Mentions] Enabling Mentions v1.4.0
+> [K[00:10:06 INFO]: [spark] Starting background profiler...
+> [K[00:10:07 INFO]: Running delayed init tasks
+> [K[00:10:07 INFO]: Done (8.383s)! For help, type "help"
+> [K[31;1m[00:10:07 ERROR]: Command exception: /plugins
+java.lang.NullPointerException: Cannot invoke "net.minecraft.server.level.ServerLevel.getGameRules()" because the return value of "net.minecraft.commands.CommandSourceStack.getLevel()" is null
+        at net.minecraft.commands.Commands.executeCommandInContext(Commands.java:462) ~[paper-1.21.11.jar:1.21.11-132-c5eb079]
+        at net.minecraft.commands.Commands.performCommand(Commands.java:374) ~[paper-1.21.11.jar:1.21.11-132-c5eb079]
+        at net.minecraft.commands.Commands.performCommand(Commands.java:362) ~[paper-1.21.11.jar:1.21.11-132-c5eb079]
+        at net.minecraft.commands.Commands.performPrefixedCommand(Commands.java:353) ~[paper-1.21.11.jar:1.21.11-132-c5eb079]
+        at net.minecraft.server.dedicated.DedicatedServer.handleConsoleInputs(DedicatedServer.java:594) ~[paper-1.21.11.jar:1.21.11-132-c5eb079]
+        at net.minecraft.server.dedicated.DedicatedServer.tickConnection(DedicatedServer.java:550) ~[paper-1.21.11.jar:1.21.11-132-c5eb079]
+        at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1833) ~[paper-1.21.11.jar:1.21.11-132-c5eb079]
+        at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:1611) ~[paper-1.21.11.jar:1.21.11-132-c5eb079]
+        at net.minecraft.server.dedicated.DedicatedServer.tickServer(DedicatedServer.java:427) ~[paper-1.21.11.jar:1.21.11-132-c5eb079]
+        at net.minecraft.server.MinecraftServer.processPacketsAndTick(MinecraftServer.java:1667) ~[paper-1.21.11.jar:1.21.11-132-c5eb079]
+        at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:1335) ~[paper-1.21.11.jar:1.21.11-132-c5eb079]
+        at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:388) ~[paper-1.21.11.jar:1.21.11-132-c5eb079]
+        at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
+[m> [K[00:10:07 INFO]: [38;2;255;85;85mAn unexpected error occurred trying to execute that command[0m
+> [K[33;1m[00:10:07 WARN]: *************************************************************************************
+[m> [K[33;1m[00:10:07 WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[m> [K[33;1m[00:10:07 WARN]: However, you are 4 release(s) behind the latest stable release (26.2)!
+[m> [K[33;1m[00:10:07 WARN]: It is recommended that you update as soon as possible
+[m> [K[33;1m[00:10:07 WARN]: https://papermc.io/downloads/paper
+[m> [K[33;1m[00:10:07 WARN]: *************************************************************************************
+[m> [31mp[0mpl[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[00:10:18 INFO]: [38;2;52;159;218mℹ [38;2;255;255;255mServer Plugins (3):[0m
+> [K[00:10:18 INFO]: [38;2;237;129;6mBukkit Plugins:[0m
+> [K[00:10:18 INFO]:  [38;2;85;85;85m- [0m[38;2;85;255;85mMentions[0m, [38;2;85;255;85mVault[0m, [38;2;85;255;85mXaLib[0m
+> [31mp[0mpl[K[31mplu[0m[K[31mg[0m[31mi[0m[31mn[0m[6Dplugins[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[00:10:20 INFO]: [38;2;52;159;218mℹ [38;2;255;255;255mServer Plugins (3):[0m
+> [K[00:10:20 INFO]: [38;2;237;129;6mBukkit Plugins:[0m
+> [K[00:10:20 INFO]:  [38;2;85;85;85m- [0m[38;2;85;255;85mMentions[0m, [38;2;85;255;85mVault[0m, [38;2;85;255;85mXaLib[0m
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[00:10:23 INFO]: Stopping the server
+> [K[00:10:23 INFO]: Stopping server
+> [K[00:10:23 INFO]: [Vault] Disabling Vault v1.7.3-CMI
+> [K[00:10:23 INFO]: [Mentions] Disabling Mentions v1.4.0
+> [K[00:10:23 INFO]: [XaLib] Disabling XaLib v1.2.2
+> [K[00:10:23 INFO]: Saving players
+> [K[00:10:24 INFO]: Saving worlds
+> [K[00:10:24 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+> [K[00:10:24 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+> [K[00:10:24 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+> [K[00:10:24 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+> [K[00:10:24 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world' in 0.00s
+> [K[00:10:24 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+> [K[00:10:24 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+> [K[00:10:24 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+> [K[00:10:24 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+> [K[00:10:24 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+> [K[00:10:24 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+> [K[00:10:24 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0.00s
+> [K[00:10:24 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+> [K[00:10:24 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+> [K[00:10:24 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+> [K[00:10:24 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+> [K[00:10:24 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+> [K[00:10:24 INFO]: Waiting for all RegionFile I/O tasks to complete...
+> [K[00:10:24 INFO]: All RegionFile I/O tasks to complete
+> [K[00:10:24 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+> [K[00:10:24 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...
+> Starting org.bukkit.craftbukkit.Main
+[11:41:04 INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Amazon.com Inc. Corretto-21.0.11.10.1) on Mac OS X 15.7.7 (aarch64)
+[11:41:04 INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[11:41:05 INFO]: [PluginInitializerManager] Initializing plugins...
+[11:41:05 INFO]: [PluginRemapper] Remapping plugin 'plugins/Mentions-1.3.4-dependent.jar'...
+[11:41:05 INFO]: [PluginRemapper] Done remapping plugin 'plugins/Mentions-1.3.4-dependent.jar' in 351ms.
+[11:41:06 INFO]: [PluginInitializerManager] Initialized 3 plugins
+[11:41:06 INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - Mentions (1.3.4), Vault (1.7.3-CMI), XaLib (1.2.2)
+[11:41:08 INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[11:41:09 INFO]: Loaded 1470 recipes
+[11:41:09 INFO]: Loaded 1584 advancements
+[11:41:09 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[11:41:09 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 276.2ms
+[11:41:10 INFO]: Starting minecraft server version 1.21.11
+[11:41:10 INFO]: Loading properties
+[11:41:10 INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[11:41:10 INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[11:41:10 INFO]: Server Ping Player Sample Count: 12
+[11:41:10 INFO]: Using 4 threads for Netty based IO
+[11:41:10 INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[11:41:10 INFO]: Default game type: SURVIVAL
+[11:41:10 INFO]: Generating keypair
+[?1h=[?2004h> [K[11:41:10 INFO]: Starting Minecraft server on *:25567
+> [K[11:41:11 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.
+> [K[11:41:11 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.
+> [K[11:41:11 INFO]: [XaLib] Loading server plugin XaLib v1.2.2
+> [K[11:41:11 INFO]: [Mentions] Loading server plugin Mentions v1.3.4
+> [K[11:41:11 INFO]: [Vault] Loading server plugin Vault v1.7.3-CMI
+> [K[11:41:11 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[11:41:11 INFO]: [Vault] Enabling Vault v1.7.3-CMI
+> [K[11:41:11 INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+> [K[11:41:11 INFO]: [Vault] Enabled Version 1.7.3-CMI
+> [K[33;1m[11:41:11 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[m> [K[33;1m[11:41:11 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[m> [K[33;1m[11:41:11 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[m> [K[33;1m[11:41:11 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[m> [K[11:41:11 INFO]: Preparing level "world"
+> [K[11:41:12 INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+> [K[11:41:12 INFO]: Prepared spawn area in 0 ms
+> [K[11:41:12 INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+> [K[11:41:12 INFO]: Prepared spawn area in 0 ms
+> [K[11:41:12 INFO]: Done preparing level "world" (0.282s)
+> [K[11:41:12 INFO]: [XaLib] Enabling XaLib v1.2.2
+> [K[11:41:12 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mLoaded XaLib v1.2.2 (4a2442c)[0m
+> [K[11:41:12 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui as plugin..[0m
+> [K[11:41:12 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui v1.5.1...[0m
+> [K[11:41:12 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mChecking for Kyori Adventure...[0m
+> [K[11:41:12 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mXaGui registered successfully![0m
+> [K[11:41:12 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mInjecting XaGui commands..[0m
+> [K[11:41:12 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mFinished loading XaLib![0m
+> [K[11:41:12 INFO]: [Mentions] Enabling Mentions v1.3.4
+> [K[11:41:12 INFO]: [spark] Starting background profiler...
+> [K[11:41:14 INFO]: Running delayed init tasks
+> [K[11:41:14 INFO]: Done (10.276s)! For help, type "help"
+> [K[33;1m[11:41:14 WARN]: *************************************************************************************
+[m> [K[33;1m[11:41:14 WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[m> [K[33;1m[11:41:14 WARN]: However, you are 4 release(s) behind the latest stable release (26.2)!
+[m> [K[33;1m[11:41:14 WARN]: It is recommended that you update as soon as possible
+[m> [K[33;1m[11:41:14 WARN]: https://papermc.io/downloads/paper
+[m> [K[33;1m[11:41:14 WARN]: *************************************************************************************
+[m> [K[11:41:53 INFO]: UUID of player XAP3Y is 9dd749fd-e384-3257-9f75-d23d3e69b5a9
+> [K[11:41:55 INFO]: [38;2;255;255;85mXAP3Y joined the game[0m
+> [K[11:41:55 INFO]: XAP3Y[/127.0.0.1:58930] logged in with entity id 20 at ([world]23.578663343428847, 111.0, 94.97939742140177)
+> [K[11:42:07 INFO]: XAP3Y issued server command: /mentions
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[11:44:33 INFO]: Stopping the server
+> [K[11:44:33 INFO]: Stopping server
+> [K[11:44:33 INFO]: [Vault] Disabling Vault v1.7.3-CMI
+> [K[11:44:33 INFO]: [Mentions] Disabling Mentions v1.3.4
+> [K[11:44:33 INFO]: [XaLib] Disabling XaLib v1.2.2
+> [K[11:44:33 INFO]: Saving players
+> [K[11:44:33 INFO]: XAP3Y lost connection: Server closed
+> [K[11:44:33 INFO]: [38;2;255;255;85mXAP3Y left the game[0m
+> [K[11:44:33 INFO]: Saving worlds
+> [K[11:44:33 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+> [K[11:44:33 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+> [K[11:44:33 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+> [K[11:44:33 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+> [K[11:44:39 INFO]: [ChunkHolderManager] Saved 4761 block chunks, 4761 entity chunks, 0 poi chunks in world 'world' in 5.97s
+> [K[11:44:39 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+> [K[11:44:39 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+> [K[11:44:39 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+> [K[11:44:39 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+> [K[11:44:39 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+> [K[11:44:39 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+> [K[11:44:39 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0.00s
+> [K[11:44:39 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+> [K[11:44:39 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+> [K[11:44:39 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+> [K[11:44:39 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+> [K[11:44:39 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+> [K[11:44:39 INFO]: Waiting for all RegionFile I/O tasks to complete...
+> [K[11:44:39 INFO]: All RegionFile I/O tasks to complete
+> [K[11:44:39 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+> [K[11:44:39 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...
+> Starting org.bukkit.craftbukkit.Main
+[11:44:41 INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Amazon.com Inc. Corretto-21.0.11.10.1) on Mac OS X 15.7.7 (aarch64)
+[11:44:41 INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[11:44:42 INFO]: [PluginInitializerManager] Initializing plugins...
+[11:44:42 INFO]: [PluginRemapper] Remapping plugin 'plugins/Mentions-1.3.4-dependent.jar'...
+[11:44:42 INFO]: [PluginRemapper] Done remapping plugin 'plugins/Mentions-1.3.4-dependent.jar' in 359ms.
+[11:44:42 INFO]: [PluginInitializerManager] Initialized 3 plugins
+[11:44:42 INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - Mentions (1.3.4), Vault (1.7.3-CMI), XaLib (1.2.2)
+[11:44:45 INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[11:44:46 INFO]: Loaded 1470 recipes
+[11:44:46 INFO]: Loaded 1584 advancements
+[11:44:46 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[11:44:47 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 226.3ms
+[11:44:47 INFO]: Starting minecraft server version 1.21.11
+[11:44:47 INFO]: Loading properties
+[11:44:47 INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[11:44:47 INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[11:44:47 INFO]: Using 4 threads for Netty based IO
+[11:44:47 INFO]: Server Ping Player Sample Count: 12
+[11:44:47 INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[11:44:48 INFO]: Default game type: SURVIVAL
+[11:44:48 INFO]: Generating keypair
+[?1h=[?2004h> [K[11:44:48 INFO]: Starting Minecraft server on *:25567
+> [K[11:44:48 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.
+> [K[11:44:48 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.
+> [K[11:44:48 INFO]: [XaLib] Loading server plugin XaLib v1.2.2
+> [K[11:44:48 INFO]: [Mentions] Loading server plugin Mentions v1.3.4
+> [K[11:44:48 INFO]: [Vault] Loading server plugin Vault v1.7.3-CMI
+> [K[11:44:48 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[11:44:48 INFO]: [Vault] Enabling Vault v1.7.3-CMI
+> [K[11:44:48 INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+> [K[11:44:48 INFO]: [Vault] Enabled Version 1.7.3-CMI
+> [K[33;1m[11:44:48 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[m> [K[33;1m[11:44:48 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[m> [K[33;1m[11:44:48 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[m> [K[33;1m[11:44:48 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[m> [K[11:44:48 INFO]: Preparing level "world"
+> [K[11:44:49 INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+> [K[11:44:49 INFO]: Preparing spawn area: 100%
+> [K[11:44:49 INFO]: Prepared spawn area in 2 ms
+> [K[11:44:49 INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+> [K[11:44:49 INFO]: Prepared spawn area in 1 ms
+> [K[11:44:49 INFO]: Done preparing level "world" (0.345s)
+> [K[11:44:49 INFO]: [XaLib] Enabling XaLib v1.2.2
+> [K[11:44:49 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mLoaded XaLib v1.2.2 (4a2442c)[0m
+> [K[11:44:49 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui as plugin..[0m
+> [K[11:44:49 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui v1.5.1...[0m
+> [K[11:44:49 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mChecking for Kyori Adventure...[0m
+> [K[11:44:49 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mXaGui registered successfully![0m
+> [K[11:44:49 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mInjecting XaGui commands..[0m
+> [K[11:44:49 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mFinished loading XaLib![0m
+> [K[11:44:49 INFO]: [Mentions] Enabling Mentions v1.3.4
+> [K[11:44:49 INFO]: [spark] Starting background profiler...
+> [K[11:44:51 INFO]: Running delayed init tasks
+> [K[11:44:51 INFO]: Done (10.358s)! For help, type "help"
+> [K[33;1m[11:44:51 WARN]: *************************************************************************************
+[m> [K[33;1m[11:44:51 WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[m> [K[33;1m[11:44:51 WARN]: However, you are 4 release(s) behind the latest stable release (26.2)!
+[m> [K[33;1m[11:44:51 WARN]: It is recommended that you update as soon as possible
+[m> [K[33;1m[11:44:51 WARN]: https://papermc.io/downloads/paper
+[m> [K[33;1m[11:44:51 WARN]: *************************************************************************************
+[m> [K[11:45:00 INFO]: UUID of player XAP3Y is 9dd749fd-e384-3257-9f75-d23d3e69b5a9
+> [K[11:45:00 INFO]: [38;2;255;255;85mXAP3Y joined the game[0m
+> [K[11:45:01 INFO]: XAP3Y[/127.0.0.1:59002] logged in with entity id 21 at ([world]23.578663343428847, 111.0, 94.97939742140177)
+> [K[11:45:03 INFO]: XAP3Y issued server command: /mentions
+> [K[11:45:37 INFO]: XAP3Y issued server command: /mentions reload
+> [K[11:45:39 INFO]: XAP3Y issued server command: /mentions
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[11:50:57 INFO]: Stopping the server
+> [K[11:50:57 INFO]: Stopping server
+> [K[11:50:57 INFO]: [Vault] Disabling Vault v1.7.3-CMI
+> [K[11:50:57 INFO]: [Mentions] Disabling Mentions v1.3.4
+> [K[11:50:57 INFO]: [XaLib] Disabling XaLib v1.2.2
+> [K[11:50:57 INFO]: Saving players
+> [K[11:50:57 INFO]: XAP3Y lost connection: Server closed
+> [K[11:50:57 INFO]: [38;2;255;255;85mXAP3Y left the game[0m
+> [K[11:50:57 INFO]: Saving worlds
+> [K[11:50:57 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+> [K[11:50:57 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+> [K[11:50:57 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+> [K[11:50:57 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+> [K[11:50:57 INFO]: [ChunkHolderManager] Saved 20 block chunks, 409 entity chunks, 0 poi chunks in world 'world' in 0.29s
+> [K[11:50:57 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+> [K[11:50:57 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+> [K[11:50:57 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+> [K[11:50:57 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+> [K[11:50:57 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+> [K[11:50:57 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+> [K[11:50:57 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0.00s
+> [K[11:50:57 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+> [K[11:50:57 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+> [K[11:50:57 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+> [K[11:50:57 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+> [K[11:50:57 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+> [K[11:50:57 INFO]: Waiting for all RegionFile I/O tasks to complete...
+> [K[11:50:57 INFO]: All RegionFile I/O tasks to complete
+> [K[11:50:57 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+> [K[11:50:57 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...
+> Starting org.bukkit.craftbukkit.Main
+[11:50:59 INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Amazon.com Inc. Corretto-21.0.11.10.1) on Mac OS X 15.7.7 (aarch64)
+[11:50:59 INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[11:51:00 INFO]: [PluginInitializerManager] Initializing plugins...
+[11:51:00 INFO]: [PluginRemapper] Remapping plugin 'plugins/Mentions-1.3.4-dependent.jar'...
+[11:51:01 INFO]: [PluginRemapper] Done remapping plugin 'plugins/Mentions-1.3.4-dependent.jar' in 340ms.
+[11:51:01 INFO]: [PluginInitializerManager] Initialized 3 plugins
+[11:51:01 INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - Mentions (1.3.4), Vault (1.7.3-CMI), XaLib (1.2.2)
+[11:51:03 INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[11:51:04 INFO]: Loaded 1470 recipes
+[11:51:04 INFO]: Loaded 1584 advancements
+[11:51:04 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[11:51:05 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 228.8ms
+[11:51:05 INFO]: Starting minecraft server version 1.21.11
+[11:51:05 INFO]: Loading properties
+[11:51:05 INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[11:51:05 INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[11:51:05 INFO]: Using 4 threads for Netty based IO
+[11:51:05 INFO]: Server Ping Player Sample Count: 12
+[11:51:05 INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[11:51:05 INFO]: Default game type: SURVIVAL
+[11:51:05 INFO]: Generating keypair
+[?1h=[?2004h> [K[11:51:05 INFO]: Starting Minecraft server on *:25567
+> [K[11:51:06 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.
+> [K[11:51:06 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.
+> [K[11:51:06 INFO]: [XaLib] Loading server plugin XaLib v1.2.2
+> [K[11:51:06 INFO]: [Mentions] Loading server plugin Mentions v1.3.4
+> [K[11:51:06 INFO]: [Vault] Loading server plugin Vault v1.7.3-CMI
+> [K[11:51:06 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[11:51:06 INFO]: [Vault] Enabling Vault v1.7.3-CMI
+> [K[11:51:06 INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+> [K[11:51:06 INFO]: [Vault] Enabled Version 1.7.3-CMI
+> [K[33;1m[11:51:06 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[m> [K[33;1m[11:51:06 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[m> [K[33;1m[11:51:06 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[m> [K[33;1m[11:51:06 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[m> [K[11:51:06 INFO]: Preparing level "world"
+> [K[11:51:06 INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+> [K[11:51:06 INFO]: Prepared spawn area in 0 ms
+> [K[11:51:06 INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+> [K[11:51:06 INFO]: Prepared spawn area in 0 ms
+> [K[11:51:06 INFO]: Done preparing level "world" (0.212s)
+> [K[11:51:06 INFO]: [XaLib] Enabling XaLib v1.2.2
+> [K[11:51:06 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mLoaded XaLib v1.2.2 (4a2442c)[0m
+> [K[11:51:06 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui as plugin..[0m
+> [K[11:51:06 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui v1.5.1...[0m
+> [K[11:51:06 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mChecking for Kyori Adventure...[0m
+> [K[11:51:06 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mXaGui registered successfully![0m
+> [K[11:51:06 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mInjecting XaGui commands..[0m
+> [K[11:51:06 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mFinished loading XaLib![0m
+> [K[11:51:06 INFO]: [Mentions] Enabling Mentions v1.3.4
+> [K[11:51:07 INFO]: [spark] Starting background profiler...
+> [K[11:51:08 INFO]: Running delayed init tasks
+> [K[11:51:08 INFO]: Done (9.149s)! For help, type "help"
+> [K[33;1m[11:51:08 WARN]: *************************************************************************************
+[m> [K[33;1m[11:51:08 WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[m> [K[33;1m[11:51:08 WARN]: However, you are 4 release(s) behind the latest stable release (26.2)!
+[m> [K[33;1m[11:51:08 WARN]: It is recommended that you update as soon as possible
+[m> [K[33;1m[11:51:08 WARN]: https://papermc.io/downloads/paper
+[m> [K[33;1m[11:51:08 WARN]: *************************************************************************************
+[m> [K[11:55:42 INFO]: UUID of player XAP3Y is 9dd749fd-e384-3257-9f75-d23d3e69b5a9
+> [K[11:55:43 INFO]: [38;2;255;255;85mXAP3Y joined the game[0m
+> [K[11:55:43 INFO]: XAP3Y[/127.0.0.1:59210] logged in with entity id 21 at ([world]23.578663343428847, 111.0, 94.97939742140177)
+> [K[11:55:47 INFO]: XAP3Y issued server command: /mentions
+> [K[11:56:02 INFO]: XAP3Y issued server command: /mentions
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[11:57:48 INFO]: Stopping the server
+> [K[11:57:48 INFO]: Stopping server
+> [K[11:57:48 INFO]: [Vault] Disabling Vault v1.7.3-CMI
+> [K[11:57:48 INFO]: [Mentions] Disabling Mentions v1.3.4
+> [K[11:57:48 INFO]: [XaLib] Disabling XaLib v1.2.2
+> [K[11:57:48 INFO]: Saving players
+> [K[11:57:48 INFO]: XAP3Y lost connection: Server closed
+> [K[11:57:49 INFO]: [38;2;255;255;85mXAP3Y left the game[0m
+> [K[11:57:49 INFO]: Saving worlds
+> [K[11:57:49 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+> [K[11:57:49 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+> [K[11:57:49 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+> [K[11:57:49 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+> [K[11:57:56 INFO]: [ChunkHolderManager] Saved 4761 block chunks, 4761 entity chunks, 0 poi chunks in world 'world' in 7.32s
+> [K[11:57:56 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+> [K[11:57:56 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+> [K[11:57:56 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+> [K[11:57:56 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+> [K[11:57:56 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+> [K[11:57:56 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+> [K[11:57:56 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0.00s
+> [K[11:57:56 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+> [K[11:57:56 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+> [K[11:57:56 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+> [K[11:57:56 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+> [K[11:57:56 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+> [K[11:57:56 INFO]: Waiting for all RegionFile I/O tasks to complete...
+> [K[11:57:56 INFO]: All RegionFile I/O tasks to complete
+> [K[11:57:56 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+> [K[11:57:56 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...
+> Starting org.bukkit.craftbukkit.Main
+[11:57:58 INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Amazon.com Inc. Corretto-21.0.11.10.1) on Mac OS X 15.7.7 (aarch64)
+[11:57:58 INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[11:57:58 INFO]: [PluginInitializerManager] Initializing plugins...
+[11:57:58 INFO]: [PluginRemapper] Remapping plugin 'plugins/Mentions-1.3.4-dependent.jar'...
+[11:57:59 INFO]: [PluginRemapper] Done remapping plugin 'plugins/Mentions-1.3.4-dependent.jar' in 353ms.
+[11:57:59 INFO]: [PluginInitializerManager] Initialized 3 plugins
+[11:57:59 INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - Mentions (1.3.4), Vault (1.7.3-CMI), XaLib (1.2.2)
+[11:58:02 INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[11:58:03 INFO]: Loaded 1470 recipes
+[11:58:03 INFO]: Loaded 1584 advancements
+[11:58:03 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[11:58:03 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 242.6ms
+[11:58:03 INFO]: Starting minecraft server version 1.21.11
+[11:58:03 INFO]: Loading properties
+[11:58:03 INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[11:58:03 INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[11:58:03 INFO]: Using 4 threads for Netty based IO
+[11:58:03 INFO]: Server Ping Player Sample Count: 12
+[11:58:04 INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[11:58:04 INFO]: Default game type: SURVIVAL
+[11:58:04 INFO]: Generating keypair
+[?1h=[?2004h> [K[11:58:04 INFO]: Starting Minecraft server on *:25567
+> [K[11:58:04 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.
+> [K[11:58:04 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.
+> [K[11:58:04 INFO]: [XaLib] Loading server plugin XaLib v1.2.2
+> [K[11:58:04 INFO]: [Mentions] Loading server plugin Mentions v1.3.4
+> [K[11:58:04 INFO]: [Vault] Loading server plugin Vault v1.7.3-CMI
+> [K[11:58:04 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[11:58:04 INFO]: [Vault] Enabling Vault v1.7.3-CMI
+> [K[11:58:04 INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+> [K[11:58:04 INFO]: [Vault] Enabled Version 1.7.3-CMI
+> [K[33;1m[11:58:04 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[m> [K[33;1m[11:58:04 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[m> [K[33;1m[11:58:04 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[m> [K[33;1m[11:58:04 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[m> [K[11:58:04 INFO]: Preparing level "world"
+> [K[11:58:05 INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+> [K[11:58:05 INFO]: Preparing spawn area: 100%
+> [K[11:58:05 INFO]: Prepared spawn area in 1 ms
+> [K[11:58:05 INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+> [K[11:58:05 INFO]: Preparing spawn area: 100%
+> [K[11:58:05 INFO]: Prepared spawn area in 1 ms
+> [K[11:58:05 INFO]: Done preparing level "world" (0.270s)
+> [K[11:58:05 INFO]: [XaLib] Enabling XaLib v1.2.2
+> [K[11:58:05 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mLoaded XaLib v1.2.2 (4a2442c)[0m
+> [K[11:58:05 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui as plugin..[0m
+> [K[11:58:05 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui v1.5.1...[0m
+> [K[11:58:05 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mChecking for Kyori Adventure...[0m
+> [K[11:58:05 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mXaGui registered successfully![0m
+> [K[11:58:05 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mInjecting XaGui commands..[0m
+> [K[11:58:05 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mFinished loading XaLib![0m
+> [K[11:58:05 INFO]: [Mentions] Enabling Mentions v1.3.4
+> [K[11:58:05 INFO]: [spark] Starting background profiler...
+> [K[11:58:07 INFO]: Running delayed init tasks
+> [K[11:58:07 INFO]: Done (9.509s)! For help, type "help"
+> [K[33;1m[11:58:07 WARN]: *************************************************************************************
+[m> [K[33;1m[11:58:07 WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[m> [K[33;1m[11:58:07 WARN]: However, you are 4 release(s) behind the latest stable release (26.2)!
+[m> [K[33;1m[11:58:07 WARN]: It is recommended that you update as soon as possible
+[m> [K[33;1m[11:58:07 WARN]: https://papermc.io/downloads/paper
+[m> [K[33;1m[11:58:07 WARN]: *************************************************************************************
+[m> [K[11:58:07 INFO]: UUID of player XAP3Y is 9dd749fd-e384-3257-9f75-d23d3e69b5a9
+> [K[11:58:08 INFO]: [38;2;255;255;85mXAP3Y joined the game[0m
+> [K[11:58:08 INFO]: XAP3Y[/127.0.0.1:59258] logged in with entity id 24 at ([world]23.078498445898546, 111.0, 96.96325123794944)
+> [K[11:58:11 INFO]: XAP3Y issued server command: /mentions
+> [K[11:58:27 INFO]: XAP3Y issued server command: /mentions
+> [K[11:58:36 INFO]: XAP3Y issued server command: /time set day
+> [K[11:58:36 INFO]: [3m[38;2;170;170;170m[XAP3Y: Set the time to 1000][0m
+> [K[11:58:48 INFO]: [Not Secure] <XAP3Y> @xap3y
+> [K[12:02:48 INFO]: XAP3Y issued server command: /mentions
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[12:05:43 INFO]: Stopping the server
+> [K[12:05:43 INFO]: Stopping server
+> [K[12:05:43 INFO]: [Vault] Disabling Vault v1.7.3-CMI
+> [K[12:05:43 INFO]: [Mentions] Disabling Mentions v1.3.4
+> [K[12:05:43 INFO]: [XaLib] Disabling XaLib v1.2.2
+> [K[12:05:43 INFO]: Saving players
+> [K[12:05:43 INFO]: XAP3Y lost connection: Server closed
+> [K[12:05:44 INFO]: [38;2;255;255;85mXAP3Y left the game[0m
+> [K[12:05:44 INFO]: Saving worlds
+> [K[12:05:44 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+> [K[12:05:44 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+> [K[12:05:44 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+> [K[12:05:44 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+> [K[12:05:45 INFO]: [ChunkHolderManager] Saved 111 block chunks, 469 entity chunks, 0 poi chunks in world 'world' in 0.92s
+> [K[12:05:45 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+> [K[12:05:45 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+> [K[12:05:45 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+> [K[12:05:45 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+> [K[12:05:45 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+> [K[12:05:45 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+> [K[12:05:45 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0.00s
+> [K[12:05:45 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+> [K[12:05:45 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+> [K[12:05:45 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+> [K[12:05:45 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+> [K[12:05:45 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+> [K[12:05:45 INFO]: Waiting for all RegionFile I/O tasks to complete...
+> [K[12:05:45 INFO]: All RegionFile I/O tasks to complete
+> [K[12:05:45 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+> [K[12:05:45 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...
+> Starting org.bukkit.craftbukkit.Main
+[12:05:47 INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Amazon.com Inc. Corretto-21.0.11.10.1) on Mac OS X 15.7.7 (aarch64)
+[12:05:47 INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[12:05:47 INFO]: [PluginInitializerManager] Initializing plugins...
+[12:05:47 INFO]: [PluginRemapper] Remapping plugin 'plugins/Mentions-1.3.4-dependent.jar'...
+[12:05:48 INFO]: [PluginRemapper] Done remapping plugin 'plugins/Mentions-1.3.4-dependent.jar' in 338ms.
+[12:05:48 INFO]: [PluginInitializerManager] Initialized 3 plugins
+[12:05:48 INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - Mentions (1.3.4), Vault (1.7.3-CMI), XaLib (1.2.2)
+[12:05:51 INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[12:05:52 INFO]: Loaded 1470 recipes
+[12:05:52 INFO]: Loaded 1584 advancements
+[12:05:52 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[12:05:52 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 265.1ms
+[12:05:52 INFO]: Starting minecraft server version 1.21.11
+[12:05:52 INFO]: Loading properties
+[12:05:52 INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[12:05:52 INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[12:05:52 INFO]: Server Ping Player Sample Count: 12
+[12:05:52 INFO]: Using 4 threads for Netty based IO
+[12:05:53 INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[12:05:53 INFO]: Default game type: SURVIVAL
+[12:05:53 INFO]: Generating keypair
+[?1h=[?2004h> [K[12:05:53 INFO]: Starting Minecraft server on *:25567
+> [K[12:05:54 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.
+> [K[12:05:54 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.
+> [K[12:05:54 INFO]: [XaLib] Loading server plugin XaLib v1.2.2
+> [K[12:05:54 INFO]: [Mentions] Loading server plugin Mentions v1.3.4
+> [K[12:05:54 INFO]: [Vault] Loading server plugin Vault v1.7.3-CMI
+> [K[12:05:54 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[12:05:54 INFO]: [Vault] Enabling Vault v1.7.3-CMI
+> [K[12:05:54 INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+> [K[12:05:54 INFO]: [Vault] Enabled Version 1.7.3-CMI
+> [K[33;1m[12:05:54 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[m> [K[33;1m[12:05:54 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[m> [K[33;1m[12:05:54 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[m> [K[33;1m[12:05:54 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[m> [K[12:05:54 INFO]: Preparing level "world"
+> [K[12:05:54 INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+> [K[12:05:54 INFO]: Prepared spawn area in 0 ms
+> [K[12:05:54 INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+> [K[12:05:54 INFO]: Prepared spawn area in 0 ms
+> [K[12:05:54 INFO]: Done preparing level "world" (0.264s)
+> [K[12:05:54 INFO]: [XaLib] Enabling XaLib v1.2.2
+> [K[12:05:54 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mLoaded XaLib v1.2.2 (4a2442c)[0m
+> [K[12:05:54 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui as plugin..[0m
+> [K[12:05:54 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui v1.5.1...[0m
+> [K[12:05:54 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mChecking for Kyori Adventure...[0m
+> [K[12:05:54 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mXaGui registered successfully![0m
+> [K[12:05:54 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mInjecting XaGui commands..[0m
+> [K[12:05:54 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mFinished loading XaLib![0m
+> [K[12:05:54 INFO]: [Mentions] Enabling Mentions v1.3.4
+> [K[12:05:54 INFO]: [spark] Starting background profiler...
+> [K[12:05:56 INFO]: Running delayed init tasks
+> [K[12:05:56 INFO]: Done (10.019s)! For help, type "help"
+> [K[33;1m[12:05:56 WARN]: *************************************************************************************
+[m> [K[33;1m[12:05:56 WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[m> [K[33;1m[12:05:56 WARN]: However, you are 4 release(s) behind the latest stable release (26.2)!
+[m> [K[33;1m[12:05:56 WARN]: It is recommended that you update as soon as possible
+[m> [K[33;1m[12:05:56 WARN]: https://papermc.io/downloads/paper
+[m> [K[33;1m[12:05:56 WARN]: *************************************************************************************
+[m> [K[12:05:56 INFO]: UUID of player XAP3Y is 9dd749fd-e384-3257-9f75-d23d3e69b5a9
+> [K[12:05:57 INFO]: [38;2;255;255;85mXAP3Y joined the game[0m
+> [K[12:05:58 INFO]: XAP3Y[/127.0.0.1:59435] logged in with entity id 22 at ([world]9.300000011920929, 111.0, 99.69999998807907)
+> [K[12:06:00 INFO]: XAP3Y issued server command: /mentions
+> [K[12:07:16 INFO]: XAP3Y issued server command: /mentions
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[12:07:53 INFO]: Stopping the server
+> [K[12:07:53 INFO]: Stopping server
+> [K[12:07:53 INFO]: [Vault] Disabling Vault v1.7.3-CMI
+> [K[12:07:53 INFO]: [Mentions] Disabling Mentions v1.3.4
+> [K[12:07:53 INFO]: [XaLib] Disabling XaLib v1.2.2
+> [K[12:07:53 INFO]: Saving players
+> [K[12:07:53 INFO]: XAP3Y lost connection: Server closed
+> [K[12:07:53 INFO]: [38;2;255;255;85mXAP3Y left the game[0m
+> [K[12:07:53 INFO]: Saving worlds
+> [K[12:07:53 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+> [K[12:07:53 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+> [K[12:07:53 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+> [K[12:07:53 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+> [K[12:08:00 INFO]: [ChunkHolderManager] Saved 4773 block chunks, 4773 entity chunks, 0 poi chunks in world 'world' in 6.72s
+> [K[12:08:00 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+> [K[12:08:00 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+> [K[12:08:00 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+> [K[12:08:00 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+> [K[12:08:00 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+> [K[12:08:00 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+> [K[12:08:00 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0.00s
+> [K[12:08:00 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+> [K[12:08:00 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+> [K[12:08:00 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+> [K[12:08:00 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+> [K[12:08:00 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+> [K[12:08:00 INFO]: Waiting for all RegionFile I/O tasks to complete...
+> [K[12:08:00 INFO]: All RegionFile I/O tasks to complete
+> [K[12:08:00 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+> [K[12:08:00 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...
+> Starting org.bukkit.craftbukkit.Main
+[12:08:02 INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS; Amazon.com Inc. Corretto-21.0.11.10.1) on Mac OS X 15.7.7 (aarch64)
+[12:08:02 INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[12:08:02 INFO]: [PluginInitializerManager] Initializing plugins...
+[12:08:03 INFO]: [PluginRemapper] Remapping plugin 'plugins/Mentions-1.3.4-dependent.jar'...
+[12:08:03 INFO]: [PluginRemapper] Done remapping plugin 'plugins/Mentions-1.3.4-dependent.jar' in 386ms.
+[12:08:03 INFO]: [PluginInitializerManager] Initialized 3 plugins
+[12:08:03 INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - Mentions (1.3.4), Vault (1.7.3-CMI), XaLib (1.2.2)
+[12:08:06 INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[12:08:07 INFO]: Loaded 1470 recipes
+[12:08:07 INFO]: Loaded 1584 advancements
+[12:08:07 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[12:08:07 INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 233.1ms
+[12:08:07 INFO]: Starting minecraft server version 1.21.11
+[12:08:07 INFO]: Loading properties
+[12:08:07 INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[12:08:07 INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[12:08:07 INFO]: Server Ping Player Sample Count: 12
+[12:08:07 INFO]: Using 4 threads for Netty based IO
+[12:08:08 INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[12:08:08 INFO]: Default game type: SURVIVAL
+[12:08:08 INFO]: Generating keypair
+[?1h=[?2004h> [K[12:08:08 INFO]: Starting Minecraft server on *:25567
+> [K[12:08:08 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.
+> [K[12:08:08 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.
+> [K[12:08:08 INFO]: [XaLib] Loading server plugin XaLib v1.2.2
+> [K[12:08:08 INFO]: [Mentions] Loading server plugin Mentions v1.3.4
+> [K[12:08:08 INFO]: [Vault] Loading server plugin Vault v1.7.3-CMI
+> [K[12:08:08 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[12:08:08 INFO]: [Vault] Enabling Vault v1.7.3-CMI
+> [K[12:08:08 INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+> [K[12:08:08 INFO]: [Vault] Enabled Version 1.7.3-CMI
+> [K[33;1m[12:08:08 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[m> [K[33;1m[12:08:08 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[m> [K[33;1m[12:08:08 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[m> [K[33;1m[12:08:08 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[m> [K[12:08:08 INFO]: Preparing level "world"
+> [K[12:08:09 INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+> [K[12:08:09 INFO]: Prepared spawn area in 0 ms
+> [K[12:08:09 INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+> [K[12:08:09 INFO]: Prepared spawn area in 0 ms
+> [K[12:08:09 INFO]: Done preparing level "world" (0.239s)
+> [K[12:08:09 INFO]: [XaLib] Enabling XaLib v1.2.2
+> [K[12:08:09 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mLoaded XaLib v1.2.2 (4a2442c)[0m
+> [K[12:08:09 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui as plugin..[0m
+> [K[12:08:09 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mRegistering XaGui v1.5.1...[0m
+> [K[12:08:09 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mChecking for Kyori Adventure...[0m
+> [K[12:08:09 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaGui[38;2;85;255;85m] [3m[38;2;170;170;170mXaGui registered successfully![0m
+> [K[12:08:09 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [3m[38;2;170;170;170mInjecting XaGui commands..[0m
+> [K[12:08:09 INFO]: [38;2;85;255;85m[[38;2;85;255;255mXaLib[38;2;85;255;85m] [38;2;170;170;170mFinished loading XaLib![0m
+> [K[12:08:09 INFO]: [Mentions] Enabling Mentions v1.3.4
+> [K[12:08:09 INFO]: [spark] Starting background profiler...
+> [K[12:08:10 INFO]: Running delayed init tasks
+> [K[12:08:10 INFO]: Done (9.389s)! For help, type "help"
+> [K[33;1m[12:08:11 WARN]: *************************************************************************************
+[m> [K[33;1m[12:08:11 WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[m> [K[33;1m[12:08:11 WARN]: However, you are 4 release(s) behind the latest stable release (26.2)!
+[m> [K[33;1m[12:08:11 WARN]: It is recommended that you update as soon as possible
+[m> [K[33;1m[12:08:11 WARN]: https://papermc.io/downloads/paper
+[m> [K[33;1m[12:08:11 WARN]: *************************************************************************************
+[m> [K[12:08:41 INFO]: UUID of player XAP3Y is 9dd749fd-e384-3257-9f75-d23d3e69b5a9
+> [K[12:08:42 INFO]: [38;2;255;255;85mXAP3Y joined the game[0m
+> [K[12:08:42 INFO]: XAP3Y[/127.0.0.1:59497] logged in with entity id 27 at ([world]12.163528584390669, 111.0, 93.31587403978224)
+> [K[12:08:44 INFO]: XAP3Y issued server command: /mentions
+> [K[12:08:48 INFO]: XAP3Y issued server command: /mentions
+> [K[12:09:15 INFO]: XAP3Y issued server command: /time set day
+> [K[12:09:15 INFO]: [3m[38;2;170;170;170m[XAP3Y: Set the time to 1000][0m
+> [K[12:09:16 INFO]: XAP3Y issued server command: /xainvoke
+> [K[12:11:02 INFO]: XAP3Y has made the advancement [38;2;85;255;85m[Best Friends Forever][0m
+> [K[12:12:38 INFO]: XAP3Y issued server command: /difficulty
+> [K[12:12:43 INFO]: XAP3Y issued server command: /difficulty hard
+> [K[12:12:43 INFO]: [3m[38;2;170;170;170m[XAP3Y: The difficulty has been set to Hard][0m
+> [K[12:13:07 INFO]: Villager Villager['Villager'/1227, uuid='26a21700-afec-46f2-a12f-d3d59d05b503', l='ServerLevel[world]', x=17.29, y=93.00, z=8.53, cpos=[1, 0], tl=1093, v=true] died, message: 'Villager was slain by Warden'
+> [K[12:14:31 INFO]: XAP3Y issued server command: /gamemode survival
+> [K[12:14:31 INFO]: [3m[38;2;170;170;170m[XAP3Y: Set own game mode to Survival Mode][0m
+> [K[12:15:09 INFO]: XAP3Y was slain by Warden
+> [K[12:15:23 INFO]: XAP3Y was slain by Warden
+> [K[12:15:29 INFO]: XAP3Y lost connection: Disconnected
+> [K[12:15:29 INFO]: [38;2;255;255;85mXAP3Y left the game[0m
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[12:34:11 INFO]: Stopping the server
+> [K[12:34:11 INFO]: Stopping server
+> [K[12:34:11 INFO]: [Vault] Disabling Vault v1.7.3-CMI
+> [K[12:34:11 INFO]: [Mentions] Disabling Mentions v1.3.4
+> [K[12:34:11 INFO]: [XaLib] Disabling XaLib v1.2.2
+> [K[12:34:11 INFO]: Saving players
+> [K[12:34:11 INFO]: Saving worlds
+> [K[12:34:11 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+> [K[12:34:11 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+> [K[12:34:11 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+> [K[12:34:11 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+> [K[12:34:11 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world' in 0.01s
+> [K[12:34:11 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+> [K[12:34:11 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+> [K[12:34:12 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+> [K[12:34:12 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+> [K[12:34:12 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+> [K[12:34:12 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+> [K[12:34:12 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0.00s
+> [K[12:34:12 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+> [K[12:34:12 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+> [K[12:34:12 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+> [K[12:34:12 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+> [K[12:34:12 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+> [K[12:34:12 INFO]: Waiting for all RegionFile I/O tasks to complete...
+> [K[12:34:12 INFO]: All RegionFile I/O tasks to complete
+> [K[12:34:12 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+> [K[12:34:12 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...
+> 

@@ -1,0 +1,6 @@
+Error: LinkageError occurred while loading main class com.velocitypowered.proxy.Velocity
+        java.lang.UnsupportedClassVersionError: com/velocitypowered/proxy/Velocity has been compiled by a more recent version of the Java Runtime (class file version 69.0), this version of the Java Runtime only recognizes class file versions up to 65.0
+Error: LinkageError occurred while loading main class com.velocitypowered.proxy.Velocity
+        java.lang.UnsupportedClassVersionError: com/velocitypowered/proxy/Velocity has been compiled by a more recent version of the Java Runtime (class file version 69.0), this version of the Java Runtime only recognizes class file versions up to 65.0
+Error: LinkageError occurred while loading main class com.velocitypowered.proxy.Velocity
+        java.lang.UnsupportedClassVersionError: com/velocitypowered/proxy/Velocity has been compiled by a more recent version of the Java Runtime (class file version 69.0), this version of the Java Runtime only recognizes class file versions up to 65.0

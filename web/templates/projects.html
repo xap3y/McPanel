@@ -1,0 +1,67 @@
+{{define "title"}}Plugin Projects — MCPanel{{end}}
+{{define "sidebar-servers"}}
+{{range .Servers}}
+<a href="/servers/{{.Name}}" class="nav-item status-{{lower .Status}}">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+    <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+  </svg>
+  <span class="truncate">{{.Name}}</span>
+  <span class="nav-dot"></span>
+</a>
+{{end}}
+{{end}}
+{{define "content"}}
+<div class="topbar">
+  <span class="topbar-title">Plugin Projects</span>
+  <div class="topbar-sub">{{len .Projects}} projects discovered</div>
+</div>
+
+<div class="page-content">
+  {{if .Projects}}
+  <div class="project-grid" id="project-grid">
+    {{range .Projects}}
+    <div class="project-card" data-project="{{.Name}}" data-url="/projects/{{.Name}}" draggable="true" role="link" tabindex="0">
+      <div class="flex items-center justify-between">
+        <span class="project-card-name">{{.Name}}</span>
+        {{if .LastBuild}}
+        <span class="badge badge-{{lower .LastBuild.Status}}">{{.LastBuild.Status}}</span>
+        {{end}}
+      </div>
+      <div class="project-card-meta">
+        {{if .LastBuild}}
+        <span>Last build · {{fmtTime .LastBuild.StartedAt}}</span>
+        {{if .LastBuild.ArtifactPath}}<span class="text-mono">{{basename .LastBuild.ArtifactPath}}</span>{{end}}
+        {{else}}
+        <span>No builds yet</span>
+        {{end}}
+      </div>
+      <div class="project-card-hint">
+        <span>Click to open</span>
+        <span>Drag to reorder · Right-click for color</span>
+      </div>
+    </div>
+    {{end}}
+  </div>
+  {{else}}
+  <div class="empty-state">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+    <p>No Gradle projects found. Check your <code>projects.root</code> config.</p>
+  </div>
+  {{end}}
+</div>
+<div class="project-color-menu" id="project-color-menu" role="menu" aria-hidden="true">
+  <div class="project-color-title">Card color</div>
+  <div class="project-color-swatches">
+    <button type="button" data-color="#60a5fa" style="--swatch:#60a5fa" title="Blue"></button>
+    <button type="button" data-color="#a78bfa" style="--swatch:#a78bfa" title="Purple"></button>
+    <button type="button" data-color="#f472b6" style="--swatch:#f472b6" title="Pink"></button>
+    <button type="button" data-color="#fb7185" style="--swatch:#fb7185" title="Red"></button>
+    <button type="button" data-color="#fbbf24" style="--swatch:#fbbf24" title="Amber"></button>
+    <button type="button" data-color="#34d399" style="--swatch:#34d399" title="Green"></button>
+    <button type="button" data-color="#22d3ee" style="--swatch:#22d3ee" title="Cyan"></button>
+    <button type="button" data-color="" class="reset-color" title="Default">×</button>
+  </div>
+</div>
+<script src="/static/js/projects.js?v=1"></script>
+{{end}}

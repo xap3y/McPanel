@@ -1,0 +1,16 @@
+server:
+  listen: 127.0.0.1
+  port: 8090
+
+minecraft:
+  root: /Users/sky/Documents/mcs
+
+projects:
+  root: /Users/sky/Documents/code/Bukkit
+
+runtime:
+  screenPrefix: mcpanel-
+  logDir: ./data/logs
+
+database:
+  dsn: "xap3y:145060Wer#@tcp(127.0.0.1:3306)/mcpanel?parseTime=true&loc=Local"

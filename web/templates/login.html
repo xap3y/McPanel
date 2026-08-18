@@ -1,0 +1,29 @@
+{{define "title"}}Sign In — MCPanel{{end}}
+{{define "sidebar-servers"}}{{end}}
+{{define "content"}}
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+        <path d="M7 7h.01M11 7h2M7 11h2M13 11h.01"/>
+      </svg>
+      <span class="login-logo-text">MCPanel</span>
+    </div>
+    {{if .Error}}
+    <div class="login-error">{{.Error}}</div>
+    {{end}}
+    <form class="login-form" method="post" action="/login" autocomplete="on">
+      <div class="login-field">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" autofocus autocomplete="username" placeholder="admin">
+      </div>
+      <div class="login-field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••">
+      </div>
+      <button type="submit" class="btn btn-primary w-full" style="justify-content:center;margin-top:4px">Sign in</button>
+    </form>
+  </div>
+</div>
+{{end}}

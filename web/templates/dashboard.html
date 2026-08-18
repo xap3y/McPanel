@@ -1,0 +1,153 @@
+{{define "title"}}Dashboard — MCPanel{{end}}
+{{define "sidebar-servers"}}
+{{range .Servers}}
+<a href="/servers/{{.Name}}" class="nav-item status-{{lower .Status}}">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+    <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+  </svg>
+  <span class="truncate">{{.Name}}</span>
+  <span class="nav-dot"></span>
+</a>
+{{end}}
+{{end}}
+{{define "content"}}
+<!-- Topbar -->
+<div class="topbar">
+  <span class="topbar-title">Dashboard</span>
+  <div class="topbar-actions">
+    <button class="btn btn-ghost btn-sm" id="refresh-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.13"/></svg>
+      Refresh
+    </button>
+  </div>
+</div>
+
+<div class="page-content">
+  <!-- Servers section -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/>
+          <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+        </svg>
+        Servers
+      </div>
+      <span class="text-muted text-sm">{{len .Servers}} discovered</span>
+    </div>
+
+    {{if .Servers}}
+    <div class="server-grid" id="server-grid">
+      {{range .Servers}}
+      <div class="server-card {{lower .Status}}" data-server="{{.Name}}">
+        <div class="server-card-header">
+          <a href="/servers/{{.Name}}" class="server-card-name">{{.Name}}</a>
+          <span class="badge badge-{{lower .Status}}">{{.Status}}</span>
+        </div>
+        <div class="server-card-meta">
+          <div class="stat-item">
+            <span class="stat-label">RAM</span>
+            <span class="stat-value {{if .RAMBytes}}highlight{{end}}">{{if .RAMBytes}}{{fmtRAM .RAMBytes}}{{else}}—{{end}}</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">CPU</span>
+            <span class="stat-value {{if .CPUPct}}highlight{{end}}">{{if .CPUPct}}{{printf "%.1f" .CPUPct}}%{{else}}—{{end}}</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Uptime</span>
+            <span class="stat-value">{{if .StartedAt.IsZero}}—{{else}}{{fmtUptime .StartedAt}}{{end}}</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">PID</span>
+            <span class="stat-value">{{if .PID}}{{.PID}}{{else}}—{{end}}</span>
+          </div>
+        </div>
+        <div class="server-card-actions">
+          {{if eq (printf "%v" .Status) "ONLINE"}}
+          <a href="/servers/{{.Name}}" class="btn btn-secondary btn-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Console
+          </a>
+          <button class="btn btn-ghost btn-sm" data-action="restart" data-name="{{.Name}}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.13"/></svg>
+            Restart
+          </button>
+          <button class="btn btn-danger btn-sm" data-action="stop" data-name="{{.Name}}">Stop</button>
+          {{else}}
+          <button class="btn btn-success btn-sm" data-action="start" data-name="{{.Name}}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Start
+          </button>
+          {{end}}
+        </div>
+      </div>
+      {{end}}
+    </div>
+    {{end}}
+  </div>
+
+  <!-- Recent Projects section -->
+  {{if .Projects}}
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+        </svg>
+        Plugin Projects
+      </div>
+      <a href="/projects" class="btn btn-ghost btn-sm">View all →</a>
+    </div>
+    <div class="project-grid">
+      {{range .Projects}}
+      <div class="project-card">
+        <div class="flex items-center justify-between">
+          <a href="/projects/{{.Name}}" class="project-card-name">{{.Name}}</a>
+          {{if .LastBuild}}
+          <span class="badge badge-{{lower .LastBuild.Status}}">{{.LastBuild.Status}}</span>
+          {{end}}
+        </div>
+        {{if .LastBuild}}
+        <div class="project-card-meta">
+          <span>Last build: {{fmtTime .LastBuild.StartedAt}}</span>
+          {{if .LastBuild.ArtifactPath}}<span class="text-mono">{{basename .LastBuild.ArtifactPath}}</span>{{end}}
+        </div>
+        {{end}}
+        <div class="flex gap-2">
+          <a href="/projects/{{.Name}}" class="btn btn-primary btn-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Build
+          </a>
+        </div>
+      </div>
+      {{end}}
+    </div>
+  </div>
+  {{end}}
+</div>
+
+<script>
+document.querySelectorAll('button[data-action]').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const {action, name} = btn.dataset;
+    const labels = {start:'Starting…', stop:'Stopping…', restart:'Restarting…'};
+    const orig = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spinner"></span> ${labels[action]||action}`;
+    const r = await api(`/api/servers/${name}/${action}`, 'POST');
+    const data = await r.json().catch(()=>({}));
+    if (!r.ok || data.error) {
+      toast(data.error || 'Action failed', 'error');
+      btn.disabled = false;
+      btn.innerHTML = orig;
+    } else {
+      toast(`${name}: ${action} issued`, 'success');
+      setTimeout(() => location.reload(), 800);
+    }
+  });
+});
+
+document.getElementById('refresh-btn').addEventListener('click', () => location.reload());
+</script>
+{{end}}
