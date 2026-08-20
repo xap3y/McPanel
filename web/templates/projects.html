@@ -13,20 +13,31 @@
 {{end}}
 {{define "content"}}
 <div class="topbar">
-  <span class="topbar-title">Plugin Projects</span>
-  <div class="topbar-sub">{{len .Projects}} projects discovered</div>
+  <div>
+    <span class="topbar-title">Plugin Projects</span>
+    <div class="topbar-sub">{{len .Projects}} projects discovered</div>
+  </div>
+  <div class="topbar-actions">
+    <button class="btn btn-secondary btn-sm" id="add-project-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add Project
+    </button>
+  </div>
 </div>
 
 <div class="page-content">
   {{if .Projects}}
   <div class="project-grid" id="project-grid">
     {{range .Projects}}
-    <div class="project-card" data-project="{{.Name}}" data-url="/projects/{{.Name}}" draggable="true" role="link" tabindex="0">
+    <div class="project-card" data-project="{{.Name}}" data-url="/projects/{{.Name}}" data-custom="{{.Custom}}" draggable="true" role="link" tabindex="0">
       <div class="flex items-center justify-between">
         <span class="project-card-name">{{.Name}}</span>
-        {{if .LastBuild}}
-        <span class="badge badge-{{lower .LastBuild.Status}}">{{.LastBuild.Status}}</span>
-        {{end}}
+        <div class="flex gap-2 items-center">
+          {{if .Custom}}<span class="badge" style="background:var(--surface-3);color:var(--text-muted);font-size:10px">custom</span>{{end}}
+          {{if .LastBuild}}
+          <span class="badge badge-{{lower .LastBuild.Status}}">{{.LastBuild.Status}}</span>
+          {{end}}
+        </div>
       </div>
       <div class="project-card-meta">
         {{if .LastBuild}}
@@ -38,7 +49,7 @@
       </div>
       <div class="project-card-hint">
         <span>Click to open</span>
-        <span>Drag to reorder · Right-click for color</span>
+        <span>Drag to reorder · Right-click for color{{if .Custom}} · Alt+click to remove{{end}}</span>
       </div>
     </div>
     {{end}}
@@ -46,10 +57,39 @@
   {{else}}
   <div class="empty-state">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-    <p>No Gradle projects found. Check your <code>projects.root</code> config.</p>
+    <p>No Gradle projects found. Check your <code>projects.root</code> config or add a custom project.</p>
   </div>
   {{end}}
 </div>
+
+<!-- Add Project Modal -->
+<div class="modal-overlay" id="add-project-modal" style="display:none">
+  <div class="modal-dialog" style="max-width:480px">
+    <div class="modal-header">
+      <span class="modal-title">Add Custom Project</span>
+      <button class="modal-close" id="add-project-close">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="field mb-3">
+        <label for="ap-dir">Project directory path</label>
+        <div style="display:flex;gap:8px">
+          <input id="ap-dir" type="text" placeholder="/Users/sky/Projects/MyPlugin" autocomplete="off" style="flex:1">
+          <button class="btn btn-secondary" id="ap-browse-btn" type="button" style="padding:0 12px;white-space:nowrap">Browse…</button>
+        </div>
+        <div class="field-hint">The directory that contains <code>gradlew</code> / <code>build.gradle</code></div>
+      </div>
+      <div class="field mb-3">
+        <label for="ap-name">Display name <span class="text-muted">(optional — defaults to folder name)</span></label>
+        <input id="ap-name" type="text" placeholder="MyPlugin">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" id="add-project-cancel">Cancel</button>
+      <button class="btn btn-primary btn-sm" id="add-project-submit">Add Project</button>
+    </div>
+  </div>
+</div>
+
 <div class="project-color-menu" id="project-color-menu" role="menu" aria-hidden="true">
   <div class="project-color-title">Card color</div>
   <div class="project-color-swatches">
@@ -63,5 +103,80 @@
     <button type="button" data-color="" class="reset-color" title="Default">×</button>
   </div>
 </div>
-<script src="/static/js/projects.js?v=1"></script>
+<script>
+const CSRF = window.CSRF;
+
+// Add custom project modal
+const addModal = document.getElementById('add-project-modal');
+document.getElementById('add-project-btn').addEventListener('click', () => {
+  document.getElementById('ap-dir').value = '';
+  document.getElementById('ap-name').value = '';
+  addModal.style.display = 'flex';
+  document.getElementById('ap-dir').focus();
+});
+document.getElementById('add-project-close').addEventListener('click', () => addModal.style.display = 'none');
+document.getElementById('add-project-cancel').addEventListener('click', () => addModal.style.display = 'none');
+addModal.addEventListener('click', e => { if (e.target === addModal) addModal.style.display = 'none'; });
+
+document.getElementById('ap-browse-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('ap-browse-btn');
+  const orig = btn.textContent;
+  btn.textContent = '…';
+  btn.disabled = true;
+  try {
+    const r = await fetch('/api/system/pick-folder');
+    if (r.ok) {
+      const data = await r.json();
+      if (data.path) {
+        document.getElementById('ap-dir').value = data.path;
+        if (!document.getElementById('ap-name').value) {
+          document.getElementById('ap-name').value = data.path.split('/').pop();
+        }
+      }
+    }
+  } catch(_) {}
+  btn.textContent = orig;
+  btn.disabled = false;
+});
+
+document.getElementById('add-project-submit').addEventListener('click', async () => {
+  const dir  = document.getElementById('ap-dir').value.trim();
+  const name = document.getElementById('ap-name').value.trim();
+  if (!dir) { toast('Please enter a directory path', 'error'); return; }
+  const btn = document.getElementById('add-project-submit');
+  btn.disabled = true;
+  btn.textContent = 'Adding…';
+  const r = await fetch('/api/projects/custom', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json','X-CSRF-Token': CSRF},
+    body: JSON.stringify({dir, name})
+  });
+  btn.disabled = false;
+  btn.textContent = 'Add Project';
+  if (r.ok) {
+    addModal.style.display = 'none';
+    toast('Project added', 'success');
+    setTimeout(() => location.reload(), 600);
+  } else {
+    const msg = await r.text();
+    toast('Failed: ' + msg, 'error');
+  }
+});
+
+// Remove custom project (Alt+click)
+document.querySelectorAll('.project-card[data-custom="true"]').forEach(card => {
+  card.addEventListener('click', async e => {
+    if (!e.altKey) return;
+    e.stopPropagation();
+    if (!confirm(`Remove "${card.dataset.project}" from custom projects?\n\nThis only removes it from the panel, not from disk.`)) return;
+    const r = await fetch(`/api/projects/custom?name=${encodeURIComponent(card.dataset.project)}`, {
+      method: 'DELETE', headers: {'X-CSRF-Token': CSRF}
+    });
+    if (r.ok) { toast('Project removed', 'success'); setTimeout(() => location.reload(), 600); }
+    else toast('Failed to remove project', 'error');
+  }, true);
+});
+</script>
+<script src="/static/js/projects.js?v=2"></script>
 {{end}}
+

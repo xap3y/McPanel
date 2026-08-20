@@ -4,3 +4,285 @@ Error: LinkageError occurred while loading main class com.velocitypowered.proxy.
         java.lang.UnsupportedClassVersionError: com/velocitypowered/proxy/Velocity has been compiled by a more recent version of the Java Runtime (class file version 69.0), this version of the Java Runtime only recognizes class file versions up to 65.0
 Error: LinkageError occurred while loading main class com.velocitypowered.proxy.Velocity
         java.lang.UnsupportedClassVersionError: com/velocitypowered/proxy/Velocity has been compiled by a more recent version of the Java Runtime (class file version 69.0), this version of the Java Runtime only recognizes class file versions up to 65.0
+TERM_PROGRAM= TERM=screen-256color COLORS=256
+Error: LinkageError occurred while loading main class com.velocitypowered.proxy.Velocity
+        java.lang.UnsupportedClassVersionError: com/velocitypowered/proxy/Velocity has been compiled by a more recent version of the Java Runtime (class file version 69.0), this version of the Java Runtime only recognizes class file versions up to 65.0
+TERM_PROGRAM= TERM=screen-256color COLORS=256
+sh: line 0: exec: jav21: not found
+TERM_PROGRAM= TERM=screen-256color COLORS=256
+Error: LinkageError occurred while loading main class com.velocitypowered.proxy.Velocity
+        java.lang.UnsupportedClassVersionError: com/velocitypowered/proxy/Velocity has been compiled by a more recent version of the Java Runtime (class file version 69.0), this version of the Java Runtime only recognizes class file versions up to 65.0
+TERM_PROGRAM= TERM=screen-256color COLORS=256
+[?2027$p[c[18:53:21 INFO]: Booting up Velocity 4.1.0-SNAPSHOT (git-00759e52-b16)...
+[18:53:22 INFO]: Connections will use kqueue channels, libdeflate (macOS ARM64 / Apple Silicon) compression, native (macOS ARM64 / Apple Silicon) ciphers
+[33;1m[18:53:22 WARN]: The proxy is running in offline mode! This is a security risk and you will NOT receive any support!
+[m[33;1m[18:53:22 WARN]: Player info forwarding is disabled! All players will appear to be connecting from the proxy and will have offline-mode UUIDs.
+[m[18:53:22 INFO]: Loading localizations...
+[18:53:22 INFO]: Loading plugins...
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldBase has been called by com.google.inject.internal.aop.HiddenClassDefiner (file:/Users/sky/Documents/mcs/proxy/velocity-4.1.0-SNAPSHOT-16.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.inject.internal.aop.HiddenClassDefiner
+WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
+[18:53:22 INFO]: Loaded plugin reportsystem 1.4.1 by XAP3Y
+[18:53:22 INFO]: Loaded 2 plugins
+[18:53:22 INFO] [reportsystem]: ReportSystem v1.4.1 has been initialized!
+[18:53:22 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mPlugin enabled!
+[18:53:22 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mApp ID: 1467955531170713651
+[18:53:22 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mGuild ID: 1218647784119599255
+[18:53:22 INFO] [discord4j.core.DiscordClientBuilder]: Discord4J 3.3.0 (https://discord4j.com)
+[18:53:22 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mStarting Discord bot...[0m
+[18:53:22 INFO] [com.zaxxer.hikari.HikariDataSource]: report-system-pool - Starting...
+[33;1m[18:53:22 WARN] [eu.xap3y.reportsystem.libs.netty.resolver.dns.DnsServerAddressStreamProviders]: Can not find eu.xap3y.reportsystem.libs.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'
+[m[18:53:23 INFO] [com.zaxxer.hikari.pool.HikariPool]: report-system-pool - Added connection org.mariadb.jdbc.Connection@5baa2e23
+[18:53:23 INFO] [com.zaxxer.hikari.HikariDataSource]: report-system-pool - Start completed.
+[18:53:23 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mDB schema ready
+[18:53:23 INFO]: Listening on /[0:0:0:0:0:0:0:0]:25565
+[18:53:23 INFO]: Done (1,68s)!
+[?1h=[?2004h> [K[18:53:24 INFO] [discord4j.gateway.DefaultGatewayClient]: [G:3e1c0ae7, S:0] Connected to Gateway
+> [K[18:53:24 INFO] [discord4j.core.shard.LocalShardCoordinator]: [G:3e1c0ae7, S:0] Shard connected
+> [K[18:53:24 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mDiscord bot [38;2;255;255;255mreport-bot [38;2;85;255;85mis up and running![0m
+> [K[18:53:24 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;85;85mSetting gateway...[0m
+> [K[18:53:24 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;85;85mRegistering guild commands: [38;2;170;170;170m[report][0m
+> [K[18:53:24 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;85;85mUpdating presence....[0m
+> [K[18:53:25 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mRegistered guild commands.[0m
+> 
+[?1l>[?1000l[?1002l[?1003l[?1005l[?1006l[?1015l[?1016l[?2004l[18:53:29 INFO]: Shutting down the proxy...
+[18:53:29 INFO]: Closing endpoint /0.0.0.0:25565
+TERM_PROGRAM= TERM=screen-256color COLORS=256
+[?2027$p[c[21:09:50 INFO]: Booting up Velocity 4.1.0-SNAPSHOT (git-00759e52-b16)...
+[21:09:51 INFO]: Connections will use kqueue channels, libdeflate (macOS ARM64 / Apple Silicon) compression, native (macOS ARM64 / Apple Silicon) ciphers
+[33;1m[21:09:51 WARN]: The proxy is running in offline mode! This is a security risk and you will NOT receive any support!
+[m[33;1m[21:09:51 WARN]: Player info forwarding is disabled! All players will appear to be connecting from the proxy and will have offline-mode UUIDs.
+[m[21:09:51 INFO]: Loading localizations...
+[21:09:51 INFO]: Loading plugins...
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldBase has been called by com.google.inject.internal.aop.HiddenClassDefiner (file:/Users/sky/Documents/mcs/proxy/velocity-4.1.0-SNAPSHOT-16.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.inject.internal.aop.HiddenClassDefiner
+WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
+[21:09:51 INFO]: Loaded plugin reportsystem 1.4.1 by XAP3Y
+[21:09:51 INFO]: Loaded 2 plugins
+[21:09:51 INFO] [reportsystem]: ReportSystem v1.4.1 has been initialized!
+[21:09:51 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mPlugin enabled!
+[21:09:51 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mApp ID: 1467955531170713651
+[21:09:51 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mGuild ID: 1218647784119599255
+[21:09:52 INFO] [discord4j.core.DiscordClientBuilder]: Discord4J 3.3.0 (https://discord4j.com)
+[21:09:52 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mStarting Discord bot...[0m
+[21:09:52 INFO] [com.zaxxer.hikari.HikariDataSource]: report-system-pool - Starting...
+[33;1m[21:09:52 WARN] [eu.xap3y.reportsystem.libs.netty.resolver.dns.DnsServerAddressStreamProviders]: Can not find eu.xap3y.reportsystem.libs.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'
+[m[21:09:52 INFO] [com.zaxxer.hikari.pool.HikariPool]: report-system-pool - Added connection org.mariadb.jdbc.Connection@2947061b
+[21:09:52 INFO] [com.zaxxer.hikari.HikariDataSource]: report-system-pool - Start completed.
+[21:09:52 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mDB schema ready
+[21:09:52 INFO]: Listening on /[0:0:0:0:0:0:0:0]:25565
+[21:09:52 INFO]: Done (1,91s)!
+[?1h=[?2004h> [K[21:09:54 INFO] [discord4j.gateway.DefaultGatewayClient]: [G:37708d03, S:0] Connected to Gateway
+> [K[21:09:54 INFO] [discord4j.core.shard.LocalShardCoordinator]: [G:37708d03, S:0] Shard connected
+> [K[21:09:54 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mDiscord bot [38;2;255;255;255mreport-bot [38;2;85;255;85mis up and running![0m
+> [K[21:09:54 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;85;85mSetting gateway...[0m
+> [K[21:09:54 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;85;85mRegistering guild commands: [38;2;170;170;170m[report][0m
+> [K[21:09:54 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;85;85mUpdating presence....[0m
+> [K[21:09:54 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mRegistered guild commands.[0m
+> [K[21:10:15 INFO]: [connected player] XAP3Y (/127.0.0.1:59899) has connected
+> [K[21:10:15 INFO]: [server connection] XAP3Y -> lobby has connected
+> [K[21:10:15 INFO]: [server connection] XAP3Y -> lobby has disconnected
+> [K[31;1m[21:10:15 ERROR]: [connected player] XAP3Y (/127.0.0.1:59899): disconnected while connecting to lobby: Outdated server! I'm still on 1.21.11
+[m> [K[21:10:15 INFO]: [connected player] XAP3Y (/127.0.0.1:59899) has disconnected: [38;2;255;85;85mUnable to connect to lobby: Outdated server! I'm still on 1.21.11[0m
+> [K[21:10:21 INFO]: [connected player] XAP3Y (/127.0.0.1:59904) has connected
+> [K[21:10:21 INFO]: [server connection] XAP3Y -> lobby has connected
+> [K[21:10:21 INFO]: [server connection] XAP3Y -> lobby has disconnected
+> [K[31;1m[21:10:21 ERROR]: [connected player] XAP3Y (/127.0.0.1:59904): disconnected while connecting to lobby: This server requires you to connect with Velocity.
+[m> [K[21:10:21 INFO]: [connected player] XAP3Y (/127.0.0.1:59904) has disconnected: [38;2;255;85;85mUnable to connect to lobby: This server requires you to connect with Velocity.[0m
+> [K[21:10:51 INFO]: [connected player] XAP3Y (/127.0.0.1:59931) has connected
+> [K[21:10:51 INFO]: [server connection] XAP3Y -> lobby has connected
+> [K[21:10:51 INFO]: [server connection] XAP3Y -> lobby has disconnected
+> [K[31;1m[21:10:51 ERROR]: [connected player] XAP3Y (/127.0.0.1:59931): disconnected while connecting to lobby: This server requires you to connect with Velocity.
+[m> [K[21:10:51 INFO]: [connected player] XAP3Y (/127.0.0.1:59931) has disconnected: [38;2;255;85;85mUnable to connect to lobby: This server requires you to connect with Velocity.[0m
+> [K[21:11:13 INFO]: [connected player] XAP3Y (/127.0.0.1:59959) has connected
+> [K[21:11:13 INFO]: [server connection] XAP3Y -> lobby has connected
+> [K[21:11:14 INFO]: [server connection] XAP3Y -> lobby has disconnected
+> [K[31;1m[21:11:14 ERROR]: [connected player] XAP3Y (/127.0.0.1:59959): disconnected while connecting to lobby: This server requires you to connect with Velocity.
+[m> [K[21:11:14 INFO]: [connected player] XAP3Y (/127.0.0.1:59959) has disconnected: [38;2;255;85;85mUnable to connect to lobby: This server requires you to connect with Velocity.[0m
+> [K[21:11:29 INFO]: [connected player] XAP3Y (/127.0.0.1:59969) has connected
+> [K[31;1m[21:11:29 ERROR]: [connected player] XAP3Y (/127.0.0.1:59969): unable to connect to server lobby
+io.netty.channel.AbstractChannel$AnnotatedConnectException: finishConnect(..) failed with error(-61): Connection refused: /127.0.0.1:25567
+Caused by: java.net.ConnectException: finishConnect(..) failed with error(-61): Connection refused
+        at io.netty.channel.unix.Errors.newConnectException0(Errors.java:166) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.channel.unix.Errors.handleConnectErrno(Errors.java:131) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.channel.unix.Socket.finishConnect(Socket.java:361) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.channel.kqueue.AbstractKQueueChannel$AbstractKQueueUnsafe.doFinishConnect(AbstractKQueueChannel.java:689) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.channel.kqueue.AbstractKQueueChannel$AbstractKQueueUnsafe.finishConnect(AbstractKQueueChannel.java:669) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.channel.kqueue.AbstractKQueueChannel$AbstractKQueueUnsafe.shutdownInput(AbstractKQueueChannel.java:478) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.channel.kqueue.AbstractKQueueChannel$AbstractKQueueUnsafe.readEOF(AbstractKQueueChannel.java:520) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.channel.kqueue.AbstractKQueueChannel$AbstractKQueueUnsafe.handle(AbstractKQueueChannel.java:418) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.channel.kqueue.KQueueIoHandler$DefaultKqueueIoRegistration.handle(KQueueIoHandler.java:474) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.channel.kqueue.KQueueIoHandler.processReady(KQueueIoHandler.java:216) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.channel.kqueue.KQueueIoHandler.run(KQueueIoHandler.java:277) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:225) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:196) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1204) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[velocity-4.1.0-SNAPSHOT-16.jar:4.1.0-SNAPSHOT (git-00759e52-b16)]
+        at java.base/java.lang.Thread.run(Thread.java:1474) [?:?]
+[m> [K[21:11:29 INFO]: [connected player] XAP3Y (/127.0.0.1:59969) has disconnected: [38;2;255;85;85mUnable to connect you to lobby. Please try again later.[0m
+> [K[21:11:37 INFO]: [connected player] XAP3Y (/127.0.0.1:59983) has connected
+> [K[21:11:37 INFO]: [server connection] XAP3Y -> lobby has connected
+> [K[21:11:37 INFO]: [server connection] XAP3Y -> lobby has disconnected
+> [K[31;1m[21:11:37 ERROR]: [connected player] XAP3Y (/127.0.0.1:59983): disconnected while connecting to lobby: This server requires you to connect with Velocity.
+[m> [K[21:11:37 INFO]: [connected player] XAP3Y (/127.0.0.1:59983) has disconnected: [38;2;255;85;85mUnable to connect to lobby: This server requires you to connect with Velocity.[0m
+> [K[21:13:42 INFO]: [connected player] XAP3Y (/127.0.0.1:60114) has connected
+> [K[21:13:42 INFO]: [server connection] XAP3Y -> lobby has connected
+> [K[21:13:42 INFO]: [server connection] XAP3Y -> lobby has disconnected
+> [K[31;1m[21:13:42 ERROR]: [connected player] XAP3Y (/127.0.0.1:60114): disconnected while connecting to lobby: This server requires you to connect with Velocity.
+[m> [K[21:13:42 INFO]: [connected player] XAP3Y (/127.0.0.1:60114) has disconnected: [38;2;255;85;85mUnable to connect to lobby: This server requires you to connect with Velocity.[0m
+> stop
+[?1l>[?1000l[?1002l[?1003l[?1005l[?1006l[?1015l[?1016l[?2004l[?1h=[?2004h> [K[21:14:19 INFO]: Shutting down the proxy...
+> [K[21:14:19 INFO]: Closing endpoint /0.0.0.0:25565
+> TERM_PROGRAM= TERM=screen-256color COLORS=256
+[?2027$p[c[21:14:21 INFO]: Booting up Velocity 4.1.0-SNAPSHOT (git-00759e52-b16)...
+[21:14:21 INFO]: Connections will use kqueue channels, libdeflate (macOS ARM64 / Apple Silicon) compression, native (macOS ARM64 / Apple Silicon) ciphers
+[33;1m[21:14:21 WARN]: The proxy is running in offline mode! This is a security risk and you will NOT receive any support!
+[m[21:14:21 INFO]: Loading localizations...
+[21:14:21 INFO]: Loading plugins...
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldBase has been called by com.google.inject.internal.aop.HiddenClassDefiner (file:/Users/sky/Documents/mcs/proxy/velocity-4.1.0-SNAPSHOT-16.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.inject.internal.aop.HiddenClassDefiner
+WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
+[21:14:21 INFO]: Loaded plugin reportsystem 1.4.1 by XAP3Y
+[21:14:21 INFO]: Loaded 2 plugins
+[21:14:21 INFO] [reportsystem]: ReportSystem v1.4.1 has been initialized!
+[21:14:22 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mPlugin enabled!
+[21:14:22 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mApp ID: 1467955531170713651
+[21:14:22 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mGuild ID: 1218647784119599255
+[21:14:22 INFO] [discord4j.core.DiscordClientBuilder]: Discord4J 3.3.0 (https://discord4j.com)
+[21:14:22 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mStarting Discord bot...[0m
+[21:14:22 INFO] [com.zaxxer.hikari.HikariDataSource]: report-system-pool - Starting...
+[33;1m[21:14:22 WARN] [eu.xap3y.reportsystem.libs.netty.resolver.dns.DnsServerAddressStreamProviders]: Can not find eu.xap3y.reportsystem.libs.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'
+[m[21:14:22 INFO] [com.zaxxer.hikari.pool.HikariPool]: report-system-pool - Added connection org.mariadb.jdbc.Connection@a9efc5a
+[21:14:22 INFO] [com.zaxxer.hikari.HikariDataSource]: report-system-pool - Start completed.
+[21:14:22 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mDB schema ready
+[21:14:22 INFO]: Listening on /[0:0:0:0:0:0:0:0]:25565
+[21:14:22 INFO]: Done (1,86s)!
+[?1h=[?2004h> [K[21:14:24 INFO] [discord4j.gateway.DefaultGatewayClient]: [G:346ae669, S:0] Connected to Gateway
+> [K[21:14:24 INFO] [discord4j.core.shard.LocalShardCoordinator]: [G:346ae669, S:0] Shard connected
+> [K[21:14:24 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mDiscord bot [38;2;255;255;255mreport-bot [38;2;85;255;85mis up and running![0m
+> [K[21:14:24 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;85;85mSetting gateway...[0m
+> [K[21:14:24 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;85;85mRegistering guild commands: [38;2;170;170;170m[report][0m
+> [K[21:14:24 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;85;85mUpdating presence....[0m
+> [K[21:14:24 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mRegistered guild commands.[0m
+> [K[21:14:30 INFO]: [connected player] XAP3Y (/127.0.0.1:60201) has connected
+> [K[21:14:30 INFO]: [server connection] XAP3Y -> lobby has connected
+> [K[21:14:42 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [Chat] [38;2;255;255;255mXAP3Y: [0mtest
+> [K[21:14:48 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [Chat] [38;2;255;255;255mXAP3Y: [0mXAP3Y2
+> [K[21:14:54 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [Chat] [38;2;255;255;255mXAP3Y: [0mwdwa
+> [K[21:15:10 INFO]: [connected player] XAP3Y (/127.0.0.1:60201) has disconnected
+> [K[21:15:10 INFO]: [server connection] XAP3Y -> lobby has disconnected
+> reports demo
+[?1l>[?1000l[?1002l[?1003l[?1005l[?1006l[?1015l[?1016l[?2004l[?1h=[?2004h> [K[21:15:18 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] Creating a demo report...[0m
+> [K[21:15:18 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mCreated demo report [38;2;255;255;85m#25 [38;2;170;170;170m(XAP3Y [38;2;85;85;85m-> [38;2;170;170;170mXAP3Y2test).[0m
+> reports demo
+[?1l>[?1000l[?1002l[?1003l[?1005l[?1006l[?1015l[?1016l[?2004l[?1h=[?2004h> [K[21:16:13 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] Creating a demo report...[0m
+> [K[21:16:13 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mCreated demo report [38;2;255;255;85m#26 [38;2;170;170;170m(XAP3Y [38;2;85;85;85m-> [38;2;170;170;170mXAP3Y2test).[0m
+> [K[21:16:23 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mReport portal connected.[0m
+> [K[21:17:37 INFO]: [connected player] XAP3Y (/127.0.0.1:60387) has connected
+> [K[21:17:37 INFO]: [server connection] XAP3Y -> lobby has connected
+> [K[21:17:41 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [Chat] [38;2;255;255;255mXAP3Y: [0mfeskfke
+> [K[21:17:45 INFO]: [connected player] XAP3Y (/127.0.0.1:60387) has disconnected
+> [K[21:17:45 INFO]: [server connection] XAP3Y -> lobby has disconnected
+> stop
+[?1l>[?1000l[?1002l[?1003l[?1005l[?1006l[?1015l[?1016l[?2004l[?1h=[?2004h> [K[21:18:26 INFO]: Shutting down the proxy...
+> [K[21:18:26 INFO]: Closing endpoint /0.0.0.0:25565
+> TERM_PROGRAM= TERM=screen-256color COLORS=256
+[?2027$p[c[21:20:31 INFO]: Booting up Velocity 4.1.0-SNAPSHOT (git-00759e52-b16)...
+[21:20:32 INFO]: Connections will use kqueue channels, libdeflate (macOS ARM64 / Apple Silicon) compression, native (macOS ARM64 / Apple Silicon) ciphers
+[33;1m[21:20:32 WARN]: The proxy is running in offline mode! This is a security risk and you will NOT receive any support!
+[m[21:20:32 INFO]: Loading localizations...
+[21:20:32 INFO]: Loading plugins...
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldBase has been called by com.google.inject.internal.aop.HiddenClassDefiner (file:/Users/sky/Documents/mcs/proxy/velocity-4.1.0-SNAPSHOT-16.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.inject.internal.aop.HiddenClassDefiner
+WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
+[21:20:32 INFO]: Loaded plugin reportsystem 1.4.1 by XAP3Y
+[21:20:32 INFO]: Loaded 2 plugins
+[21:20:32 INFO] [reportsystem]: ReportSystem v1.4.1 has been initialized!
+[21:20:32 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mPlugin enabled!
+[21:20:32 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mApp ID: 1467955531170713651
+[21:20:32 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mGuild ID: 1218647784119599255
+[21:20:33 INFO] [discord4j.core.DiscordClientBuilder]: Discord4J 3.3.0 (https://discord4j.com)
+[21:20:33 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mStarting Discord bot...[0m
+[21:20:33 INFO] [com.zaxxer.hikari.HikariDataSource]: report-system-pool - Starting...
+[33;1m[21:20:33 WARN] [eu.xap3y.reportsystem.libs.netty.resolver.dns.DnsServerAddressStreamProviders]: Can not find eu.xap3y.reportsystem.libs.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'
+[m[21:20:33 INFO] [com.zaxxer.hikari.pool.HikariPool]: report-system-pool - Added connection org.mariadb.jdbc.Connection@7109e5ac
+[21:20:33 INFO] [com.zaxxer.hikari.HikariDataSource]: report-system-pool - Start completed.
+[21:20:33 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mDB schema ready
+[21:20:33 INFO]: Listening on /[0:0:0:0:0:0:0:0]:25565
+[21:20:33 INFO]: Done (2,29s)!
+[?1h=[?2004h> [K[21:20:33 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mReport portal connected.[0m
+> [K[21:20:35 INFO] [discord4j.gateway.DefaultGatewayClient]: [G:7f7ac678, S:0] Connected to Gateway
+> [K[21:20:35 INFO] [discord4j.core.shard.LocalShardCoordinator]: [G:7f7ac678, S:0] Shard connected
+> [K[21:20:35 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mDiscord bot [38;2;255;255;255mreport-bot [38;2;85;255;85mis up and running![0m
+> [K[21:20:35 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;85;85mSetting gateway...[0m
+> [K[21:20:35 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;85;85mRegistering guild commands: [38;2;170;170;170m[report][0m
+> [K[21:20:35 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;85;85mUpdating presence....[0m
+> [K[21:20:35 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mRegistered guild commands.[0m
+> [K[21:21:06 INFO]: [connected player] XAP3Ytestacc (/127.0.0.1:60727) has connected
+> [K[21:21:06 INFO]: [server connection] XAP3Ytestacc -> lobby has connected
+> [K[21:21:06 INFO]: [server connection] XAP3Ytestacc -> lobby has disconnected
+> [K[31;1m[21:21:06 ERROR]: [connected player] XAP3Ytestacc (/127.0.0.1:60727): disconnected while connecting to lobby: Outdated server! I'm still on 1.21.11
+[m> [K[21:21:06 INFO]: [connected player] XAP3Ytestacc (/127.0.0.1:60727) has disconnected: [38;2;255;85;85mUnable to connect to lobby: Outdated server! I'm still on 1.21.11[0m
+> [K[21:21:11 INFO]: [connected player] XAP3Ytestacc (/127.0.0.1:60738) has connected
+> [K[21:21:11 INFO]: [server connection] XAP3Ytestacc -> lobby has connected
+> [K[21:21:22 INFO]: [connected player] XAP3Y (/127.0.0.1:60822) has connected
+> [K[21:21:22 INFO]: [server connection] XAP3Y -> lobby has connected
+> [K[21:21:26 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [Chat] [38;2;255;255;255mXAP3Y: [0mttest
+> [K[21:21:26 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [Chat] [38;2;255;255;255mXAP3Y: [0mtseestt
+> [K[21:21:27 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [Chat] [38;2;255;255;255mXAP3Y: [0mttest
+> [K[21:21:33 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [Chat] [38;2;255;255;255mXAP3Ytestacc: [0mfef
+> [K[21:21:35 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [Chat] [38;2;255;255;255mXAP3Ytestacc: [0mfent
+> [K[21:21:53 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [38;2;85;255;85mNew report #27 by XAP3Ytestacc against XAP3Y: test[0m
+> [K[21:21:55 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mDebug: sendChatHistory=true, reporterHistSize=4, targetHistSize=4
+> [K[21:21:57 INFO]: [connected player] XAP3Ytestacc (/127.0.0.1:60738) has disconnected
+> [K[21:21:57 INFO]: [server connection] XAP3Ytestacc -> lobby has disconnected
+> [K[21:21:58 INFO]: [38;2;170;170;170m[[38;2;255;85;85mReports[38;2;170;170;170m] [0mDebug: Combined chat history size is 8
+> [K[21:22:19 INFO]: [connected player] XAP3Y (/127.0.0.1:60822) has disconnected: [38;2;255;85;85mAn internal error occurred in your connection.[0m
+> [K[31;1m[21:22:19 ERROR]: [connected player] XAP3Y (/127.0.0.1:60822): exception encountered in com.velocitypowered.proxy.connection.client.ClientPlaySessionHandler@33bc3e6c
+io.netty.channel.unix.Errors$NativeIoException: readAddress(..) failed with error(-54): Connection reset by peer
+[m> [K[21:22:19 INFO]: [server connection] XAP3Y -> lobby has disconnected
+> stop
+[?1l>[?1000l[?1002l[?1003l[?1005l[?1006l[?1015l[?1016l[?2004l[21:22:45 INFO]: Shutting down the proxy...
+[?1h=[?2004h> [K[21:22:45 INFO]: Closing endpoint /0.0.0.0:25565
+> TERM_PROGRAM= TERM=screen-256color COLORS=256
+[?2027$p[c[21:26:51 INFO]: Booting up Velocity 4.1.0-SNAPSHOT (git-00759e52-b16)...
+[21:26:51 INFO]: Connections will use kqueue channels, libdeflate (macOS ARM64 / Apple Silicon) compression, native (macOS ARM64 / Apple Silicon) ciphers
+[33;1m[21:26:51 WARN]: The proxy is running in offline mode! This is a security risk and you will NOT receive any support!
+[m[21:26:52 INFO]: Loading localizations...
+[21:26:52 INFO]: Loading plugins...
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldBase has been called by com.google.inject.internal.aop.HiddenClassDefiner (file:/Users/sky/Documents/mcs/proxy/velocity-4.1.0-SNAPSHOT-16.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.inject.internal.aop.HiddenClassDefiner
+WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
+[21:26:52 INFO]: Loaded plugin reportsystem 1.4.1 by XAP3Y
+[21:26:52 INFO]: Loaded 2 plugins
+[21:26:52 INFO] [reportsystem]: ReportSystem v1.4.1 has been initialized!
+[21:26:52 INFO]: [38;5;7m[[38;5;9mReports[38;5;7m] [0mPlugin enabled!
+[21:26:52 INFO]: [38;5;7m[[38;5;9mReports[38;5;7m] [0mApp ID: 1467955531170713651
+[21:26:52 INFO]: [38;5;7m[[38;5;9mReports[38;5;7m] [0mGuild ID: 1218647784119599255
+[21:26:52 INFO] [discord4j.core.DiscordClientBuilder]: Discord4J 3.3.0 (https://discord4j.com)
+[21:26:52 INFO]: [38;5;7m[[38;5;9mReports[38;5;7m] [38;5;10mStarting Discord bot...[0m
+[21:26:52 INFO] [com.zaxxer.hikari.HikariDataSource]: report-system-pool - Starting...
+[33;1m[21:26:52 WARN] [eu.xap3y.reportsystem.libs.netty.resolver.dns.DnsServerAddressStreamProviders]: Can not find eu.xap3y.reportsystem.libs.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'
+[m[21:26:52 INFO] [com.zaxxer.hikari.pool.HikariPool]: report-system-pool - Added connection org.mariadb.jdbc.Connection@207ee88f
+[21:26:52 INFO] [com.zaxxer.hikari.HikariDataSource]: report-system-pool - Start completed.
+[21:26:52 INFO]: [38;5;7m[[38;5;9mReports[38;5;7m] [0mDB schema ready
+[21:26:52 INFO]: Listening on /[0:0:0:0:0:0:0:0]:25565
+[21:26:52 INFO]: Done (1,99s)!
+[?1h=[?2004h> [K[21:26:55 INFO] [discord4j.gateway.DefaultGatewayClient]: [G:5a11f7c8, S:0] Connected to Gateway
+> [K[21:26:55 INFO] [discord4j.core.shard.LocalShardCoordinator]: [G:5a11f7c8, S:0] Shard connected
+> [K[21:26:55 INFO]: [38;5;7m[[38;5;9mReports[38;5;7m] [38;5;10mDiscord bot [38;5;15mreport-bot [38;5;10mis up and running![0m
+> [K[21:26:55 INFO]: [38;5;7m[[38;5;9mReports[38;5;7m] [38;5;8mSetting gateway...[0m
+> [K[21:26:55 INFO]: [38;5;7m[[38;5;9mReports[38;5;7m] [38;5;8mRegistering guild commands: [38;5;7m[report][0m
+> [K[21:26:55 INFO]: [38;5;7m[[38;5;9mReports[38;5;7m] [38;5;8mUpdating presence....[0m
+> [K[21:26:55 INFO]: [38;5;7m[[38;5;9mReports[38;5;7m] [38;5;10mRegistered guild commands.[0m
+> [K[21:27:28 INFO]: [38;5;7m[[38;5;9mReports[38;5;7m] Logging deletion of report #27 to audit log...[0m
+> stop
+[?1l>[?1000l[?1002l[?1003l[?1005l[?1006l[?1015l[?1016l[?2004l[?1h=[?2004h> [K[21:29:39 INFO]: Shutting down the proxy...
+> [K[21:29:39 INFO]: Closing endpoint /0.0.0.0:25565
+> 

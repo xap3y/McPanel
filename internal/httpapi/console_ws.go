@@ -63,6 +63,9 @@ func (a *API) ConsoleWS(w http.ResponseWriter, r *http.Request) {
 			if m.Type == "command" && m.Data != "" {
 				a.Screen.SendCommand(name, m.Data)
 			}
+			if m.Type == "ctrlc" {
+				a.Screen.SendCtrlC(name)
+			}
 		}
 	}()
 

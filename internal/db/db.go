@@ -37,8 +37,17 @@ func migrate(db *sql.DB) error {
 			return err
 		}
 	}
+	// Column-level migrations for existing databases (ALTER TABLE IF NOT EXISTS column is MySQL 8+)
+	alterations := []string{
+		`ALTER TABLE project_settings ADD COLUMN IF NOT EXISTS build_args TEXT`,
+		`ALTER TABLE build_profiles ADD COLUMN IF NOT EXISTS build_args TEXT`,
+	}
+	for _, alt := range alterations {
+		db.Exec(alt) // ignore errors (column may already exist or DB doesn't support IF NOT EXISTS)
+	}
 	return nil
 }
+
 
 func splitStatements(s string) []string {
 	var out []string

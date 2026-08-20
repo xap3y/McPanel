@@ -1,3 +1,13 @@
+// ── localStorage persistence keys ─────────────────────────────────────────
+const lsKey = (suffix) => `mcpanel.project.${PROJECT_NAME}.${suffix}`;
+
+function lsSave(key, value) {
+  try { localStorage.setItem(lsKey(key), JSON.stringify(value)); } catch(_) {}
+}
+function lsLoad(key, fallback) {
+  try { return JSON.parse(localStorage.getItem(lsKey(key))) ?? fallback; } catch(_) { return fallback; }
+}
+
 // ── Build infrastructure ──────────────────────────────────────────────────
 const buildConsole  = document.getElementById('build-console');
 const buildStatusTx = document.getElementById('build-status-text');
@@ -38,7 +48,6 @@ function setBuildRunning(running) {
 function appendBuildLine(raw) {
   const line = document.createElement('div');
   const text = raw.replace(/\x1b\[[0-9;]*m/g,'');
-  // Classify line
   if (/BUILD SUCCESSFUL/i.test(text)) line.className = 'success-line';
   else if (/BUILD FAILED|error:/i.test(text)) line.className = 'error-line';
   else if (/^> Task/i.test(text)) line.className = 'task-line';
@@ -63,7 +72,6 @@ function connectBuildWS(onFinished) {
           buildStatusTx.textContent = 'Building…';
           setBadge('running', 'BUILDING');
         } else if (msg.data === 'finished') {
-          // Check last line for success
           const lines = buildConsole.innerText;
           const success = /BUILD SUCCESSFUL/i.test(lines);
           setBuildRunning(false);
@@ -139,16 +147,37 @@ function selectedTargets() {
   return Array.from(document.querySelectorAll('.target-cb:checked')).map(cb => cb.value);
 }
 
-// Deploy target checkboxes. The label performs the native toggle; only the
-// visuals are custom, so one click always means one state change.
+// Deploy target checkboxes + localStorage persistence
 document.querySelectorAll('.deploy-target-item').forEach(item => {
   const cb = item.querySelector('input[type=checkbox]');
-  cb.addEventListener('change', () => item.classList.toggle('checked', cb.checked));
+  cb.addEventListener('change', () => {
+    item.classList.toggle('checked', cb.checked);
+    lsSave('targets', selectedTargets());
+  });
 });
 
+// Restore persisted target checkboxes (overrides server defaults if saved)
+const savedTargets = lsLoad('targets', null);
+if (savedTargets !== null) {
+  document.querySelectorAll('.target-cb').forEach(cb => {
+    const checked = savedTargets.includes(cb.value);
+    cb.checked = checked;
+    cb.closest('.deploy-target-item')?.classList.toggle('checked', checked);
+  });
+}
+
 // ── Button handlers ───────────────────────────────────────────────────────
+const profileSelect = document.getElementById('profile-select');
+
+// Restore persisted profile selection
+const savedProfile = lsLoad('profile', null);
+if (savedProfile && [...profileSelect.options].some(o => o.value === savedProfile)) {
+  profileSelect.value = savedProfile;
+}
+profileSelect.addEventListener('change', () => lsSave('profile', profileSelect.value));
+
 buildBtn.addEventListener('click', () => {
-  const profile = document.getElementById('profile-select').value;
+  const profile = profileSelect.value;
   startBuild(profile);
 });
 
@@ -161,14 +190,14 @@ cancelBtn.addEventListener('click', async () => {
 document.getElementById('deploy-btn').addEventListener('click', () => doDeploy(false));
 
 document.getElementById('build-deploy-btn').addEventListener('click', async () => {
-  const profile = document.getElementById('profile-select').value;
+  const profile = profileSelect.value;
   const ok = await startBuild(profile);
   if (!ok) return;
   connectBuildWS(async (success) => { if (success) await doDeploy(false); });
 });
 
 document.getElementById('bdr-btn').addEventListener('click', async () => {
-  const profile = document.getElementById('profile-select').value;
+  const profile = profileSelect.value;
   const ok = await startBuild(profile);
   if (!ok) return;
   connectBuildWS(async (success) => { if (success) await doDeploy(true); });
@@ -178,12 +207,18 @@ document.getElementById('bdr-btn').addEventListener('click', async () => {
 async function loadProfiles() {
   const r = await fetch(`/api/projects/${PROJECT_NAME}/profiles`);
   const profiles = await r.json() || [];
-  const profileSelect = document.getElementById('profile-select');
   const profilesList  = document.getElementById('profiles-list');
 
   // Update select options
-  const current = profileSelect.value;
+  const currentVal = profileSelect.value;
   profileSelect.innerHTML = profiles.map(p => `<option value="${esc(p.ProfileName)}" ${p.IsDefault?'selected':''}>${esc(p.ProfileName)}</option>`).join('');
+  // Restore selection
+  const toRestore = lsLoad('profile', null);
+  if (toRestore && [...profileSelect.options].some(o => o.value === toRestore)) {
+    profileSelect.value = toRestore;
+  } else if (currentVal && [...profileSelect.options].some(o => o.value === currentVal)) {
+    profileSelect.value = currentVal;
+  }
 
   // Render list
   if (profiles.length === 0) {
@@ -213,14 +248,8 @@ async function loadProfiles() {
       await saveProfile({...prof, IsDefault:true});
       loadProfiles();
     });
-    row.querySelector('[data-paction="edit"]')?.addEventListener('click', () => editProfileDialog(prof));
-    row.querySelector('[data-paction="delete"]')?.addEventListener('click', async () => {
-      if (!confirm(`Delete profile "${prof.ProfileName}"?`)) return;
-      await fetch(`/api/projects/${PROJECT_NAME}/profiles?profile=${encodeURIComponent(prof.ProfileName)}`, {
-        method:'DELETE', headers:{'X-CSRF-Token':CSRF}
-      });
-      loadProfiles();
-    });
+    row.querySelector('[data-paction="edit"]')?.addEventListener('click', () => openProfileModal(prof));
+    row.querySelector('[data-paction="delete"]')?.addEventListener('click', () => openDeleteModal(prof));
   });
 }
 
@@ -240,37 +269,97 @@ async function saveProfile(p) {
   });
 }
 
-function editProfileDialog(existing) {
-  const name = prompt('Profile name:', existing?.ProfileName || 'New Profile');
-  if (!name) return;
-  const defaultCmd = existing?.Command || (existing?.Executable ? [existing.Executable, ...(existing.Args||[])].join(' ') : './gradlew clean build');
-  const cmd = prompt('Build command:', defaultCmd);
-  if (!cmd) return;
-  if (!cmd.trim()) return;
-  const isDef = confirm('Set as default?');
-  saveProfile({
-    ID: existing?.ID || 0,
-    ProjectName: PROJECT_NAME,
-    ProfileName: name,
-    Command: cmd.trim(),
-    IsDefault: isDef,
-  }).then(loadProfiles);
+// ── Profile Modal ─────────────────────────────────────────────────────────
+const profileModal = document.getElementById('profile-modal');
+const pmId   = document.getElementById('pm-id');
+const pmName = document.getElementById('pm-name');
+const pmCmd  = document.getElementById('pm-cmd');
+const pmDefault = document.getElementById('pm-default');
+const pmDefaultLabel = document.getElementById('pm-default-label');
+
+function openProfileModal(existing) {
+  document.getElementById('profile-modal-title').textContent = existing ? 'Edit Build Profile' : 'Add Build Profile';
+  pmId.value = existing?.ID || 0;
+  pmName.value = existing?.ProfileName || '';
+  pmCmd.value  = existing?.Command || (existing?.Executable ? [existing.Executable, ...(existing.Args||[])].join(' ') : './gradlew clean build');
+  pmDefault.checked = existing?.IsDefault || false;
+  pmDefaultLabel.classList.toggle('checked', existing?.IsDefault || false);
+  profileModal.style.display = 'flex';
+  pmName.focus();
 }
 
-document.getElementById('add-profile-btn').addEventListener('click', () => editProfileDialog(null));
+pmDefault.addEventListener('change', () => pmDefaultLabel.classList.toggle('checked', pmDefault.checked));
+
+document.getElementById('profile-modal-close').addEventListener('click', () => profileModal.style.display = 'none');
+document.getElementById('profile-modal-cancel').addEventListener('click', () => profileModal.style.display = 'none');
+profileModal.addEventListener('click', e => { if (e.target === profileModal) profileModal.style.display = 'none'; });
+
+document.getElementById('profile-modal-save').addEventListener('click', async () => {
+  const name = pmName.value.trim();
+  const cmd  = pmCmd.value.trim();
+  if (!name) { toast('Profile name is required', 'error'); return; }
+  if (!cmd)  { toast('Build command is required', 'error'); return; }
+  const btn = document.getElementById('profile-modal-save');
+  btn.disabled = true;
+  await saveProfile({
+    ID: parseInt(pmId.value) || 0,
+    ProjectName: PROJECT_NAME,
+    ProfileName: name,
+    Command: cmd,
+    IsDefault: pmDefault.checked,
+  });
+  btn.disabled = false;
+  profileModal.style.display = 'none';
+  loadProfiles();
+  toast('Profile saved', 'success');
+});
+
+// ── Delete Profile Modal ──────────────────────────────────────────────────
+const deleteModal = document.getElementById('delete-profile-modal');
+let _deleteTarget = null;
+
+function openDeleteModal(prof) {
+  _deleteTarget = prof;
+  document.getElementById('delete-profile-name').textContent = prof.ProfileName;
+  deleteModal.style.display = 'flex';
+}
+
+document.getElementById('delete-profile-close').addEventListener('click', () => deleteModal.style.display = 'none');
+document.getElementById('delete-profile-cancel').addEventListener('click', () => deleteModal.style.display = 'none');
+deleteModal.addEventListener('click', e => { if (e.target === deleteModal) deleteModal.style.display = 'none'; });
+
+document.getElementById('delete-profile-confirm').addEventListener('click', async () => {
+  if (!_deleteTarget) return;
+  const btn = document.getElementById('delete-profile-confirm');
+  btn.disabled = true;
+  await fetch(`/api/projects/${PROJECT_NAME}/profiles?profile=${encodeURIComponent(_deleteTarget.ProfileName)}`, {
+    method:'DELETE', headers:{'X-CSRF-Token':CSRF}
+  });
+  btn.disabled = false;
+  deleteModal.style.display = 'none';
+  loadProfiles();
+  toast('Profile deleted', 'success');
+});
+
+document.getElementById('add-profile-btn').addEventListener('click', () => openProfileModal(null));
 
 // ── Artifacts ─────────────────────────────────────────────────────────────
 async function loadArtifacts() {
   const picker = document.getElementById('artifact-picker');
   const selectedInput = document.getElementById('artifact-select');
   const hint = document.getElementById('artifact-picker-hint');
-  const current = selectedInput.value;
+
+  // Restore persisted artifact selection
+  const savedArtifact = lsLoad('artifact', '');
+  const current = savedArtifact || selectedInput.value;
+
   try {
     const r = await projectAPI(`/api/projects/${PROJECT_NAME}/artifacts`);
     if (!r.ok) throw new Error(await r.text());
     const jars = await r.json() || [];
     const selected = jars.includes(current) ? current : '';
     selectedInput.value = selected;
+
     picker.innerHTML = `
       <button type="button" class="artifact-option ${selected === '' ? 'selected' : ''}" data-artifact="">
         <span class="artifact-radio"></span>
@@ -286,6 +375,7 @@ async function loadArtifacts() {
     picker.querySelectorAll('.artifact-option').forEach(option => {
       option.addEventListener('click', () => {
         selectedInput.value = option.dataset.artifact;
+        lsSave('artifact', option.dataset.artifact);
         picker.querySelectorAll('.artifact-option').forEach(el => el.classList.toggle('selected', el === option));
       });
     });
@@ -296,14 +386,27 @@ async function loadArtifacts() {
 }
 
 // ── Project settings ───────────────────────────────────────────────────────
+// Load saved build args
+async function loadProjectSettingsUI() {
+  try {
+    const r = await projectAPI(`/api/projects/${PROJECT_NAME}/settings`);
+    if (!r.ok) return;
+    const ps = await r.json();
+    const baEl = document.getElementById('ps-buildargs');
+    if (baEl && ps.BuildArgs) baEl.value = ps.BuildArgs;
+  } catch(_) {}
+}
+
 document.getElementById('project-settings-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const f = e.target;
   const targets = selectedTargets();
+  const buildArgs = f.BuildArgs?.value || '';
   const r = await projectAPI(`/api/projects/${PROJECT_NAME}/settings`, 'POST', {
-    ArtifactGlob: "*.jar", // fallback to default
+    ArtifactGlob: "*.jar",
     DeploymentFilename: f.DeploymentFilename.value,
     DeployTargets: targets,
+    BuildArgs: buildArgs,
   });
   if (r.ok) toast('Settings saved', 'success');
   else toast('Save failed', 'error');
@@ -328,7 +431,6 @@ async function refreshHistory() {
 
     let html = '<table class="history-table"><thead><tr><th>Time</th><th>Event</th><th>Status</th></tr></thead><tbody>';
 
-    // Merge and sort by time (most recent first)
     const events = [
       ...builds.map(b => ({time: b.StartedAt, type: 'build', data: b})),
       ...deploys.map(d => ({time: d.DeployedAt, type: 'deploy', data: d})),
@@ -384,6 +486,7 @@ document.getElementById('history-refresh-btn').addEventListener('click', refresh
 loadProfiles();
 loadArtifacts();
 refreshHistory();
+loadProjectSettingsUI();
 
 // Reconnect WS if build is already running
 connectBuildWS();

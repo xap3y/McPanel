@@ -7,8 +7,10 @@ import (
 	"io"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"sync"
 )
+
 
 type BuildStatus string
 
@@ -115,6 +117,12 @@ func (r *Runner) Start(projectDir, projectName string, profile BuildProfile) (*B
 	}
 
 	cmd := exec.Command(exe, profile.Args...) // argv slice - never a shell string
+	// Append extra build arguments if set
+	if profile.BuildArgs != "" {
+		for _, arg := range strings.Fields(profile.BuildArgs) {
+			cmd.Args = append(cmd.Args, arg)
+		}
+	}
 	cmd.Dir = projectDir
 
 	stdout, _ := cmd.StdoutPipe()

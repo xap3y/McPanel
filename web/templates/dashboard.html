@@ -43,27 +43,28 @@
       <div class="server-card {{lower .Status}}" data-server="{{.Name}}">
         <div class="server-card-header">
           <a href="/servers/{{.Name}}" class="server-card-name">{{.Name}}</a>
-          <span class="badge badge-{{lower .Status}}">{{.Status}}</span>
+          <span class="badge badge-{{lower .Status}}" id="card-badge-{{.Name}}">{{.Status}}</span>
         </div>
         <div class="server-card-meta">
           <div class="stat-item">
             <span class="stat-label">RAM</span>
-            <span class="stat-value {{if .RAMBytes}}highlight{{end}}">{{if .RAMBytes}}{{fmtRAM .RAMBytes}}{{else}}—{{end}}</span>
+            <span class="stat-value" id="card-ram-{{.Name}}">—</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">CPU</span>
-            <span class="stat-value {{if .CPUPct}}highlight{{end}}">{{if .CPUPct}}{{printf "%.1f" .CPUPct}}%{{else}}—{{end}}</span>
+            <span class="stat-value" id="card-cpu-{{.Name}}">—</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">Uptime</span>
-            <span class="stat-value">{{if .StartedAt.IsZero}}—{{else}}{{fmtUptime .StartedAt}}{{end}}</span>
+            <span class="stat-value" id="card-uptime-{{.Name}}">—</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">PID</span>
-            <span class="stat-value">{{if .PID}}{{.PID}}{{else}}—{{end}}</span>
+            <span class="stat-value" id="card-pid-{{.Name}}">—</span>
           </div>
         </div>
-        <div class="server-card-actions">
+        <div class="server-card-actions" id="card-actions-{{.Name}}">
+          <a href="/servers/{{.Name}}" class="btn btn-secondary btn-sm">View</a>
           {{if eq (printf "%v" .Status) "ONLINE"}}
           <a href="/servers/{{.Name}}" class="btn btn-secondary btn-sm">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -74,6 +75,7 @@
             Restart
           </button>
           <button class="btn btn-danger btn-sm" data-action="stop" data-name="{{.Name}}">Stop</button>
+          <button class="btn btn-danger btn-sm" data-action="kill" data-name="{{.Name}}" title="Force kill (SIGKILL)">Kill</button>
           {{else}}
           <button class="btn btn-success btn-sm" data-action="start" data-name="{{.Name}}">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -85,6 +87,7 @@
       {{end}}
     </div>
     {{end}}
+
   </div>
 
   <!-- Recent Projects section -->
@@ -128,10 +131,37 @@
 </div>
 
 <script>
+// Server cards: live stat polling
+const serverNames = [...document.querySelectorAll('.server-card')].map(c => c.dataset.server);
+
+async function pollServerStats() {
+  for (const name of serverNames) {
+    try {
+      const r = await fetch(`/api/servers/${name}/status`);
+      if (!r.ok) continue;
+      const s = await r.json();
+      const ramEl    = document.getElementById('card-ram-'    + name);
+      const cpuEl    = document.getElementById('card-cpu-'    + name);
+      const uptimeEl = document.getElementById('card-uptime-' + name);
+      const pidEl    = document.getElementById('card-pid-'    + name);
+      const badgeEl  = document.getElementById('card-badge-'  + name);
+      if (ramEl)    { ramEl.textContent    = s.ram    || '—'; ramEl.classList.toggle('highlight', !!s.ram); }
+      if (cpuEl)    { cpuEl.textContent    = s.cpu    ? s.cpu + '%' : '—'; cpuEl.classList.toggle('highlight', !!s.cpu); }
+      if (uptimeEl) { uptimeEl.textContent = s.uptime || '—'; }
+      if (pidEl)    { pidEl.textContent    = s.pid    || '—'; }
+      if (badgeEl)  { badgeEl.textContent  = s.status; badgeEl.className = 'badge badge-' + s.status.toLowerCase(); }
+    } catch(_) {}
+  }
+}
+
+pollServerStats();
+setInterval(pollServerStats, 2000);
+
+// Action buttons
 document.querySelectorAll('button[data-action]').forEach(btn => {
   btn.addEventListener('click', async () => {
     const {action, name} = btn.dataset;
-    const labels = {start:'Starting…', stop:'Stopping…', restart:'Restarting…'};
+    const labels = {start:'Starting…', stop:'Stopping…', restart:'Restarting…', kill:'Killing…'};
     const orig = btn.innerHTML;
     btn.disabled = true;
     btn.innerHTML = `<span class="spinner"></span> ${labels[action]||action}`;

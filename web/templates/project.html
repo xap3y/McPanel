@@ -1,7 +1,7 @@
 {{define "title"}}{{.Name}} — MCPanel{{end}}
 {{define "sidebar-servers"}}
 {{range .AllServers}}
-<a href="/servers/{{.Name}}" class="nav-item status-{{lower .Status}}">
+<a href="/servers/{{.Name}}" class="nav-item status-{{lower .Status}} {{if eq .Name $.Name}}active{{end}}">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
     <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
@@ -131,6 +131,11 @@
                 <input id="ps-dest" name="DeploymentFilename" type="text" placeholder="Plugin.jar (leave blank = keep original)" value="{{.Settings.DeploymentFilename}}">
                 <div class="field-hint">Leave blank to keep original artifact filename</div>
               </div>
+              <div class="field">
+                <label for="ps-buildargs">Build arguments</label>
+                <input id="ps-buildargs" name="BuildArgs" type="text" placeholder="--stacktrace --info">
+                <div class="field-hint">Extra arguments appended to the build command (e.g. <code>--stacktrace</code>)</div>
+              </div>
             </div>
             <div class="mt-2">
               <button type="submit" class="btn btn-secondary btn-sm">Save</button>
@@ -173,10 +178,62 @@
   </div>
 </div>
 
+<!-- Build Profile Modal -->
+<div class="modal-overlay" id="profile-modal" style="display:none">
+  <div class="modal-dialog" style="max-width:500px">
+    <div class="modal-header">
+      <span class="modal-title" id="profile-modal-title">Add Build Profile</span>
+      <button class="modal-close" id="profile-modal-close">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="pm-id" value="0">
+      <div class="field mb-3">
+        <label for="pm-name">Profile name</label>
+        <input id="pm-name" type="text" placeholder="My Profile">
+      </div>
+      <div class="field mb-3">
+        <label for="pm-cmd">Build command</label>
+        <input id="pm-cmd" type="text" placeholder="./gradlew clean build">
+        <div class="field-hint">The full shell command to run for this profile</div>
+      </div>
+      <div class="field mb-3">
+        <label class="deploy-target-item" id="pm-default-label" style="display:inline-flex;width:auto;cursor:pointer">
+          <input type="checkbox" id="pm-default" class="target-cb">
+          <span class="target-checkbox" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.25 6.5 11l6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span>Set as default profile</span>
+        </label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" id="profile-modal-cancel">Cancel</button>
+      <button class="btn btn-primary btn-sm" id="profile-modal-save">Save Profile</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Profile Confirm Modal -->
+<div class="modal-overlay" id="delete-profile-modal" style="display:none">
+  <div class="modal-dialog" style="max-width:400px">
+    <div class="modal-header">
+      <span class="modal-title">Delete Profile</span>
+      <button class="modal-close" id="delete-profile-close">×</button>
+    </div>
+    <div class="modal-body">
+      <p>Delete profile <strong id="delete-profile-name"></strong>? This cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" id="delete-profile-cancel">Cancel</button>
+      <button class="btn btn-danger btn-sm" id="delete-profile-confirm">Delete</button>
+    </div>
+  </div>
+</div>
+
 <script>
 window.CSRF = {{.CSRF}};
 window.PROJECT_NAME = {{.Name}};
 window.ALL_SERVERS = {{.Servers}};
 </script>
-<script src="/static/js/project.js?v=5"></script>
+<script src="/static/js/project.js?v=6"></script>
 {{end}}

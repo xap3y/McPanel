@@ -12,6 +12,7 @@ type BuildProfile struct {
 	Executable  string
 	Args        []string
 	Command     string
+	BuildArgs   string // extra CLI arguments appended at build time
 	IsDefault   bool
 }
 
@@ -70,12 +71,13 @@ type ProjectSettings struct {
 	ArtifactGlob       string   `json:"ArtifactGlob"`
 	DeploymentFilename string   `json:"DeploymentFilename"` // empty = keep original artifact filename
 	DeployTargets      []string `json:"DeployTargets"`
+	BuildArgs          string   `json:"BuildArgs"` // extra CLI args appended to build command
 }
 
 func LoadProjectSettings(db *sql.DB, projectName string) ProjectSettings {
-	var glob, destFilename, targets sql.NullString
-	err := db.QueryRow(`SELECT artifact_glob, deployment_filename, deploy_targets FROM project_settings WHERE project_name = ?`, projectName).
-		Scan(&glob, &destFilename, &targets)
+	var glob, destFilename, targets, buildArgs sql.NullString
+	err := db.QueryRow(`SELECT artifact_glob, deployment_filename, deploy_targets, COALESCE(build_args,'') FROM project_settings WHERE project_name = ?`, projectName).
+		Scan(&glob, &destFilename, &targets, &buildArgs)
 	ps := ProjectSettings{ArtifactGlob: "*.jar"}
 	if err == nil {
 		if glob.Valid {
@@ -87,6 +89,9 @@ func LoadProjectSettings(db *sql.DB, projectName string) ProjectSettings {
 		if targets.Valid && targets.String != "" {
 			ps.DeployTargets = strings.Split(targets.String, ",")
 		}
+		if buildArgs.Valid {
+			ps.BuildArgs = buildArgs.String
+		}
 	}
 	return ps
 }
@@ -96,13 +101,18 @@ func SaveProjectSettings(db *sql.DB, projectName string, ps ProjectSettings) err
 	if ps.DeploymentFilename != "" {
 		destNull = ps.DeploymentFilename
 	}
+	var buildArgsNull interface{}
+	if ps.BuildArgs != "" {
+		buildArgsNull = ps.BuildArgs
+	}
 	_, err := db.Exec(`
-		INSERT INTO project_settings (project_name, artifact_glob, deployment_filename, deploy_targets)
-		VALUES (?, ?, ?, ?)
-		ON DUPLICATE KEY UPDATE artifact_glob=VALUES(artifact_glob), deployment_filename=VALUES(deployment_filename), deploy_targets=VALUES(deploy_targets)`,
-		projectName, ps.ArtifactGlob, destNull, strings.Join(ps.DeployTargets, ","))
+		INSERT INTO project_settings (project_name, artifact_glob, deployment_filename, deploy_targets, build_args)
+		VALUES (?, ?, ?, ?, ?)
+		ON DUPLICATE KEY UPDATE artifact_glob=VALUES(artifact_glob), deployment_filename=VALUES(deployment_filename), deploy_targets=VALUES(deploy_targets), build_args=VALUES(build_args)`,
+		projectName, ps.ArtifactGlob, destNull, strings.Join(ps.DeployTargets, ","), buildArgsNull)
 	return err
 }
+
 
 func splitLines(s string) []string {
 	if s == "" {

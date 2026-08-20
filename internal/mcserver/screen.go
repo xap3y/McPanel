@@ -80,9 +80,9 @@ func (m *Manager) Start(server, serverDir string, s Settings) error {
 		return fmt.Errorf("server %q is already running", server)
 	}
 
-	// Write a temporary .screenrc for this server to set the logfile
+	// Write a temporary .screenrc for this server to set the logfile and 256 colors
 	rcPath := filepath.Join(m.logDir, server+".screenrc")
-	os.WriteFile(rcPath, []byte(fmt.Sprintf("logfile %s\nlogfile flush 0\n", m.LogPath(server))), 0o644)
+	os.WriteFile(rcPath, []byte(fmt.Sprintf("logfile %s\nlogfile flush 0\nterm screen-256color\n", m.LogPath(server))), 0o644)
 
 	jar, err := ResolveServerJar(serverDir, s.ServerJar)
 	if err != nil {
@@ -90,6 +90,10 @@ func (m *Manager) Start(server, serverDir string, s Settings) error {
 	}
 
 	args := []string{"-c", rcPath, "-L", "-dmS", m.SessionName(server)}
+
+	wrapperScript := `printf "\rTERM_PROGRAM=$TERM_PROGRAM TERM=$TERM COLORS=$(tput colors)\n"; exec "$@"`
+	args = append(args, "sh", "-c", wrapperScript, "sh")
+
 	args = append(args, s.JavaPath)
 	args = append(args, "-Xms"+s.Xms, "-Xmx"+s.Xmx)
 	args = append(args, s.JVMArgs...)
@@ -98,6 +102,15 @@ func (m *Manager) Start(server, serverDir string, s Settings) error {
 
 	cmd := exec.Command("screen", args...)
 	cmd.Dir = serverDir
+
+	var env []string
+	for _, e := range os.Environ() {
+		if !strings.HasPrefix(e, "TERM_PROGRAM=") && !strings.HasPrefix(e, "TMUX=") && !strings.HasPrefix(e, "TMUX_PANE=") {
+			env = append(env, e)
+		}
+	}
+	cmd.Env = env
+
 	if err := cmd.Run(); err != nil {
 		return err
 	}
@@ -153,6 +166,14 @@ func ResolveServerJar(serverDir, configured string) (string, error) {
 func (m *Manager) SendCommand(server, command string) error {
 	name := m.SessionName(server)
 	cmd := exec.Command("screen", "-S", name, "-p", "0", "-X", "stuff", command+"\r")
+	return cmd.Run()
+}
+
+// SendCtrlC sends a Ctrl-C (SIGINT) to the foreground process in the screen session.
+func (m *Manager) SendCtrlC(server string) error {
+	name := m.SessionName(server)
+	// screen `stuff` with \003 sends a literal ^C to the pty
+	cmd := exec.Command("screen", "-S", name, "-p", "0", "-X", "stuff", "\x03")
 	return cmd.Run()
 }
 

@@ -40,6 +40,7 @@ func NewRouter(a *API) http.Handler {
 	mux.HandleFunc("GET /servers/{name}", a.requireAuth(a.ServerPage))
 	mux.HandleFunc("POST /api/servers/{name}/{action}", a.requireAuth(a.requireCSRF(a.ServerAction)))
 	mux.HandleFunc("GET /api/servers/{name}/status", a.requireAuth(a.ServerStatusAPI))
+	mux.HandleFunc("GET /api/servers/{name}/screen-name", a.requireAuth(a.ScreenNameAPI))
 	mux.HandleFunc("GET /ws/console/{name}", a.requireAuth(a.ConsoleWS))
 
 	// File manager
@@ -66,6 +67,11 @@ func NewRouter(a *API) http.Handler {
 	// Project pages
 	mux.HandleFunc("GET /projects", a.requireAuth(a.ProjectsPage))
 	mux.HandleFunc("GET /projects/{name}", a.requireAuth(a.ProjectPage))
+
+	// Custom projects
+	mux.HandleFunc("POST /api/projects/custom", a.requireAuth(a.requireCSRF(a.CustomProjectsAPI)))
+	mux.HandleFunc("DELETE /api/projects/custom", a.requireAuth(a.requireCSRF(a.CustomProjectsAPI)))
+	mux.HandleFunc("GET /api/system/pick-folder", a.requireAuth(a.PickFolderAPI))
 
 	// Project APIs
 	mux.HandleFunc("GET /api/projects/{name}/profiles", a.requireAuth(a.BuildProfilesAPI))

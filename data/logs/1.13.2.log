@@ -37,3 +37,481 @@ java.lang.IllegalStateException: Failed to initialize server
 > [K[23:26:59 INFO]: Closing Thread Pool[m
 > 2026-08-16 23:26:59,176 Log4j2-AsyncAppenderEventDispatcher-1-Async WARN Advanced terminal features are not available in this environment
 [23:26:59 INFO]: Closing Server
+TERM_PROGRAM= TERM=screen-256color COLORS=256
+Starting org.bukkit.craftbukkit.Main
+*** Warning, you've not updated in a while! ***
+*** Please download a new build as per instructions from https://papermc.io/downloads/paper ***
+System Info: Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS) Host: Mac OS X 15.7.7 (aarch64)
+Loading libraries, please wait...
+[19:33:27 INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'[m
+[19:33:28 INFO]: Loaded 7 recipes[m
+[19:33:28 INFO]: Starting minecraft server version 1.19.4[m
+[19:33:28 INFO]: Loading properties[m
+[19:33:28 INFO]: This server is running Paper version git-Paper-550 (MC: 1.19.4) (Implementing API version 1.19.4-R0.1-SNAPSHOT) (Git: 483368e on ver/1.19.4)[m
+[19:33:28 INFO]: Server Ping Player Sample Count: 12[m
+[19:33:28 INFO]: Using 4 threads for Netty based IO[m
+[33;1m[19:33:28 WARN]: [!] The timings profiler has been enabled but has been scheduled for removal from Paper in the future.
+    We recommend installing the spark profiler as a replacement: https://spark.lucko.me/
+    For more information please visit: https://github.com/PaperMC/Paper/issues/8948[m
+[m[19:33:28 INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 2 worker threads, and gen parallelism of 2 threads[m
+[19:33:28 INFO]: Default game type: SURVIVAL[m
+[19:33:28 INFO]: Generating keypair[m
+[?1h=[?2004h> [K[19:33:29 INFO]: Starting Minecraft server on *:25565[m
+> [K[19:33:29 INFO]: Using default channel type[m
+> [K[19:33:29 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.[m
+> [K[19:33:29 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.[m
+> [K[19:33:29 INFO]: [Mentions] Loading server plugin Mentions v1.3.4[m
+> [K[19:33:29 INFO]: Server permissions file permissions.yml is empty, ignoring it[m
+> [K[19:33:29 INFO]: Preparing level "world"[m
+> [K[19:33:30 INFO]: Preparing start region for dimension minecraft:overworld[m
+> [K[19:33:30 INFO]: Time elapsed: 81 ms[m
+> [K[19:33:30 INFO]: Preparing start region for dimension minecraft:the_nether[m
+> [K[19:33:30 INFO]: Time elapsed: 41 ms[m
+> [K[19:33:30 INFO]: Preparing start region for dimension minecraft:the_end[m
+> [K[19:33:30 INFO]: Time elapsed: 63 ms[m
+> [K[19:33:30 INFO]: [Mentions] Enabling Mentions v1.3.4[m
+> [K[31;1m[19:33:30 ERROR]: Error occurred while enabling Mentions v1.3.4 (Is it up to date?)[m
+java.lang.NoClassDefFoundError: io/papermc/paper/command/brigadier/BasicCommand
+        at eu.xap3y.mentions.Mentions.onEnable(Mentions.java:58) ~[Mentions-1.3.4-standalone.jar:?]
+        at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:281) ~[paper-api-1.19.4-R0.1-SNAPSHOT.jar:?]
+        at io.papermc.paper.plugin.manager.PaperPluginInstanceManager.enablePlugin(PaperPluginInstanceManager.java:189) ~[paper-1.19.4.jar:git-Paper-550]
+        at io.papermc.paper.plugin.manager.PaperPluginManagerImpl.enablePlugin(PaperPluginManagerImpl.java:104) ~[paper-1.19.4.jar:git-Paper-550]
+        at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:507) ~[paper-api-1.19.4-R0.1-SNAPSHOT.jar:?]
+        at org.bukkit.craftbukkit.v1_19_R3.CraftServer.enablePlugin(CraftServer.java:563) ~[paper-1.19.4.jar:git-Paper-550]
+        at org.bukkit.craftbukkit.v1_19_R3.CraftServer.enablePlugins(CraftServer.java:474) ~[paper-1.19.4.jar:git-Paper-550]
+        at net.minecraft.server.MinecraftServer.loadWorld0(MinecraftServer.java:638) ~[paper-1.19.4.jar:git-Paper-550]
+        at net.minecraft.server.MinecraftServer.loadLevel(MinecraftServer.java:437) ~[paper-1.19.4.jar:git-Paper-550]
+        at net.minecraft.server.dedicated.DedicatedServer.initServer(DedicatedServer.java:308) ~[paper-1.19.4.jar:git-Paper-550]
+        at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:1104) ~[paper-1.19.4.jar:git-Paper-550]
+        at net.minecraft.server.MinecraftServer.lambda$spin$0(MinecraftServer.java:320) ~[paper-1.19.4.jar:git-Paper-550]
+        at java.lang.Thread.run(Thread.java:1583) ~[?:?]
+Caused by: java.lang.ClassNotFoundException: io.papermc.paper.command.brigadier.BasicCommand
+        at org.bukkit.plugin.java.PluginClassLoader.loadClass0(PluginClassLoader.java:183) ~[paper-api-1.19.4-R0.1-SNAPSHOT.jar:?]
+        at org.bukkit.plugin.java.PluginClassLoader.loadClass(PluginClassLoader.java:150) ~[paper-api-1.19.4-R0.1-SNAPSHOT.jar:?]
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:526) ~[?:?]
+        ... 13 more
+[m> [K[19:33:30 INFO]: [Mentions] Disabling Mentions v1.3.4[m
+> [K[19:33:30 INFO]: Running delayed init tasks[m
+> [K[19:33:30 INFO]: Done (1.973s)! For help, type "help"[m
+> [K[19:33:30 INFO]: Timings Reset[m
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[19:33:45 INFO]: Stopping the server[m
+> [K[19:33:45 INFO]: Stopping server[m
+> [K[19:33:45 INFO]: Saving players[m
+> [K[19:33:45 INFO]: Saving worlds[m
+> [K[19:33:45 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld[m
+> [K[19:33:45 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'[m
+> [K[19:33:45 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'[m
+> [K[19:33:45 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'[m
+> [K[19:33:46 INFO]: [ChunkHolderManager] Saved 529 block chunks, 529 entity chunks, 0 poi chunks in world 'world' in 1.17s[m
+> [K[19:33:46 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved[m
+> [K[19:33:46 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether[m
+> [K[19:33:46 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'[m
+> [K[19:33:46 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'[m
+> [K[19:33:46 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'[m
+> [K[19:33:46 INFO]: [ChunkHolderManager] Saved 529 block chunks, 529 entity chunks, 0 poi chunks in world 'world_nether' in 0.48s[m
+> [K[19:33:46 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved[m
+> [K[19:33:46 INFO]: Saving chunks for level 'ServerLevel[world_the_end]'/minecraft:the_end[m
+> [K[19:33:46 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_the_end'[m
+> [K[19:33:46 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_the_end'[m
+> [K[19:33:46 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_the_end'[m
+> [K[19:33:47 INFO]: [ChunkHolderManager] Saved 529 block chunks, 529 entity chunks, 0 poi chunks in world 'world_the_end' in 0.11s[m
+> [K[19:33:47 INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved[m
+> [K[19:33:47 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved[m
+> [K[19:33:47 INFO]: Flushing Chunk IO[m
+> [K[19:33:47 INFO]: Closing Thread Pool[m
+> 2026-08-18 19:33:47,080 Log4j2-AsyncAppenderEventDispatcher-1-Async WARN Advanced terminal features are not available in this environment
+[19:33:47 INFO]: Closing Server
+TERM_PROGRAM= TERM=screen-256color COLORS=256
+Starting org.bukkit.craftbukkit.Main
+*** Warning, you've not updated in a while! ***
+*** Please download a new build as per instructions from https://papermc.io/downloads/paper ***
+System Info: Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS) Host: Mac OS X 15.7.7 (aarch64)
+Loading libraries, please wait...
+[19:46:24 INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'[m
+[19:46:25 INFO]: Loaded 7 recipes[m
+[19:46:26 INFO]: Starting minecraft server version 1.19.4[m
+[19:46:26 INFO]: Loading properties[m
+[19:46:26 INFO]: This server is running Paper version git-Paper-550 (MC: 1.19.4) (Implementing API version 1.19.4-R0.1-SNAPSHOT) (Git: 483368e on ver/1.19.4)[m
+[19:46:26 INFO]: Using 4 threads for Netty based IO[m
+[19:46:26 INFO]: Server Ping Player Sample Count: 12[m
+[33;1m[19:46:26 WARN]: [!] The timings profiler has been enabled but has been scheduled for removal from Paper in the future.
+    We recommend installing the spark profiler as a replacement: https://spark.lucko.me/
+    For more information please visit: https://github.com/PaperMC/Paper/issues/8948[m
+[m[19:46:26 INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 2 worker threads, and gen parallelism of 2 threads[m
+[19:46:26 INFO]: Default game type: SURVIVAL[m
+[19:46:26 INFO]: Generating keypair[m
+[?1h=[?2004h> [K[19:46:26 INFO]: Starting Minecraft server on *:25565[m
+> [K[19:46:26 INFO]: Using default channel type[m
+> [K[19:46:26 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.[m
+> [K[19:46:26 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.[m
+> [K[19:46:27 INFO]: Server permissions file permissions.yml is empty, ignoring it[m
+> [K[19:46:27 INFO]: Preparing level "world"[m
+> [K[19:46:27 INFO]: Preparing start region for dimension minecraft:overworld[m
+> [K[19:46:27 INFO]: Time elapsed: 67 ms[m
+> [K[19:46:27 INFO]: Preparing start region for dimension minecraft:the_nether[m
+> [K[19:46:27 INFO]: Time elapsed: 47 ms[m
+> [K[19:46:27 INFO]: Preparing start region for dimension minecraft:the_end[m
+> [K[19:46:27 INFO]: Time elapsed: 38 ms[m
+> [K[19:46:27 INFO]: Running delayed init tasks[m
+> [K[19:46:27 INFO]: Done (1.108s)! For help, type "help"[m
+> [K[19:46:27 INFO]: Timings Reset[m
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[19:46:29 INFO]: Stopping the server[m
+> [K[19:46:29 INFO]: Stopping server[m
+> [K[19:46:29 INFO]: Saving players[m
+> [K[19:46:29 INFO]: Saving worlds[m
+> [K[19:46:29 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld[m
+> [K[19:46:29 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'[m
+> [K[19:46:29 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'[m
+> [K[19:46:29 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'[m
+> [K[19:46:30 INFO]: [ChunkHolderManager] Saved 529 block chunks, 529 entity chunks, 0 poi chunks in world 'world' in 1.01s[m
+> [K[19:46:30 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved[m
+> [K[19:46:30 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether[m
+> [K[19:46:30 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'[m
+> [K[19:46:30 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'[m
+> [K[19:46:30 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'[m
+> [K[19:46:31 INFO]: [ChunkHolderManager] Saved 529 block chunks, 529 entity chunks, 0 poi chunks in world 'world_nether' in 0.37s[m
+> [K[19:46:31 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved[m
+> [K[19:46:31 INFO]: Saving chunks for level 'ServerLevel[world_the_end]'/minecraft:the_end[m
+> [K[19:46:31 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_the_end'[m
+> [K[19:46:31 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_the_end'[m
+> [K[19:46:31 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_the_end'[m
+> [K[19:46:31 INFO]: [ChunkHolderManager] Saved 529 block chunks, 529 entity chunks, 0 poi chunks in world 'world_the_end' in 0.07s[m
+> [K[19:46:31 INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved[m
+> [K[19:46:31 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved[m
+> [K[19:46:31 INFO]: Flushing Chunk IO[m
+> 2026-08-18 19:46:31,248 Log4j2-AsyncAppenderEventDispatcher-1-Async WARN Advanced terminal features are not available in this environment
+[19:46:31 INFO]: Closing Thread Pool
+[19:46:31 INFO]: Closing Server
+TERM_PROGRAM= TERM=screen-256color COLORS=256
+Starting org.bukkit.craftbukkit.Main
+*** Warning, you've not updated in a while! ***
+*** Please download a new build as per instructions from https://papermc.io/downloads/paper ***
+System Info: Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS) Host: Mac OS X 15.7.7 (aarch64)
+Loading libraries, please wait...
+[19:46:57 INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'[m
+[19:46:57 INFO]: Loaded 7 recipes[m
+[19:46:58 INFO]: Starting minecraft server version 1.19.4[m
+[19:46:58 INFO]: Loading properties[m
+[19:46:58 INFO]: This server is running Paper version git-Paper-550 (MC: 1.19.4) (Implementing API version 1.19.4-R0.1-SNAPSHOT) (Git: 483368e on ver/1.19.4)[m
+[19:46:58 INFO]: Server Ping Player Sample Count: 12[m
+[19:46:58 INFO]: Using 4 threads for Netty based IO[m
+[33;1m[19:46:58 WARN]: [!] The timings profiler has been enabled but has been scheduled for removal from Paper in the future.
+    We recommend installing the spark profiler as a replacement: https://spark.lucko.me/
+    For more information please visit: https://github.com/PaperMC/Paper/issues/8948[m
+[m[19:46:58 INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 2 worker threads, and gen parallelism of 2 threads[m
+[19:46:58 INFO]: Default game type: SURVIVAL[m
+[19:46:58 INFO]: Generating keypair[m
+[?1h=[?2004h> [K[19:46:58 INFO]: Starting Minecraft server on *:25565[m
+> [K[19:46:58 INFO]: Using default channel type[m
+> [K[19:46:58 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.[m
+> [K[19:46:58 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.[m
+> [K[19:46:59 INFO]: [Mentions] Loading server plugin Mentions v1.3.4[m
+> [K[19:46:59 INFO]: Server permissions file permissions.yml is empty, ignoring it[m
+> [K[19:46:59 INFO]: Preparing level "world"[m
+> [K[19:46:59 INFO]: Preparing start region for dimension minecraft:overworld[m
+> [K[19:46:59 INFO]: Time elapsed: 62 ms[m
+> [K[19:46:59 INFO]: Preparing start region for dimension minecraft:the_nether[m
+> [K[19:46:59 INFO]: Time elapsed: 18 ms[m
+> [K[19:46:59 INFO]: Preparing start region for dimension minecraft:the_end[m
+> [K[19:46:59 INFO]: Time elapsed: 33 ms[m
+> [K[19:46:59 INFO]: [Mentions] Enabling Mentions v1.3.4[m
+> [K[19:46:59 INFO]: [m[38;2;85;255;85m[[m[38;2;85;255;255mXaGui[m[38;2;85;255;85m] [m[38;2;170;170;170m[3mRegistering XaGui v1.5.1...[m
+> [K[19:46:59 INFO]: [m[38;2;85;255;85m[[m[38;2;85;255;255mXaGui[m[38;2;85;255;85m] [m[38;2;170;170;170m[3mChecking for Kyori Adventure...[m
+> [K[19:46:59 INFO]: [m[38;2;85;255;85m[[m[38;2;85;255;255mXaGui[m[38;2;85;255;85m] [m[38;2;170;170;170m[3mXaGui registered successfully![m
+> [K[19:47:00 INFO]: Running delayed init tasks[m
+> [K[19:47:00 INFO]: Done (2.050s)! For help, type "help"[m
+> [K[19:47:00 INFO]: Timings Reset[m
+> [31mx[0m[31ma[0m[31mg[0m[31mu[0m[31mi[0m
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[19:47:04 INFO]: Unknown command. Type "/help" for help.[m
+> [31mm[0mme[K[31mmen[0m[K[31mt[0m[31mi[0m[31mo[0m[31mn[0m[7Dmentions[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[19:47:06 INFO]: [m[38;2;85;85;85m[[m[38;2;85;255;85m[1mMentions[m[38;2;85;85;85m[1m] [m[38;2;255;85;85mThis command can only be executed by a player![m
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[19:51:18 INFO]: Stopping the server[m
+> [K[19:51:18 INFO]: Stopping server[m
+> [K[19:51:18 INFO]: [Mentions] Disabling Mentions v1.3.4[m
+> [K[19:51:18 INFO]: Saving players[m
+> [K[19:51:18 INFO]: Saving worlds[m
+> [K[19:51:18 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld[m
+> [K[19:51:18 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'[m
+> [K[19:51:18 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'[m
+> [K[19:51:18 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'[m
+> [K[19:51:20 INFO]: [ChunkHolderManager] Saved 529 block chunks, 529 entity chunks, 0 poi chunks in world 'world' in 1.74s[m
+> [K[19:51:20 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved[m
+> [K[19:51:20 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether[m
+> [K[19:51:20 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'[m
+> [K[19:51:20 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'[m
+> [K[19:51:20 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'[m
+> [K[19:51:21 INFO]: [ChunkHolderManager] Saved 529 block chunks, 529 entity chunks, 0 poi chunks in world 'world_nether' in 0.53s[m
+> [K[19:51:21 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved[m
+> [K[19:51:21 INFO]: Saving chunks for level 'ServerLevel[world_the_end]'/minecraft:the_end[m
+> [K[19:51:21 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_the_end'[m
+> [K[19:51:21 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_the_end'[m
+> [K[19:51:21 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_the_end'[m
+> [K[19:51:21 INFO]: [ChunkHolderManager] Saved 529 block chunks, 529 entity chunks, 0 poi chunks in world 'world_the_end' in 0.25s[m
+> [K[19:51:21 INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved[m
+> [K[19:51:21 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved[m
+> [K[19:51:21 INFO]: Flushing Chunk IO[m
+> [K[19:51:21 INFO]: Closing Thread Pool[m
+> 2026-08-18 19:51:21,665 Log4j2-AsyncAppenderEventDispatcher-1-Async WARN Advanced terminal features are not available in this environment
+[19:51:21 INFO]: Closing Server
+TERM_PROGRAM= TERM=screen-256color COLORS=256
+Starting org.bukkit.craftbukkit.Main
+*** Warning, you've not updated in a while! ***
+*** Please download a new build as per instructions from https://papermc.io/downloads/paper ***
+System Info: Java 21 (OpenJDK 64-Bit Server VM 21.0.11+10-LTS) Host: Mac OS X 15.7.7 (aarch64)
+Loading libraries, please wait...
+[19:51:28 INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'[m
+[19:51:29 INFO]: Loaded 7 recipes[m
+[19:51:29 INFO]: Starting minecraft server version 1.19.4[m
+[19:51:29 INFO]: Loading properties[m
+[19:51:29 INFO]: This server is running Paper version git-Paper-550 (MC: 1.19.4) (Implementing API version 1.19.4-R0.1-SNAPSHOT) (Git: 483368e on ver/1.19.4)[m
+[19:51:29 INFO]: Server Ping Player Sample Count: 12[m
+[19:51:29 INFO]: Using 4 threads for Netty based IO[m
+[33;1m[19:51:29 WARN]: [!] The timings profiler has been enabled but has been scheduled for removal from Paper in the future.
+    We recommend installing the spark profiler as a replacement: https://spark.lucko.me/
+    For more information please visit: https://github.com/PaperMC/Paper/issues/8948[m
+[m[19:51:29 INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 2 worker threads, and gen parallelism of 2 threads[m
+[19:51:30 INFO]: Default game type: SURVIVAL[m
+[19:51:30 INFO]: Generating keypair[m
+[?1h=[?2004h> [K[19:51:30 INFO]: Starting Minecraft server on *:25565[m
+> [K[19:51:30 INFO]: Using default channel type[m
+> [K[19:51:30 INFO]: Paper: Using libdeflate (macOS ARM64 / Apple Silicon) compression from Velocity.[m
+> [K[19:51:30 INFO]: Paper: Using native (macOS ARM64 / Apple Silicon) cipher from Velocity.[m
+> [K[31;1m[19:51:30 ERROR]: [ModernPluginLoadingStrategy] Could not load plugin 'XaLib-1.2.2.jar' in folder 'plugins'[m
+org.bukkit.plugin.InvalidPluginException: Unsupported API version 1.20
+        at org.bukkit.craftbukkit.v1_19_R3.util.CraftMagicNumbers.checkSupported(CraftMagicNumbers.java:382) ~[paper-1.19.4.jar:git-Paper-550]
+        at io.papermc.paper.plugin.provider.type.spigot.SpigotPluginProvider.createInstance(SpigotPluginProvider.java:119) ~[paper-1.19.4.jar:git-Paper-550]
+        at io.papermc.paper.plugin.provider.type.spigot.SpigotPluginProvider.createInstance(SpigotPluginProvider.java:35) ~[paper-1.19.4.jar:git-Paper-550]
+        at io.papermc.paper.plugin.entrypoint.strategy.modern.ModernPluginLoadingStrategy.loadProviders(ModernPluginLoadingStrategy.java:116) ~[paper-1.19.4.jar:git-Paper-550]
+        at io.papermc.paper.plugin.storage.SimpleProviderStorage.enter(SimpleProviderStorage.java:39) ~[paper-1.19.4.jar:git-Paper-550]
+        at io.papermc.paper.plugin.entrypoint.LaunchEntryPointHandler.enter(LaunchEntryPointHandler.java:36) ~[paper-1.19.4.jar:git-Paper-550]
+        at org.bukkit.craftbukkit.v1_19_R3.CraftServer.loadPlugins(CraftServer.java:431) ~[paper-1.19.4.jar:git-Paper-550]
+        at net.minecraft.server.dedicated.DedicatedServer.initServer(DedicatedServer.java:273) ~[paper-1.19.4.jar:git-Paper-550]
+        at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:1104) ~[paper-1.19.4.jar:git-Paper-550]
+        at net.minecraft.server.MinecraftServer.lambda$spin$0(MinecraftServer.java:320) ~[paper-1.19.4.jar:git-Paper-550]
+        at java.lang.Thread.run(Thread.java:1583) ~[?:?]
+[m> [K[19:51:30 INFO]: [Mentions] Loading server plugin Mentions v1.3.4[m
+> [K[19:51:30 INFO]: Server permissions file permissions.yml is empty, ignoring it[m
+> [K[19:51:30 INFO]: Preparing level "world"[m
+> [K[19:51:31 INFO]: Preparing start region for dimension minecraft:overworld[m
+> [K[19:51:31 INFO]: Time elapsed: 62 ms[m
+> [K[19:51:31 INFO]: Preparing start region for dimension minecraft:the_nether[m
+> [K[19:51:31 INFO]: Time elapsed: 27 ms[m
+> [K[19:51:31 INFO]: Preparing start region for dimension minecraft:the_end[m
+> [K[19:51:31 INFO]: Time elapsed: 64 ms[m
+> [K[19:51:31 INFO]: [Mentions] Enabling Mentions v1.3.4[m
+> [K[31;1m[19:51:31 ERROR]: Error occurred while enabling Mentions v1.3.4 (Is it up to date?)[m
+java.lang.NoClassDefFoundError: eu/xap3y/xagui/XaGuiPlugin
+        at eu.xap3y.mentions.Mentions.onEnable(Mentions.java:60) ~[Mentions-1.3.4-dependent.jar:?]
+        at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:281) ~[paper-api-1.19.4-R0.1-SNAPSHOT.jar:?]
+        at io.papermc.paper.plugin.manager.PaperPluginInstanceManager.enablePlugin(PaperPluginInstanceManager.java:189) ~[paper-1.19.4.jar:git-Paper-550]
+        at io.papermc.paper.plugin.manager.PaperPluginManagerImpl.enablePlugin(PaperPluginManagerImpl.java:104) ~[paper-1.19.4.jar:git-Paper-550]
+        at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:507) ~[paper-api-1.19.4-R0.1-SNAPSHOT.jar:?]
+        at org.bukkit.craftbukkit.v1_19_R3.CraftServer.enablePlugin(CraftServer.java:563) ~[paper-1.19.4.jar:git-Paper-550]
+        at org.bukkit.craftbukkit.v1_19_R3.CraftServer.enablePlugins(CraftServer.java:474) ~[paper-1.19.4.jar:git-Paper-550]
+        at net.minecraft.server.MinecraftServer.loadWorld0(MinecraftServer.java:638) ~[paper-1.19.4.jar:git-Paper-550]
+        at net.minecraft.server.MinecraftServer.loadLevel(MinecraftServer.java:437) ~[paper-1.19.4.jar:git-Paper-550]
+        at net.minecraft.server.dedicated.DedicatedServer.initServer(DedicatedServer.java:308) ~[paper-1.19.4.jar:git-Paper-550]
+        at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:1104) ~[paper-1.19.4.jar:git-Paper-550]
+        at net.minecraft.server.MinecraftServer.lambda$spin$0(MinecraftServer.java:320) ~[paper-1.19.4.jar:git-Paper-550]
+        at java.lang.Thread.run(Thread.java:1583) ~[?:?]
+Caused by: java.lang.ClassNotFoundException: eu.xap3y.xagui.XaGuiPlugin
+        at org.bukkit.plugin.java.PluginClassLoader.loadClass0(PluginClassLoader.java:183) ~[paper-api-1.19.4-R0.1-SNAPSHOT.jar:?]
+        at org.bukkit.plugin.java.PluginClassLoader.loadClass(PluginClassLoader.java:150) ~[paper-api-1.19.4-R0.1-SNAPSHOT.jar:?]
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:526) ~[?:?]
+        ... 13 more
+[m> [K[19:51:31 INFO]: [Mentions] Disabling Mentions v1.3.4[m
+> [K[19:51:31 INFO]: Running delayed init tasks[m
+> [K[19:51:31 INFO]: Done (1.487s)! For help, type "help"[m
+> [K[19:51:31 INFO]: Timings Reset[m
+> [31ms[0m[31mt[0m[31mo[0mstop[K
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[20:00:27 INFO]: Stopping the server[m
+> [K[20:00:27 INFO]: Stopping server[m
+> [K[20:00:28 INFO]: Saving players[m
+> [K[20:00:28 INFO]: Saving worlds[m
+> [K[20:00:28 INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld[m
+> [K[20:00:28 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'[m
+> [K[20:00:28 INFO]: [ChunkHolderManager] Halted chunk system for world 'world'[m
+> [K[20:00:28 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'[m
+> [K[20:00:28 INFO]: [ChunkHolderManager] Saved 1 block chunks, 75 entity chunks, 0 poi chunks in world 'world' in 0.15s[m
+> [K[20:00:28 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved[m
+> [K[20:00:28 INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether[m
+> [K[20:00:28 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'[m
+> [K[20:00:28 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'[m
+> [K[20:00:28 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'[m
+> [K[20:00:28 INFO]: [ChunkHolderManager] Saved 0 block chunks, 7 entity chunks, 0 poi chunks in world 'world_nether' in 0.11s[m
+> [K[20:00:28 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved[m
+> [K[20:00:28 INFO]: Saving chunks for level 'ServerLevel[world_the_end]'/minecraft:the_end[m
+> [K[20:00:28 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_the_end'[m
+> [K[20:00:28 INFO]: [ChunkHolderManager] Halted chunk system for world 'world_the_end'[m
+> [K[20:00:28 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_the_end'[m
+> [K[20:00:28 INFO]: [ChunkHolderManager] Saved 10 block chunks, 10 entity chunks, 0 poi chunks in world 'world_the_end' in 0.06s[m
+> [K[20:00:28 INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved[m
+> [K[20:00:28 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved[m
+> [K[20:00:28 INFO]: Flushing Chunk IO[m
+> [K[20:00:28 INFO]: Closing Thread Pool[m
+> 2026-08-18 20:00:28,725 Log4j2-AsyncAppenderEventDispatcher-1-Async WARN Advanced terminal features are not available in this environment
+[20:00:28 INFO]: Closing Server
+TERM_PROGRAM= TERM=screen-256color COLORS=256
+Downloading vanilla jar...
+Patching vanilla jar...
+Unsupported Java detected (65.0). Only up to Java 12 is supported.
+TERM_PROGRAM= TERM=screen-256color COLORS=256
+Unsupported Java detected (65.0). Only up to Java 12 is supported.
+TERM_PROGRAM= TERM=screen-256color COLORS=256
+System Info: Java 1.8 (OpenJDK 64-Bit Server VM 25.502-b07) Host:  Mac OS X 15.7.7 (x86_64)
+Loading libraries, please wait...
+[19:05:34 INFO]: Loaded 0 recipes
+[19:05:35 INFO]: Starting minecraft server version 1.13.2
+[19:05:35 INFO]: Loading properties
+[19:05:35 INFO]: Default game type: SURVIVAL
+[?1h=[?2004h> [K[19:05:35 INFO]: This server is running Paper version git-Paper-657 (MC: 1.13.2) (Implementing API version 1.13.2-R0.1-SNAPSHOT)
+> [K[19:05:36 INFO]: Server Ping Player Sample Count: 12
+> [K[19:05:36 INFO]: Using 4 threads for Netty based IO
+> [K[19:05:36 INFO]: Debug logging is disabled
+> [K[19:05:36 INFO]: Generating keypair
+> [K[19:05:37 INFO]: Starting Minecraft server on *:25565
+> [K[19:05:37 INFO]: Using default channel type
+> [K[19:05:40 INFO]: [Mentions] Loading Mentions v1.3.4
+> [K[19:05:40 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[19:05:40 INFO]: Preparing level "world"
+> [K[19:05:40 INFO]: Found new data pack file/bukkit, loading it automatically
+> [K[19:05:40 INFO]: Found new data pack vanilla, loading it automatically
+> [K[19:05:40 INFO]: Reloading ResourceManager: Default, bukkit
+> [K[19:05:40 INFO]: Loaded 524 recipes
+> [K[19:05:45 INFO]: Preparing start region for level minecraft:overworld (Seed: -288758806488773515)
+> [K[19:05:45 INFO]: Time elapsed: 45 ms
+> [K[19:05:45 INFO]: [Mentions] Enabling Mentions v1.3.4
+> [K[19:05:45 INFO]: [0;32;1m[[0;36;1mXaGui[0;32;1m] [0;37;22m[3mRegistering XaGui v1.5.1...[39;0m
+> [K[19:05:45 INFO]: [0;32;1m[[0;36;1mXaGui[0;32;1m] [0;37;22m[3mChecking for Kyori Adventure...[39;0m
+> [K[19:05:45 INFO]: [0;32;1m[[0;36;1mXaGui[0;32;1m] [0;37;22m[3mXaGui registered successfully![39;0m
+> [K[19:05:46 INFO]: Done (6.549s)! For help, type "help"
+> [K[19:05:46 INFO]: UUID of player XAP3Y is f1c3931e-93d3-4125-8fdc-9b1dc39bc4d6
+> [K[19:05:46 INFO]: Timings Reset
+> [K[19:05:47 INFO]: XAP3Y[/127.0.0.1:52289] logged in with entity id 9 at ([world]2.5, 72.0, -165.5)
+> [K[19:05:49 INFO]: XAP3Y issued server command: /mentions
+> [K[19:05:50 INFO]: [0;30;1m[[0;32;1m[21mMentions[0;30;1m] [39;0mServer version: git-Paper-657 (MC: 1.13.2), isOld: false[39;0m
+> [K[31;1m[19:05:52 ERROR]: Could not pass event InventoryClickEvent to Mentions v1.3.4
+java.lang.NoSuchMethodError: java.util.List.of([Ljava/lang/Object;)Ljava/util/List;
+        at eu.xap3y.mentions.api.gui.SoundGui.getSounds(SoundGui.java:78) ~[?:?]
+        at eu.xap3y.mentions.api.gui.SoundGui.build(SoundGui.java:48) ~[?:?]
+        at eu.xap3y.mentions.api.gui.SoundGui.build(SoundGui.java:17) ~[?:?]
+        at eu.xap3y.mentions.api.gui.SettingGui.lambda$build$4(SettingGui.java:127) ~[?:?]
+        at eu.xap3y.mentions.libs.xagui.listeners.MenuListener.onInventoryClick(MenuListener.java:99) ~[?:?]
+        at com.destroystokyo.paper.event.executor.asm.generated.GeneratedEventExecutor1.execute(Unknown Source) ~[?:?]
+        at org.bukkit.plugin.EventExecutor.lambda$create$1(EventExecutor.java:69) ~[patched_1.13.2.jar:git-Paper-657]
+        at co.aikar.timings.TimedEventExecutor.execute(TimedEventExecutor.java:80) ~[patched_1.13.2.jar:git-Paper-657]
+        at org.bukkit.plugin.RegisteredListener.callEvent(RegisteredListener.java:66) ~[patched_1.13.2.jar:git-Paper-657]
+        at org.bukkit.plugin.SimplePluginManager.callEvent(SimplePluginManager.java:520) ~[patched_1.13.2.jar:git-Paper-657]
+        at net.minecraft.server.v1_13_R2.PlayerConnection.a(PlayerConnection.java:2288) ~[patched_1.13.2.jar:git-Paper-657]
+        at net.minecraft.server.v1_13_R2.PacketPlayInWindowClick.a(SourceFile:33) ~[patched_1.13.2.jar:git-Paper-657]
+        at net.minecraft.server.v1_13_R2.PacketPlayInWindowClick.a(SourceFile:10) ~[patched_1.13.2.jar:git-Paper-657]
+        at net.minecraft.server.v1_13_R2.PlayerConnectionUtils.lambda$ensureMainThread$0(PlayerConnectionUtils.java:15) ~[patched_1.13.2.jar:git-Paper-657]
+        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_502]
+        at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_502]
+        at net.minecraft.server.v1_13_R2.SystemUtils.a(SystemUtils.java:108) ~[patched_1.13.2.jar:git-Paper-657]
+        at net.minecraft.server.v1_13_R2.MinecraftServer.b(MinecraftServer.java:1018) ~[patched_1.13.2.jar:git-Paper-657]
+        at net.minecraft.server.v1_13_R2.DedicatedServer.b(DedicatedServer.java:439) ~[patched_1.13.2.jar:git-Paper-657]
+        at net.minecraft.server.v1_13_R2.MinecraftServer.a(MinecraftServer.java:940) ~[patched_1.13.2.jar:git-Paper-657]
+        at net.minecraft.server.v1_13_R2.MinecraftServer.run(MinecraftServer.java:837) ~[patched_1.13.2.jar:git-Paper-657]
+        at java.lang.Thread.run(Thread.java:750) [?:1.8.0_502][39;0m
+> stop
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[19:15:49 INFO]: Stopping the server
+> [K[19:15:49 INFO]: Stopping server
+> [K[19:15:49 INFO]: [Mentions] Disabling Mentions v1.3.4
+> [K[19:15:49 INFO]: Saving players
+> [K[19:15:49 INFO]: XAP3Y lost connection: Server closed
+> [K[19:15:49 INFO]: [0;33;1mXAP3Y left the game[39;0m
+> [K[19:15:49 INFO]: Saving worlds
+> [K[19:15:49 INFO]: Saving chunks for level 'world'/minecraft:overworld
+> TERM_PROGRAM= TERM=screen-256color COLORS=256
+System Info: Java 1.8 (OpenJDK 64-Bit Server VM 25.502-b07) Host:  Mac OS X 15.7.7 (x86_64)
+Loading libraries, please wait...
+[19:16:26 INFO]: Loaded 0 recipes
+[19:16:26 INFO]: Starting minecraft server version 1.13.2
+[19:16:26 INFO]: Loading properties
+[19:16:26 INFO]: Default game type: SURVIVAL
+[?1h=[?2004h> [K[19:16:27 INFO]: This server is running Paper version git-Paper-657 (MC: 1.13.2) (Implementing API version 1.13.2-R0.1-SNAPSHOT)
+> [K[19:16:28 INFO]: Server Ping Player Sample Count: 12
+> [K[19:16:28 INFO]: Using 4 threads for Netty based IO
+> [K[19:16:28 INFO]: Debug logging is disabled
+> [K[19:16:28 INFO]: Generating keypair
+> [K[19:16:30 INFO]: Starting Minecraft server on *:25565
+> [K[19:16:30 INFO]: Using default channel type
+> [K[19:16:33 INFO]: [Mentions] Loading Mentions v1.3.4
+> [K[19:16:33 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[19:16:33 INFO]: Preparing level "world"
+> [K[19:16:33 INFO]: Reloading ResourceManager: Default, bukkit
+> [K[19:16:33 INFO]: Loaded 524 recipes
+> [K[19:16:34 INFO]: Preparing start region for level minecraft:overworld (Seed: -288758806488773515)
+> [K[19:16:34 INFO]: Time elapsed: 21 ms
+> [K[19:16:34 INFO]: [Mentions] Enabling Mentions v1.3.4
+> [K[19:16:34 INFO]: [0;32;1m[[0;36;1mXaGui[0;32;1m] [0;37;22m[3mRegistering XaGui v1.5.1...[39;0m
+> [K[19:16:34 INFO]: [0;32;1m[[0;36;1mXaGui[0;32;1m] [0;37;22m[3mChecking for Kyori Adventure...[39;0m
+> [K[19:16:34 INFO]: [0;32;1m[[0;36;1mXaGui[0;32;1m] [0;37;22m[3mXaGui registered successfully![39;0m
+> [K[19:16:35 INFO]: Done (2.712s)! For help, type "help"
+> [K[19:16:35 INFO]: Timings Reset
+> [K[19:16:38 INFO]: UUID of player XAP3Y is f1c3931e-93d3-4125-8fdc-9b1dc39bc4d6
+> [K[19:16:39 INFO]: XAP3Y[/127.0.0.1:53553] logged in with entity id 233 at ([world]-35.25053214888204, 78.0, -166.43456854273236)
+> [K[19:16:41 INFO]: XAP3Y issued server command: /mentions
+> [K[19:16:41 INFO]: [0;30;1m[[0;32;1m[21mMentions[0;30;1m] [39;0mServer version: git-Paper-657 (MC: 1.13.2), isOld: false[39;0m
+> [K[19:17:52 INFO]: XAP3Y issued server command: /mentions
+> [K[19:17:52 INFO]: [0;30;1m[[0;32;1m[21mMentions[0;30;1m] [39;0mServer version: git-Paper-657 (MC: 1.13.2), isOld: false[39;0m
+> stop
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[19:19:45 INFO]: Stopping the server
+> [K[19:19:45 INFO]: Stopping server
+> [K[19:19:45 INFO]: [Mentions] Disabling Mentions v1.3.4
+> [K[19:19:45 INFO]: Saving players
+> [K[19:19:45 INFO]: XAP3Y lost connection: Server closed
+> [K[19:19:45 INFO]: [0;33;1mXAP3Y left the game[39;0m
+> [K[19:19:45 INFO]: Saving worlds
+> [K[19:19:45 INFO]: Saving chunks for level 'world'/minecraft:overworld
+> TERM_PROGRAM= TERM=screen-256color COLORS=256
+System Info: Java 1.8 (OpenJDK 64-Bit Server VM 25.502-b07) Host:  Mac OS X 15.7.7 (x86_64)
+Loading libraries, please wait...
+[19:19:58 INFO]: Loaded 0 recipes
+[19:19:58 INFO]: Starting minecraft server version 1.13.2
+[19:19:58 INFO]: Loading properties
+[19:19:58 INFO]: Default game type: SURVIVAL
+[?1h=[?2004h> [K[19:19:59 INFO]: This server is running Paper version git-Paper-657 (MC: 1.13.2) (Implementing API version 1.13.2-R0.1-SNAPSHOT)
+> [K[19:20:00 INFO]: Using 4 threads for Netty based IO
+> [K[19:20:00 INFO]: Server Ping Player Sample Count: 12
+> [K[19:20:00 INFO]: Debug logging is disabled
+> [K[19:20:01 INFO]: Generating keypair
+> [K[19:20:03 INFO]: Starting Minecraft server on *:25565
+> [K[19:20:03 INFO]: Using default channel type
+> [K[19:20:06 INFO]: [Mentions] Loading Mentions v1.3.4
+> [K[19:20:06 INFO]: Server permissions file permissions.yml is empty, ignoring it
+> [K[19:20:06 INFO]: Preparing level "world"
+> [K[19:20:06 INFO]: Reloading ResourceManager: Default, bukkit
+> [K[19:20:07 INFO]: Loaded 524 recipes
+> [K[19:20:07 INFO]: Preparing start region for level minecraft:overworld (Seed: -288758806488773515)
+> [K[19:20:07 INFO]: Time elapsed: 26 ms
+> [K[19:20:07 INFO]: [Mentions] Enabling Mentions v1.3.4
+> [K[19:20:07 INFO]: [0;32;1m[[0;36;1mXaGui[0;32;1m] [0;37;22m[3mRegistering XaGui v1.5.1...[39;0m
+> [K[19:20:08 INFO]: [0;32;1m[[0;36;1mXaGui[0;32;1m] [0;37;22m[3mChecking for Kyori Adventure...[39;0m
+> [K[19:20:08 INFO]: [0;32;1m[[0;36;1mXaGui[0;32;1m] [0;37;22m[3mXaGui registered successfully![39;0m
+> [K[19:20:09 INFO]: Done (2.601s)! For help, type "help"
+> [K[19:20:09 INFO]: Timings Reset
+> [K[19:20:15 INFO]: UUID of player XAP3Y is f1c3931e-93d3-4125-8fdc-9b1dc39bc4d6
+> [K[19:20:16 INFO]: XAP3Y[/127.0.0.1:53792] logged in with entity id 235 at ([world]-35.25053214888204, 78.0, -166.43456854273236)
+> [K[19:20:18 INFO]: XAP3Y issued server command: /mentions
+> [K[19:20:18 INFO]: [0;30;1m[[0;32;1m[21mMentions[0;30;1m] [39;0mServer version: git-Paper-657 (MC: 1.13.2), isOld: false[39;0m
+> op XAP3Y
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[19:20:43 INFO]: Made [0;37;1mXAP3Y[0;37;1m a server operator[39;0m
+> [K[19:21:08 INFO]: XAP3Y issued server command: /mentions reload
+> [K[19:21:10 INFO]: XAP3Y issued server command: /mentions
+> [K[19:21:10 INFO]: [0;30;1m[[0;32;1m[21mMentions[0;30;1m] [39;0mServer version: git-Paper-657 (MC: 1.13.2), isOld: false[39;0m
+> [K[19:21:18 INFO]: [0;30;1m[[0;32;1m[21mMentions[0;30;1m] [39;0mServer version: git-Paper-657 (MC: 1.13.2), isOld: false[39;0m
+> stop
+[?1l>[?1000l[?2004l[?1h=[?2004h> [K[19:21:49 INFO]: Stopping the server
+> [K[19:21:49 INFO]: Stopping server
+> [K[19:21:49 INFO]: [Mentions] Disabling Mentions v1.3.4
+> [K[19:21:49 INFO]: Saving players
+> [K[19:21:49 INFO]: XAP3Y lost connection: Server closed
+> [K[19:21:49 INFO]: [0;33;1mXAP3Y left the game[39;0m
+> [K[19:21:50 INFO]: Saving worlds
+> [K[19:21:50 INFO]: Saving chunks for level 'world'/minecraft:overworld
+> 

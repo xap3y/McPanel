@@ -51,8 +51,14 @@
       <div class="console-input-row">
         <span class="console-prompt">›</span>
         <input class="console-input" id="cmd-input" placeholder="Type a command and press Enter…" autocomplete="off" spellcheck="false">
+        <button class="btn btn-ghost btn-sm" id="ctrlc-btn" title="Send Ctrl-C (SIGINT)" style="font-family:var(--font-mono);font-size:12px;padding:0 10px;opacity:0.75">^C</button>
         <button class="btn btn-ghost btn-sm console-scroll-btn" id="autoscroll-btn" title="Toggle autoscroll">⬇ Auto</button>
       </div>
+    </div>
+    <div class="console-attach-bar" id="console-attach-bar" style="display:none">
+      <span style="color:var(--text-muted);font-size:12px">Attach in terminal:</span>
+      <code id="console-attach-cmd" style="font-family:var(--font-mono);font-size:12px;background:var(--surface-2);padding:2px 8px;border-radius:4px;cursor:pointer" title="Click to copy"></code>
+      <button class="btn btn-ghost btn-sm" id="copy-attach-btn" style="font-size:11px;padding:2px 8px">Copy</button>
     </div>
   </div>
 </div>
@@ -176,5 +182,5 @@ window.SERVER_NAME = {{.Name}};
 const CSRF = window.CSRF;
 </script>
 <script src="/static/js/console.js"></script>
-<script src="/static/js/server.js?v=3"></script>
+<script src="/static/js/server.js?v=4"></script>
 {{end}}

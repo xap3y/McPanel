@@ -1,2 +1,3 @@
 logfile /Users/sky/Documents/mcpanel/data/logs/1.21.11.log
 logfile flush 0
+term screen-256color

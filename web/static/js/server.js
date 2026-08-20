@@ -25,7 +25,7 @@ async function loadServerStatus() {
     if (!r.ok) return;
     const s = await r.json();
     const status = s.status || 'OFFLINE';
-    serverSubtitle.innerHTML = `<span class="badge badge-${status.toLowerCase()}">${status}</span>${s.uptime ? ' · ' + s.uptime : ''}${s.ram ? ' · ' + s.ram : ''}`;
+    serverSubtitle.innerHTML = `<span class="badge badge-${status.toLowerCase()}">${status}</span>${s.uptime ? ' · ' + s.uptime : ''}${s.ram ? ' · ' + s.ram : ''}${s.cpu ? ' · ' + s.cpu + '% CPU' : ''}`;
     renderTopbarActions(status);
 
     // Update left sidebar dot
@@ -44,12 +44,10 @@ function renderTopbarActions(status) {
     topbarActions.appendChild(actionBtn('Restart', 'restart', 'secondary',
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.13"/></svg>'));
     topbarActions.appendChild(actionBtn('Stop', 'stop', 'danger', ''));
+    topbarActions.appendChild(actionBtn('Kill', 'kill', 'danger', ''));
   } else {
     topbarActions.appendChild(actionBtn('Start', 'start', 'success',
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>'));
-    if (status === 'ONLINE' || status === 'CRASHED') {
-      topbarActions.appendChild(actionBtn('Kill', 'kill', 'danger', ''));
-    }
   }
 }
 
@@ -79,8 +77,35 @@ async function serverAction(action, btn, origLabel) {
   }
 }
 
+// Load screen session name for attach command
+async function loadScreenName() {
+  try {
+    const r = await fetch(`/api/servers/${SERVER_NAME}/screen-name`);
+    if (!r.ok) return;
+    const data = await r.json();
+    const bar  = document.getElementById('console-attach-bar');
+    const cmd  = document.getElementById('console-attach-cmd');
+    const copyBtn = document.getElementById('copy-attach-btn');
+    if (data.screenName && bar && cmd) {
+      const attachCmd = `screen -r ${data.screenName}`;
+      cmd.textContent = attachCmd;
+      bar.style.display = 'flex';
+      bar.style.alignItems = 'center';
+      bar.style.gap = '8px';
+      bar.style.padding = '6px 16px';
+      bar.style.borderTop = '1px solid var(--border-subtle)';
+      const doCopy = () => {
+        navigator.clipboard.writeText(attachCmd).then(() => toast('Copied!', 'success'));
+      };
+      cmd.addEventListener('click', doCopy);
+      copyBtn?.addEventListener('click', doCopy);
+    }
+  } catch(_) {}
+}
+
 loadServerStatus();
-setInterval(loadServerStatus, 8000);
+setInterval(loadServerStatus, 2000);
+loadScreenName();
 
 // ── File Manager ──────────────────────────────────────────────────────────
 let currentFMPath = '';

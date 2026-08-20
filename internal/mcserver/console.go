@@ -116,7 +116,21 @@ func (cm *ConsoleManager) tail(server string, h *Hub) {
 
 	var reader *bufio.Reader
 	if f != nil {
-		f.Seek(0, 2) // start at EOF, only stream new lines
+		stat, err := f.Stat()
+		if err == nil {
+			size := stat.Size()
+			const maxTail = 64 * 1024
+			if size > maxTail {
+				f.Seek(size-maxTail, 0)
+				// Read until the next newline to ensure we start at a complete line
+				buf := make([]byte, 1)
+				for {
+					if n, err := f.Read(buf); err != nil || n == 0 || buf[0] == '\n' {
+						break
+					}
+				}
+			}
+		}
 		reader = bufio.NewReader(f)
 	}
 
@@ -138,6 +152,10 @@ func (cm *ConsoleManager) tail(server string, h *Hub) {
 				h.push(clean)
 			}
 		}
+	}
+
+	if reader != nil {
+		readAvailable()
 	}
 
 	for event := range watcher.Events {

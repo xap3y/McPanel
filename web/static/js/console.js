@@ -40,11 +40,34 @@ function ansiToHtml(text) {
     } else {
       const codes = parts[i] === '' ? [0] : parts[i].split(';').map(Number);
       let changed = false;
-      for (const c of codes) {
+      for (let j = 0; j < codes.length; j++) {
+        const c = codes[j];
         if (c === 0 || c === 39) {
           currentClasses.clear();
           currentStyles.clear();
           changed = true;
+        } else if (c === 38 || c === 48) {
+          if (j + 2 < codes.length && codes[j+1] === 5) {
+            j += 2;
+          } else if (j + 4 < codes.length && codes[j+1] === 2) {
+            if (c === 38) {
+              for (let cls of currentClasses) {
+                if (cls.startsWith('ansi-') && !cls.includes('bold') && !cls.includes('dim')) currentClasses.delete(cls);
+              }
+              for (let sty of currentStyles) {
+                if (sty.startsWith('color:')) currentStyles.delete(sty);
+              }
+              currentStyles.add(`color:rgb(${codes[j+2]},${codes[j+3]},${codes[j+4]})`);
+              changed = true;
+            } else if (c === 48) {
+              for (let sty of currentStyles) {
+                if (sty.startsWith('background-color:')) currentStyles.delete(sty);
+              }
+              currentStyles.add(`background-color:rgb(${codes[j+2]},${codes[j+3]},${codes[j+4]})`);
+              changed = true;
+            }
+            j += 4;
+          }
         } else if (ANSI_COLORS[c]) {
           const val = ANSI_COLORS[c];
           if (val.startsWith('class=')) {
@@ -174,3 +197,16 @@ cmdInput.addEventListener('keydown', (e) => {
     else { histIdx = cmdHistory.length; cmdInput.value = ''; }
   }
 });
+
+// ── Ctrl-C button ──────────────────────────────────────────────────────────
+const ctrlcBtn = document.getElementById('ctrlc-btn');
+if (ctrlcBtn) {
+  ctrlcBtn.addEventListener('click', () => {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({type: 'ctrlc'}));
+      appendLine('\x1b[2m[panel] Sent ^C\x1b[0m');
+    } else {
+      appendLine('\x1b[31m[panel] Not connected\x1b[0m');
+    }
+  });
+}

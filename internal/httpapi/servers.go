@@ -142,7 +142,7 @@ func (a *API) Dashboard(w http.ResponseWriter, r *http.Request) {
 		rows = append(rows, row)
 	}
 
-	projs, _ := project.Discover(a.ProjectsRoot)
+	projs, _ := project.DiscoverAll(a.ProjectsRoot, a.DB)
 	projRows := make([]dashboardProjectRow, 0, len(projs))
 	for _, p := range projs {
 		row := dashboardProjectRow{Name: p.Name}
@@ -227,6 +227,8 @@ func (a *API) ServerAction(w http.ResponseWriter, r *http.Request) {
 		err = a.Screen.Restart(name, dir, s, 30*time.Second)
 	case "kill":
 		err = a.Screen.Kill(name)
+	case "ctrlc":
+		err = a.Screen.SendCtrlC(name)
 	default:
 		http.Error(w, "unknown action", http.StatusBadRequest)
 		return
@@ -241,6 +243,20 @@ func (a *API) ServerAction(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]bool{"ok": true})
 }
 
+// ── Screen name API (for attach command) ─────────────────────────────────
+
+func (a *API) ScreenNameAPI(w http.ResponseWriter, r *http.Request) {
+	name := r.PathValue("name")
+	if !mcserver.IsKnownServer(a.MCRoot, name) {
+		http.Error(w, "unknown server", http.StatusNotFound)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{
+		"screenName": a.Screen.SessionName(name),
+	})
+}
+
 // ── Server status API (polled by topbar) ─────────────────────────────────
 
 func (a *API) ServerStatusAPI(w http.ResponseWriter, r *http.Request) {
@@ -253,6 +269,7 @@ func (a *API) ServerStatusAPI(w http.ResponseWriter, r *http.Request) {
 	st := "OFFLINE"
 	uptime := ""
 	ramStr := ""
+	cpuStr := ""
 	if running {
 		st = "ONLINE"
 		startedAt := a.Screen.StartedAt(name)
@@ -260,9 +277,12 @@ func (a *API) ServerStatusAPI(w http.ResponseWriter, r *http.Request) {
 			uptime = fmtUptime(startedAt)
 		}
 		if pid > 0 {
-			ram, _ := mcserver.SampleResource(pid)
+			ram, cpu := mcserver.SampleResource(pid)
 			if ram > 0 {
 				ramStr = fmtRAM(ram)
+			}
+			if cpu > 0 {
+				cpuStr = fmt.Sprintf("%.1f", cpu)
 			}
 		}
 	}
@@ -272,13 +292,14 @@ func (a *API) ServerStatusAPI(w http.ResponseWriter, r *http.Request) {
 		"pid":    pid,
 		"uptime": uptime,
 		"ram":    ramStr,
+		"cpu":    cpuStr,
 	})
 }
 
 // ── Projects page ─────────────────────────────────────────────────────────
 
 func (a *API) ProjectsPage(w http.ResponseWriter, r *http.Request) {
-	projs, err := project.Discover(a.ProjectsRoot)
+	projs, err := project.DiscoverAll(a.ProjectsRoot, a.DB)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -287,10 +308,11 @@ func (a *API) ProjectsPage(w http.ResponseWriter, r *http.Request) {
 	type projRow struct {
 		Name      string
 		LastBuild *buildSummary
+		Custom    bool
 	}
 	rows := make([]projRow, 0, len(projs))
 	for _, p := range projs {
-		row := projRow{Name: p.Name}
+		row := projRow{Name: p.Name, Custom: p.Custom}
 		if a.DB != nil {
 			var status, artifact string
 			var startedAt time.Time
@@ -316,7 +338,7 @@ func (a *API) ProjectsPage(w http.ResponseWriter, r *http.Request) {
 
 func (a *API) ProjectPage(w http.ResponseWriter, r *http.Request) {
 	name := r.PathValue("name")
-	if !project.IsKnownProject(a.ProjectsRoot, name) {
+	if !project.IsKnownProjectDB(a.ProjectsRoot, name, a.DB) {
 		http.NotFound(w, r)
 		return
 	}

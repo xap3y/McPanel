@@ -42,8 +42,10 @@ CREATE TABLE IF NOT EXISTS project_settings (
   artifact_glob VARCHAR(256) NOT NULL DEFAULT '*.jar',
   deployment_filename VARCHAR(256),
   deploy_targets TEXT,
+  build_args TEXT,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
+
 
 CREATE TABLE IF NOT EXISTS build_history (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -67,4 +69,10 @@ CREATE TABLE IF NOT EXISTS deploy_history (
   deployed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   error_message TEXT NULL,
   FOREIGN KEY (build_id) REFERENCES build_history(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS custom_projects (
+  name VARCHAR(128) PRIMARY KEY,
+  dir VARCHAR(1024) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
