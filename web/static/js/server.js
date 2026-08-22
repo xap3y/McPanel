@@ -9,7 +9,7 @@ tabBtns.forEach(btn => {
     tabBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
     tabPanes.forEach(p => p.classList.toggle('active', p.id === 'tab-' + tab));
     activeTab = tab;
-    if (tab === 'files')   { currentFMPath = ''; loadFiles(''); }
+    if (tab === 'files' && !editorPath) { currentFMPath = ''; loadFiles(''); }
     if (tab === 'plugins') loadPlugins();
     if (tab === 'settings') loadSettings();
   });
@@ -21,7 +21,7 @@ const serverSubtitle = document.getElementById('server-subtitle');
 
 async function loadServerStatus() {
   try {
-    const r = await fetch(`/api/servers/${SERVER_NAME}/status`);
+    const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/status`);
     if (!r.ok) return;
     const s = await r.json();
     const status = s.status || 'OFFLINE';
@@ -29,7 +29,7 @@ async function loadServerStatus() {
     renderTopbarActions(status);
 
     // Update left sidebar dot
-    const navItem = document.querySelector(`.sidebar-nav a[href="/servers/${SERVER_NAME}"]`);
+    const navItem = document.querySelector(`.sidebar-nav a[href="/servers/${encodeURIComponent(SERVER_NAME)}"]`);
     if (navItem) {
       navItem.className = navItem.className.replace(/status-\w+/g, '').trim() + ' status-' + status.toLowerCase();
     }
@@ -63,7 +63,7 @@ async function serverAction(action, btn, origLabel) {
   const orig = btn.innerHTML;
   btn.disabled = true;
   btn.innerHTML = `<span class="spinner"></span> ${origLabel}…`;
-  const r = await fetch(`/api/servers/${SERVER_NAME}/${action}`, {
+  const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/${action}`, {
     method: 'POST', headers: {'X-CSRF-Token': CSRF}
   });
   const data = await r.json().catch(()=>({}));
@@ -80,7 +80,7 @@ async function serverAction(action, btn, origLabel) {
 // Load screen session name for attach command
 async function loadScreenName() {
   try {
-    const r = await fetch(`/api/servers/${SERVER_NAME}/screen-name`);
+    const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/screen-name`);
     if (!r.ok) return;
     const data = await r.json();
     const bar  = document.getElementById('console-attach-bar');
@@ -109,6 +109,13 @@ loadScreenName();
 
 // ── File Manager ──────────────────────────────────────────────────────────
 let currentFMPath = '';
+let editorPath = null;
+let editorInstance = null;
+let editorModel = null;
+let editorOriginalContent = '';
+let editorDirty = false;
+let monacoLoadPromise = null;
+let monacoAPI = null;
 
 const fmList       = document.getElementById('fm-list');
 const fmBreadcrumb = document.getElementById('fm-breadcrumb');
@@ -126,7 +133,7 @@ fmFileInput.addEventListener('change', async () => {
   for (const file of fmFileInput.files) {
     const fd = new FormData();
     fd.append('file', file);
-    const r = await fetch(`/api/servers/${SERVER_NAME}/files/upload?path=${encodeURIComponent(currentFMPath)}`, {
+    const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/files/upload?path=${encodeURIComponent(currentFMPath)}`, {
       method: 'POST', headers: {'X-CSRF-Token': CSRF}, body: fd
     });
     if (r.ok) toast(`Uploaded ${file.name}`, 'success');
@@ -139,7 +146,7 @@ fmFileInput.addEventListener('change', async () => {
 document.getElementById('fm-mkdir-btn').addEventListener('click', async () => {
   const name = prompt('New folder name:');
   if (!name) return;
-  const r = await fetch(`/api/servers/${SERVER_NAME}/files/mkdir`, {
+  const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/files/mkdir`, {
     method: 'POST', headers: {'Content-Type':'application/json','X-CSRF-Token':CSRF},
     body: JSON.stringify({path: currentFMPath ? currentFMPath + '/' + name : name})
   });
@@ -151,7 +158,7 @@ document.getElementById('fm-newfile-btn').addEventListener('click', async () => 
   const name = prompt('New file name:');
   if (!name) return;
   const path = currentFMPath ? currentFMPath + '/' + name : name;
-  const r = await fetch(`/api/servers/${SERVER_NAME}/files/create`, {
+  const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/files/create`, {
     method: 'POST', headers: {'Content-Type':'application/json','X-CSRF-Token':CSRF},
     body: JSON.stringify({path})
   });
@@ -212,7 +219,7 @@ async function loadFiles(path) {
     el.addEventListener('click', () => loadFiles(el.dataset.path));
   });
 
-  const r = await fetch(`/api/servers/${SERVER_NAME}/files?path=${encodeURIComponent(path)}`);
+  const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/files?path=${encodeURIComponent(path)}`);
   if (!r.ok) { fmList.innerHTML = `<div class="empty-state"><p>Error loading directory</p></div>`; return; }
   const entries = await r.json() || [];
 
@@ -248,7 +255,7 @@ async function loadFiles(path) {
       <span class="fm-row-time">${fmTime(e.modTime)}</span>
       <div class="fm-row-actions">
         ${!e.isDir && isTextFile(e.name) ? `<button class="btn-icon" data-action="edit" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>` : ''}
-        ${!e.isDir ? `<a class="btn-icon" href="/api/servers/${SERVER_NAME}/files/download?path=${encodeURIComponent(filePath)}" download title="Download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>` : ''}
+        ${!e.isDir ? `<a class="btn-icon" href="/api/servers/${encodeURIComponent(SERVER_NAME)}/files/download?path=${encodeURIComponent(filePath)}" download title="Download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>` : ''}
         <button class="btn-icon" data-action="rename" title="Rename"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
         <button class="btn-icon danger" data-action="delete" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
       </div>`;
@@ -273,7 +280,7 @@ async function loadFiles(path) {
       e2.stopPropagation();
       const newName = prompt('Rename to:', e.name);
       if (!newName || newName === e.name) return;
-      const r2 = await fetch(`/api/servers/${SERVER_NAME}/files/rename`, {
+      const r2 = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/files/rename`, {
         method:'POST', headers:{'Content-Type':'application/json','X-CSRF-Token':CSRF},
         body:JSON.stringify({path:filePath, newName})
       });
@@ -284,7 +291,7 @@ async function loadFiles(path) {
     row.querySelector('[data-action="delete"]')?.addEventListener('click', async (e2) => {
       e2.stopPropagation();
       if (!confirm(`Delete ${e.name}?`)) return;
-      const r2 = await fetch(`/api/servers/${SERVER_NAME}/files/delete`, {
+      const r2 = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/files/delete`, {
         method:'POST', headers:{'Content-Type':'application/json','X-CSRF-Token':CSRF},
         body:JSON.stringify({path:filePath})
       });
@@ -301,11 +308,190 @@ async function loadFiles(path) {
 }
 
 async function openFileEditor(path, filename) {
-  const r = await fetch(`/api/servers/${SERVER_NAME}/files/read?path=${encodeURIComponent(path)}`);
+  const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/files/read?path=${encodeURIComponent(path)}`);
   if (!r.ok) { toast('Cannot open file (too large or binary)', 'error'); return; }
   const content = await r.text();
-  openEditor(SERVER_NAME, path, content, filename);
+  editorPath = path;
+  editorOriginalContent = content;
+  editorDirty = false;
+  document.getElementById('editor-filename').textContent = path;
+  document.getElementById('file-manager').hidden = true;
+  document.getElementById('file-editor-workspace').hidden = false;
+  document.body.classList.add('file-editor-open');
+  updateEditorDirtyStatus();
+  await mountMonacoEditor(content, filename || path.split('/').pop());
 }
+
+function editorLanguage(filename) {
+  const ext = filename.split('.').pop().toLowerCase();
+  return ({
+    yml:'yaml', yaml:'yaml', json:'json', properties:'ini', ini:'ini', cfg:'ini', conf:'ini', toml:'ini',
+    xml:'xml', html:'html', htm:'html', css:'css', js:'javascript', ts:'typescript', java:'java',
+    py:'python', sh:'shell', bat:'bat', md:'markdown', sql:'sql', go:'go', txt:'plaintext', log:'plaintext'
+  })[ext] || 'plaintext';
+}
+
+function loadMonaco() {
+  if (monacoAPI) return Promise.resolve(monacoAPI);
+  if (monacoLoadPromise) return monacoLoadPromise;
+  monacoLoadPromise = new Promise((resolve, reject) => {
+    const base = '/static/vendor/monaco/';
+    let settled = false;
+    const finish = (callback, value) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeout);
+      callback(value);
+    };
+    const timeout = setTimeout(() => {
+      finish(reject, new Error('Monaco Editor initialization timed out'));
+    }, 12000);
+
+    const initialize = () => {
+      try {
+        if (typeof window.require !== 'function' || typeof window.require.config !== 'function') {
+          throw new Error('Monaco Editor loader is unavailable');
+        }
+        window.require.config({paths: {vs: base + 'vs'}});
+        window.require(['vs/editor/editor.main'], api => {
+          if (!api?.editor?.create) {
+            finish(reject, new Error('Monaco Editor returned an invalid API'));
+            return;
+          }
+          monacoAPI = api;
+          finish(resolve, api);
+        }, error => finish(reject, error instanceof Error ? error : new Error(String(error))));
+      } catch (error) {
+        finish(reject, error);
+      }
+    };
+
+    if (typeof window.require === 'function' && typeof window.require.config === 'function') {
+      initialize();
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = base + 'vs/loader.js';
+    script.onload = initialize;
+    script.onerror = () => finish(reject, new Error('Monaco Editor assets could not be loaded'));
+    document.head.appendChild(script);
+  });
+  return monacoLoadPromise;
+}
+
+async function mountMonacoEditor(content, filename) {
+  const loading = document.getElementById('editor-loading');
+  const fallback = document.getElementById('editor-fallback');
+  loading.hidden = false;
+  loading.style.display = 'flex';
+  fallback.hidden = true;
+  fallback.style.display = 'none';
+  try {
+    const monaco = await loadMonaco();
+    editorModel?.dispose();
+    editorModel = monaco.editor.createModel(content, editorLanguage(filename));
+    if (!editorInstance) {
+      editorInstance = monaco.editor.create(document.getElementById('monaco-editor'), {
+        model: editorModel,
+        theme: 'vs-dark',
+        automaticLayout: true,
+        fontFamily: 'JetBrains Mono, SFMono-Regular, Consolas, monospace',
+        fontSize: 13,
+        lineHeight: 21,
+        minimap: {enabled: true},
+        scrollBeyondLastLine: false,
+        smoothScrolling: true,
+        wordWrap: 'off',
+        padding: {top: 10, bottom: 10},
+      });
+      editorInstance.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, saveEditorFile);
+      editorInstance.addCommand(monaco.KeyCode.Escape, closeFileEditor);
+    } else {
+      editorInstance.setModel(editorModel);
+    }
+    editorModel.onDidChangeContent(() => {
+      editorDirty = editorModel.getValue() !== editorOriginalContent;
+      updateEditorDirtyStatus();
+    });
+    loading.hidden = true;
+    loading.style.display = 'none';
+    requestAnimationFrame(() => editorInstance.focus());
+  } catch (error) {
+    monacoLoadPromise = null;
+    editorModel?.dispose();
+    editorModel = null;
+    loading.hidden = true;
+    loading.style.display = 'none';
+    fallback.value = content;
+    fallback.hidden = false;
+    fallback.style.display = 'block';
+    fallback.focus();
+    console.error('Monaco Editor failed to initialize:', error);
+    toast(error.message + '; using basic editor', 'error');
+  }
+}
+
+function currentEditorContent() {
+  return editorModel && editorInstance ? editorModel.getValue() : document.getElementById('editor-fallback').value;
+}
+
+function updateEditorDirtyStatus() {
+  const status = document.getElementById('editor-dirty-status');
+  status.textContent = editorDirty ? 'Modified' : 'Saved';
+  status.classList.toggle('modified', editorDirty);
+}
+
+async function saveEditorFile() {
+  if (!editorPath) return;
+  const saveButton = document.getElementById('editor-save-btn');
+  const original = saveButton.textContent;
+  saveButton.disabled = true;
+  saveButton.textContent = 'Saving…';
+  const content = currentEditorContent();
+  const r = await api(`/api/servers/${encodeURIComponent(SERVER_NAME)}/files/write`, 'POST', {path: editorPath, content});
+  if (r.ok) {
+    editorOriginalContent = content;
+    editorDirty = false;
+    updateEditorDirtyStatus();
+    toast('File saved', 'success');
+  } else {
+    toast('Save failed: ' + await r.text(), 'error');
+  }
+  saveButton.disabled = false;
+  saveButton.textContent = original;
+}
+
+function closeFileEditor() {
+  if (editorDirty && !confirm('Discard unsaved changes?')) return;
+  editorPath = null;
+  editorDirty = false;
+  document.getElementById('file-editor-workspace').hidden = true;
+  document.getElementById('file-manager').hidden = false;
+  document.body.classList.remove('file-editor-open');
+  loadFiles(currentFMPath);
+}
+
+document.getElementById('editor-save-btn').addEventListener('click', saveEditorFile);
+document.getElementById('editor-back-btn').addEventListener('click', closeFileEditor);
+document.getElementById('editor-fallback').addEventListener('input', event => {
+  editorDirty = event.target.value !== editorOriginalContent;
+  updateEditorDirtyStatus();
+});
+document.getElementById('editor-fallback').addEventListener('keydown', event => {
+  if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') {
+    event.preventDefault();
+    saveEditorFile();
+  }
+  if (event.key === 'Escape') {
+    event.preventDefault();
+    closeFileEditor();
+  }
+});
+window.addEventListener('beforeunload', event => {
+  if (!editorDirty) return;
+  event.preventDefault();
+  event.returnValue = '';
+});
 
 function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -313,7 +499,7 @@ function escHtml(s) {
 
 // ── Plugins ────────────────────────────────────────────────────────────────
 async function loadPlugins() {
-  const r = await fetch(`/api/servers/${SERVER_NAME}/plugins`);
+  const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/plugins`);
   if (!r.ok) return;
   const plugins = await r.json() || [];
   const list = document.getElementById('plugin-list');
@@ -356,14 +542,14 @@ async function loadPlugins() {
     const deleteBtn = row.querySelector('[data-plugin-action="delete"]');
 
     async function doToggle(restart) {
-      const r2 = await fetch(`/api/servers/${SERVER_NAME}/plugins/${encodeURIComponent(p.name)}/toggle`, {
+      const r2 = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/plugins/${encodeURIComponent(p.name)}/toggle`, {
         method:'POST', headers:{'Content-Type':'application/json','X-CSRF-Token':CSRF},
         body:JSON.stringify({enable: !p.enabled})
       });
       if (r2.ok) {
         toast(`Plugin ${p.name} ${!p.enabled ? 'enabled' : 'disabled'}`, 'success');
         if (restart) {
-          await fetch(`/api/servers/${SERVER_NAME}/restart`, {method:'POST',headers:{'X-CSRF-Token':CSRF}});
+          await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/restart`, {method:'POST',headers:{'X-CSRF-Token':CSRF}});
           toast('Restart issued', 'info');
         }
         loadPlugins();
@@ -377,7 +563,7 @@ async function loadPlugins() {
     deleteBtn.addEventListener('click', async () => {
       if (!confirm(`Permanently delete plugin "${p.name}"?\n\nThis removes the JAR from this server.`)) return;
       deleteBtn.disabled = true;
-      const r2 = await fetch(`/api/servers/${SERVER_NAME}/plugins/${encodeURIComponent(p.name)}/delete`, {
+      const r2 = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/plugins/${encodeURIComponent(p.name)}/delete`, {
         method:'POST', headers:{'Content-Type':'application/json','X-CSRF-Token':CSRF},
         body:JSON.stringify({enabled:p.enabled})
       });
@@ -396,7 +582,7 @@ async function loadPlugins() {
 
 // ── Settings ───────────────────────────────────────────────────────────────
 async function loadSettings() {
-  const r = await fetch(`/api/servers/${SERVER_NAME}/settings`);
+  const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/settings`);
   if (!r.ok) return;
   const s = await r.json();
   document.getElementById('s-java').value = s.JavaPath || '';
@@ -420,7 +606,7 @@ document.getElementById('settings-form').addEventListener('submit', async (e) =>
     ServerJar: f.ServerJar.value,
     ServerArgs: f.ServerArgsText.value.split('\n').filter(Boolean),
   };
-  const r = await fetch(`/api/servers/${SERVER_NAME}/settings`, {
+  const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/settings`, {
     method:'POST', headers:{'Content-Type':'application/json','X-CSRF-Token':CSRF},
     body: JSON.stringify(body)
   });
@@ -430,7 +616,7 @@ document.getElementById('settings-form').addEventListener('submit', async (e) =>
 
 document.getElementById('velocity-toggle').addEventListener('change', async (e) => {
   const enable = e.target.checked;
-  const r = await fetch(`/api/servers/${SERVER_NAME}/velocity`, {
+  const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/velocity`, {
     method:'POST', headers:{'Content-Type':'application/json','X-CSRF-Token':CSRF},
     body:JSON.stringify({enable})
   });

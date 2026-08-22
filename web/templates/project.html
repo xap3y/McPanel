@@ -1,7 +1,7 @@
 {{define "title"}}{{.Name}} — MCPanel{{end}}
 {{define "sidebar-servers"}}
 {{range .AllServers}}
-<a href="/servers/{{.Name}}" class="nav-item status-{{lower .Status}} {{if eq .Name $.Name}}active{{end}}">
+<a href="/servers/{{pathEscape .Name}}" class="nav-item status-{{lower .Status}} {{if eq .Name $.Name}}active{{end}}">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
     <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
@@ -13,12 +13,12 @@
 {{end}}
 {{define "content"}}
 <div class="topbar">
-  <div>
-    <div class="topbar-title">{{.Name}}</div>
-    <div class="topbar-sub">Plugin Project</div>
-  </div>
-  <div class="topbar-actions">
+  <div class="project-title-row">
     <a href="/projects" class="btn btn-ghost btn-sm">← All Projects</a>
+    <div class="project-title-copy">
+      <div class="topbar-title">{{.Name}}</div>
+      <div class="topbar-sub">Plugin Project</div>
+    </div>
   </div>
 </div>
 
@@ -74,16 +74,14 @@
           </div>
         </div>
         <div class="card-body">
-          <div class="deploy-field">
-            <div class="deploy-field-label">Artifact to deploy</div>
-            <input type="hidden" id="artifact-select" name="Artifact" value="">
-            <div class="artifact-picker" id="artifact-picker">
-              <button type="button" class="artifact-option selected" data-artifact="">
-                <span class="artifact-radio"></span>
-                <span><strong>Latest build</strong><small>Automatically use the newest JAR</small></span>
-              </button>
+          <div class="deploy-field deploy-artifact-field">
+            <label class="deploy-field-label" for="artifact-select">Artifact to deploy</label>
+            <div class="deploy-artifact-control">
+              <select id="artifact-select" name="Artifact">
+                <option value="">Latest build</option>
+              </select>
+              <span class="field-hint" id="artifact-picker-hint">Loading JARs…</span>
             </div>
-            <div class="field-hint" id="artifact-picker-hint">Loading available JARs…</div>
           </div>
           <div class="deploy-field-label">Target servers</div>
           <div class="deploy-targets mb-4" id="deploy-targets">
@@ -98,15 +96,19 @@
             </label>
             {{end}}
           </div>
-          <div class="flex gap-2 flex-wrap">
-            <button class="btn btn-secondary" id="deploy-btn">
-              Deploy only
+          <div class="deploy-action-grid">
+            <button class="btn btn-secondary btn-sm" id="deploy-btn">
+              Deploy
             </button>
-            <button class="btn btn-primary" id="build-deploy-btn">
+            <button class="btn btn-secondary btn-sm" id="deploy-restart-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.5 15a9 9 0 1 0 .5-3.1"/></svg>
+              Deploy + Restart
+            </button>
+            <button class="btn btn-primary btn-sm" id="build-deploy-btn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               Build + Deploy
             </button>
-            <button class="btn btn-primary" id="bdr-btn" style="background:var(--green);border-color:var(--green)">
+            <button class="btn btn-primary btn-sm" id="bdr-btn" style="background:var(--green);border-color:var(--green)">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               Build + Deploy + Restart
             </button>
@@ -235,5 +237,5 @@ window.CSRF = {{.CSRF}};
 window.PROJECT_NAME = {{.Name}};
 window.ALL_SERVERS = {{.Servers}};
 </script>
-<script src="/static/js/project.js?v=6"></script>
+<script src="/static/js/project.js?v=7"></script>
 {{end}}

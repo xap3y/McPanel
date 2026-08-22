@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
@@ -23,6 +24,7 @@ var tplFuncs = template.FuncMap{
 		return strings.ToLower(fmt.Sprintf("%v", v))
 	},
 	"basename":  filepath.Base,
+	"pathEscape": url.PathEscape,
 	"fmtRAM":    fmtRAM,
 	"fmtUptime": fmtUptime,
 	"fmtTime":   fmtRelTime,
@@ -121,7 +123,7 @@ type dashboardProjectRow struct {
 }
 
 func (a *API) Dashboard(w http.ResponseWriter, r *http.Request) {
-	names, err := mcserver.Discover(a.MCRoot)
+	names, err := mcserver.Discover(a.MCRoot, a.ServerSubfolders())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -175,7 +177,7 @@ type sidebarServer struct {
 }
 
 func (a *API) allServersForSidebar() []sidebarServer {
-	names, _ := mcserver.Discover(a.MCRoot)
+	names, _ := mcserver.Discover(a.MCRoot, a.ServerSubfolders())
 	out := make([]sidebarServer, 0, len(names))
 	for _, n := range names {
 		running, _ := a.Screen.IsRunning(n)
@@ -192,7 +194,7 @@ func (a *API) allServersForSidebar() []sidebarServer {
 
 func (a *API) ServerPage(w http.ResponseWriter, r *http.Request) {
 	name := r.PathValue("name")
-	if !mcserver.IsKnownServer(a.MCRoot, name) {
+	if !mcserver.IsKnownServer(a.MCRoot, name, a.ServerSubfolders()) {
 		http.NotFound(w, r)
 		return
 	}
@@ -210,7 +212,7 @@ func (a *API) ServerAction(w http.ResponseWriter, r *http.Request) {
 	name := r.PathValue("name")
 	action := r.PathValue("action")
 
-	if !mcserver.IsKnownServer(a.MCRoot, name) {
+	if !mcserver.IsKnownServer(a.MCRoot, name, a.ServerSubfolders()) {
 		http.Error(w, "unknown server", http.StatusNotFound)
 		return
 	}
@@ -247,7 +249,7 @@ func (a *API) ServerAction(w http.ResponseWriter, r *http.Request) {
 
 func (a *API) ScreenNameAPI(w http.ResponseWriter, r *http.Request) {
 	name := r.PathValue("name")
-	if !mcserver.IsKnownServer(a.MCRoot, name) {
+	if !mcserver.IsKnownServer(a.MCRoot, name, a.ServerSubfolders()) {
 		http.Error(w, "unknown server", http.StatusNotFound)
 		return
 	}
@@ -261,7 +263,7 @@ func (a *API) ScreenNameAPI(w http.ResponseWriter, r *http.Request) {
 
 func (a *API) ServerStatusAPI(w http.ResponseWriter, r *http.Request) {
 	name := r.PathValue("name")
-	if !mcserver.IsKnownServer(a.MCRoot, name) {
+	if !mcserver.IsKnownServer(a.MCRoot, name, a.ServerSubfolders()) {
 		http.Error(w, "unknown server", http.StatusNotFound)
 		return
 	}
@@ -342,7 +344,7 @@ func (a *API) ProjectPage(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	serverNames, _ := mcserver.Discover(a.MCRoot)
+	serverNames, _ := mcserver.Discover(a.MCRoot, a.ServerSubfolders())
 	profiles, _ := project.ListProfiles(a.DB, name)
 	ps := project.LoadProjectSettings(a.DB, name)
 

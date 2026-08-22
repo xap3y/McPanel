@@ -1,7 +1,7 @@
 {{define "title"}}{{.Name}} — MCPanel{{end}}
 {{define "sidebar-servers"}}
 {{range .AllServers}}
-<a href="/servers/{{.Name}}" class="nav-item status-{{lower .Status}} {{if eq .Name $.Name}}active{{end}}">
+<a href="/servers/{{pathEscape .Name}}" class="nav-item status-{{lower .Status}} {{if eq .Name $.Name}}active{{end}}">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
     <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
@@ -90,6 +90,24 @@
         </div>
       </div>
       <div class="fm-list" id="fm-list"></div>
+    </div>
+    <div class="file-editor-workspace" id="file-editor-workspace" hidden>
+      <div class="file-editor-toolbar">
+        <button class="btn btn-ghost btn-sm" id="editor-back-btn" type="button" title="Back to files">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Files
+        </button>
+        <div class="file-editor-title">
+          <span class="editor-filename" id="editor-filename"></span>
+          <span class="file-editor-dirty" id="editor-dirty-status">Saved</span>
+        </div>
+        <button class="btn btn-primary btn-sm" id="editor-save-btn" type="button">Save</button>
+      </div>
+      <div class="monaco-editor-shell">
+        <div class="editor-loading" id="editor-loading">Loading Monaco Editor…</div>
+        <div id="monaco-editor"></div>
+        <textarea class="editor-fallback" id="editor-fallback" spellcheck="false" hidden></textarea>
+      </div>
     </div>
     <!-- hidden file input -->
     <input type="file" id="fm-file-input" style="display:none" multiple>
@@ -181,6 +199,7 @@
 window.SERVER_NAME = {{.Name}};
 const CSRF = window.CSRF;
 </script>
-<script src="/static/js/console.js"></script>
-<script src="/static/js/server.js?v=4"></script>
+<script src="/static/vendor/monaco/vs/loader.js"></script>
+<script src="/static/js/console.js?v=2"></script>
+<script src="/static/js/server.js?v=9"></script>
 {{end}}

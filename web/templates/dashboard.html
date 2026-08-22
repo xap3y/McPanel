@@ -1,7 +1,7 @@
 {{define "title"}}Dashboard — MCPanel{{end}}
 {{define "sidebar-servers"}}
 {{range .Servers}}
-<a href="/servers/{{.Name}}" class="nav-item status-{{lower .Status}}">
+<a href="/servers/{{pathEscape .Name}}" class="nav-item status-{{lower .Status}}">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
     <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
@@ -16,6 +16,10 @@
 <div class="topbar">
   <span class="topbar-title">Dashboard</span>
   <div class="topbar-actions">
+    <a href="/servers/new" class="btn btn-primary btn-sm">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+      New Server
+    </a>
     <button class="btn btn-ghost btn-sm" id="refresh-btn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.13"/></svg>
       Refresh
@@ -42,7 +46,7 @@
       {{range .Servers}}
       <div class="server-card {{lower .Status}}" data-server="{{.Name}}">
         <div class="server-card-header">
-          <a href="/servers/{{.Name}}" class="server-card-name">{{.Name}}</a>
+          <a href="/servers/{{pathEscape .Name}}" class="server-card-name">{{.Name}}</a>
           <span class="badge badge-{{lower .Status}}" id="card-badge-{{.Name}}">{{.Status}}</span>
         </div>
         <div class="server-card-meta">
@@ -64,9 +68,9 @@
           </div>
         </div>
         <div class="server-card-actions" id="card-actions-{{.Name}}">
-          <a href="/servers/{{.Name}}" class="btn btn-secondary btn-sm">View</a>
+          <a href="/servers/{{pathEscape .Name}}" class="btn btn-secondary btn-sm">View</a>
           {{if eq (printf "%v" .Status) "ONLINE"}}
-          <a href="/servers/{{.Name}}" class="btn btn-secondary btn-sm">
+          <a href="/servers/{{pathEscape .Name}}" class="btn btn-secondary btn-sm">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             Console
           </a>
@@ -137,7 +141,7 @@ const serverNames = [...document.querySelectorAll('.server-card')].map(c => c.da
 async function pollServerStats() {
   for (const name of serverNames) {
     try {
-      const r = await fetch(`/api/servers/${name}/status`);
+      const r = await fetch(`/api/servers/${encodeURIComponent(name)}/status`);
       if (!r.ok) continue;
       const s = await r.json();
       const ramEl    = document.getElementById('card-ram-'    + name);
@@ -165,7 +169,7 @@ document.querySelectorAll('button[data-action]').forEach(btn => {
     const orig = btn.innerHTML;
     btn.disabled = true;
     btn.innerHTML = `<span class="spinner"></span> ${labels[action]||action}`;
-    const r = await api(`/api/servers/${name}/${action}`, 'POST');
+    const r = await api(`/api/servers/${encodeURIComponent(name)}/${action}`, 'POST');
     const data = await r.json().catch(()=>({}));
     if (!r.ok || data.error) {
       toast(data.error || 'Action failed', 'error');

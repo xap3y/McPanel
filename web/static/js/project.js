@@ -127,18 +127,18 @@ async function startBuild(profile) {
 async function doDeploy(restart) {
   const targets = selectedTargets();
   if (targets.length === 0) { toast('Select at least one deploy target', 'error'); return false; }
-  buildStatusTx.textContent = 'Deploying…';
+  buildStatusTx.textContent = restart ? 'Deploying + restarting…' : 'Deploying…';
   const artifact = document.getElementById('artifact-select').value;
   const url = `/api/projects/${PROJECT_NAME}/deploy${restart ? '?restart=true' : ''}`;
   const r = await projectAPI(url, 'POST', { targets, artifact });
   const data = await r.json().catch(()=>({}));
   const results = Object.entries(data);
   const allOk = results.every(([,v]) => v.startsWith('deployed'));
-  if (allOk) toast('Deployed to ' + targets.join(', '), 'success');
+  if (allOk) toast((restart ? 'Deployed and restarted: ' : 'Deployed to: ') + targets.join(', '), 'success');
   else {
     results.forEach(([srv, msg]) => toast(`${srv}: ${msg}`, msg.startsWith('deployed') ? 'success' : 'error'));
   }
-  buildStatusTx.textContent = allOk ? 'Deployed' : 'Partial deploy';
+  buildStatusTx.textContent = allOk ? (restart ? 'Deployed + restarted' : 'Deployed') : 'Partial deploy';
   refreshHistory();
   return allOk;
 }
@@ -147,12 +147,69 @@ function selectedTargets() {
   return Array.from(document.querySelectorAll('.target-cb:checked')).map(cb => cb.value);
 }
 
+// Keep deploy targets navigable when servers are arranged in group folders.
+// Direct children of the Minecraft root appear under an explicit Root group.
+function groupDeployTargets() {
+  const container = document.getElementById('deploy-targets');
+  if (!container) return;
+  const targets = [...container.querySelectorAll('.deploy-target-item')];
+  if (targets.length === 0) return;
+
+  const groups = new Map();
+  targets.forEach(target => {
+    const name = target.querySelector('.target-cb').value;
+    const parts = name.split('/');
+    const group = parts.length > 1 ? parts.shift() : 'Root';
+    target.querySelector('.deploy-target-name').textContent = parts.join('/') || name;
+    if (!groups.has(group)) groups.set(group, []);
+    groups.get(group).push(target);
+  });
+
+  const fragment = document.createDocumentFragment();
+  for (const [group, items] of groups) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'deploy-target-group';
+    const header = document.createElement('button');
+    header.type = 'button';
+    header.className = 'deploy-target-group-header';
+    header.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg><span class="deploy-target-group-name"></span><span class="deploy-target-group-count"></span>';
+    header.querySelector('.deploy-target-group-name').textContent = group;
+    const content = document.createElement('div');
+    content.className = 'deploy-target-group-content';
+    items.forEach(item => content.appendChild(item));
+    const stateKey = 'deploy_target_group_open_' + group;
+    const savedState = localStorage.getItem(stateKey);
+    if (savedState === null ? items.some(item => item.querySelector('.target-cb').checked) : savedState === 'true') wrapper.classList.add('open');
+    header.setAttribute('aria-expanded', wrapper.classList.contains('open'));
+    header.addEventListener('click', () => {
+      const open = wrapper.classList.toggle('open');
+      header.setAttribute('aria-expanded', open);
+      localStorage.setItem(stateKey, open);
+    });
+    wrapper.append(header, content);
+    fragment.appendChild(wrapper);
+  }
+  container.replaceChildren(fragment);
+}
+
+function updateTargetGroupCounts() {
+  document.querySelectorAll('.deploy-target-group').forEach(group => {
+    const boxes = [...group.querySelectorAll('.target-cb')];
+    const selected = boxes.filter(box => box.checked).length;
+    const count = group.querySelector('.deploy-target-group-count');
+    if (count) count.textContent = selected ? `${selected}/${boxes.length}` : String(boxes.length);
+  });
+}
+
+groupDeployTargets();
+
 // Deploy target checkboxes + localStorage persistence
 document.querySelectorAll('.deploy-target-item').forEach(item => {
   const cb = item.querySelector('input[type=checkbox]');
   cb.addEventListener('change', () => {
     item.classList.toggle('checked', cb.checked);
     lsSave('targets', selectedTargets());
+    updateTargetGroupCounts();
   });
 });
 
@@ -165,6 +222,7 @@ if (savedTargets !== null) {
     cb.closest('.deploy-target-item')?.classList.toggle('checked', checked);
   });
 }
+updateTargetGroupCounts();
 
 // ── Button handlers ───────────────────────────────────────────────────────
 const profileSelect = document.getElementById('profile-select');
@@ -188,6 +246,7 @@ cancelBtn.addEventListener('click', async () => {
 });
 
 document.getElementById('deploy-btn').addEventListener('click', () => doDeploy(false));
+document.getElementById('deploy-restart-btn').addEventListener('click', () => doDeploy(true));
 
 document.getElementById('build-deploy-btn').addEventListener('click', async () => {
   const profile = profileSelect.value;
@@ -345,7 +404,6 @@ document.getElementById('add-profile-btn').addEventListener('click', () => openP
 
 // ── Artifacts ─────────────────────────────────────────────────────────────
 async function loadArtifacts() {
-  const picker = document.getElementById('artifact-picker');
   const selectedInput = document.getElementById('artifact-select');
   const hint = document.getElementById('artifact-picker-hint');
 
@@ -360,27 +418,17 @@ async function loadArtifacts() {
     const selected = jars.includes(current) ? current : '';
     selectedInput.value = selected;
 
-    picker.innerHTML = `
-      <button type="button" class="artifact-option ${selected === '' ? 'selected' : ''}" data-artifact="">
-        <span class="artifact-radio"></span>
-        <span><strong>Latest build</strong><small>Automatically use the newest JAR</small></span>
-      </button>` + jars.map(j => `
-      <button type="button" class="artifact-option ${selected === j ? 'selected' : ''}" data-artifact="${esc(j)}">
-        <span class="artifact-radio"></span>
-        <span><strong>${esc(basename(j))}</strong><small>${esc(j)}</small></span>
-      </button>`).join('');
+    selectedInput.innerHTML = '<option value="">Latest build (newest JAR)</option>' + jars.map(j =>
+      `<option value="${esc(j)}">${esc(basename(j))}</option>`
+    ).join('');
+    selectedInput.value = selected;
     hint.textContent = jars.length === 0
       ? 'No JARs found in build/libs, target, or deploy.'
       : `${jars.length} deployable JAR${jars.length === 1 ? '' : 's'} found.`;
-    picker.querySelectorAll('.artifact-option').forEach(option => {
-      option.addEventListener('click', () => {
-        selectedInput.value = option.dataset.artifact;
-        lsSave('artifact', option.dataset.artifact);
-        picker.querySelectorAll('.artifact-option').forEach(el => el.classList.toggle('selected', el === option));
-      });
-    });
+    selectedInput.onchange = () => lsSave('artifact', selectedInput.value);
   } catch (err) {
-    picker.innerHTML = '<div class="artifact-empty">Could not load project artifacts.</div>';
+    selectedInput.innerHTML = '<option value="">Could not load artifacts</option>';
+    selectedInput.disabled = true;
     hint.textContent = String(err.message || err);
   }
 }

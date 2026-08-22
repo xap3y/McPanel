@@ -37,10 +37,14 @@ func NewRouter(a *API) http.Handler {
 	mux.HandleFunc("GET /{$}", a.requireAuth(a.Dashboard))
 
 	// Server pages & actions
+	mux.HandleFunc("GET /servers/new", a.requireAuth(a.NewServerPage))
+	mux.HandleFunc("POST /api/servers", a.requireAuth(a.requireCSRF(a.CreateServer)))
+	mux.HandleFunc("POST /api/servers/manage", a.requireAuth(a.requireCSRF(a.ManageServer)))
 	mux.HandleFunc("GET /servers/{name}", a.requireAuth(a.ServerPage))
 	mux.HandleFunc("POST /api/servers/{name}/{action}", a.requireAuth(a.requireCSRF(a.ServerAction)))
 	mux.HandleFunc("GET /api/servers/{name}/status", a.requireAuth(a.ServerStatusAPI))
 	mux.HandleFunc("GET /api/servers/{name}/screen-name", a.requireAuth(a.ScreenNameAPI))
+	mux.HandleFunc("GET /api/servers/{name}/info", a.requireAuth(a.ServerInfoAPI))
 	mux.HandleFunc("GET /ws/console/{name}", a.requireAuth(a.ConsoleWS))
 
 	// File manager
@@ -58,6 +62,10 @@ func NewRouter(a *API) http.Handler {
 	mux.HandleFunc("GET /api/servers/{name}/plugins", a.requireAuth(a.ListPlugins))
 	mux.HandleFunc("POST /api/servers/{name}/plugins/{plugin}/toggle", a.requireAuth(a.requireCSRF(a.TogglePlugin)))
 	mux.HandleFunc("POST /api/servers/{name}/plugins/{plugin}/delete", a.requireAuth(a.requireCSRF(a.DeletePlugin)))
+
+	// Global Settings
+	mux.HandleFunc("GET /settings", a.requireAuth(a.GlobalSettingsPage))
+	mux.HandleFunc("POST /settings", a.requireAuth(a.requireCSRF(a.GlobalSettingsPage)))
 
 	// Server settings & Velocity
 	mux.HandleFunc("GET /api/servers/{name}/settings", a.requireAuth(a.ServerSettingsAPI))
@@ -92,4 +100,8 @@ func NewRouter(a *API) http.Handler {
 	// Static files
 	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 	return mux
+}
+
+func (a *API) ServerSubfolders() []string {
+	return settings.LoadGlobal(a.DB).Subfolders
 }

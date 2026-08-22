@@ -20,7 +20,7 @@ type fileEntry struct {
 
 func (a *API) serverDirOr404(w http.ResponseWriter, r *http.Request) (string, bool) {
 	name := r.PathValue("name")
-	if !mcserver.IsKnownServer(a.MCRoot, name) {
+	if !mcserver.IsKnownServer(a.MCRoot, name, a.ServerSubfolders()) {
 		http.Error(w, "unknown server", http.StatusNotFound)
 		return "", false
 	}

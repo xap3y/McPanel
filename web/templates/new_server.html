@@ -1,0 +1,134 @@
+{{define "title"}}Create Server — MCPanel{{end}}
+{{define "sidebar-servers"}}
+{{range .AllServers}}
+<a href="/servers/{{pathEscape .Name}}" class="nav-item status-{{lower .Status}}">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+    <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+  </svg>
+  <span class="truncate">{{.Name}}</span>
+  <span class="nav-dot"></span>
+</a>
+{{end}}
+{{end}}
+
+{{define "content"}}
+<div class="topbar">
+  <div>
+    <div class="topbar-title">Create Server</div>
+    <div class="topbar-sub">Download a server JAR and prepare its first-launch configuration</div>
+  </div>
+  <div class="topbar-actions">
+    <a href="/" class="btn btn-ghost btn-sm">Cancel</a>
+  </div>
+</div>
+
+<div class="page-content new-server-page">
+  <form id="new-server-form">
+    <div class="card mb-4">
+      <div class="card-header"><div class="card-title">Server and JAR</div></div>
+      <div class="card-body">
+        <div class="settings-grid">
+          <div class="field">
+            <label for="new-server-name">Server name</label>
+            <input id="new-server-name" type="text" required maxlength="80" pattern="[A-Za-z0-9._-]+" placeholder="1.21.11">
+            <div class="field-hint">Used as the server directory name.</div>
+          </div>
+          <div class="field">
+            <label for="new-server-group">Location</label>
+            <select id="new-server-group">
+              <option value="">Root</option>
+              {{range .Groups}}<option value="{{.}}">{{.}}</option>{{end}}
+            </select>
+            <div class="field-hint">Configured server group folder.</div>
+          </div>
+          <div class="field field-full">
+            <label for="new-server-url">Server JAR URL</label>
+            <input id="new-server-url" type="url" required placeholder="https://example.com/server.jar">
+            <div class="field-hint">Direct HTTP or HTTPS download URL. Redirects are supported.</div>
+          </div>
+          <div class="field">
+            <label for="new-server-jar-name">Save JAR as</label>
+            <input id="new-server-jar-name" type="text" required value="server.jar" pattern="[^/\\]+\.jar">
+          </div>
+          <div class="field new-server-eula-field">
+            <label class="config-checkbox">
+              <input id="new-server-eula" type="checkbox" checked>
+              <span><strong>Accept Minecraft EULA</strong><small>Create <code>eula.txt</code> with <code>eula=true</code></small></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        <div>
+          <div class="card-title">First-launch template</div>
+          <div class="text-muted text-sm mt-1">Every setting is optional and editable.</div>
+        </div>
+      </div>
+      <div class="card-body config-preset-list">
+        <label class="config-preset">
+          <input type="checkbox" checked data-config="bukkit" data-key="settings.allow-end">
+          <span class="config-preset-copy"><strong>Disable The End</strong><small><code>bukkit.yml → settings.allow-end</code></small></span>
+          <input class="preset-value" type="text" value="false" aria-label="settings.allow-end value">
+        </label>
+        <label class="config-preset">
+          <input type="checkbox" checked data-config="properties" data-key="view-distance">
+          <span class="config-preset-copy"><strong>View distance</strong><small><code>server.properties → view-distance</code></small></span>
+          <input class="preset-value" type="text" value="32" aria-label="view-distance value">
+        </label>
+        <label class="config-preset">
+          <input type="checkbox" checked data-config="properties" data-key="online-mode">
+          <span class="config-preset-copy"><strong>Offline mode</strong><small><code>server.properties → online-mode</code></small></span>
+          <input class="preset-value" type="text" value="false" aria-label="online-mode value">
+        </label>
+        <label class="config-preset">
+          <input type="checkbox" checked data-config="properties" data-key="allow-nether">
+          <span class="config-preset-copy"><strong>Disable Nether</strong><small><code>server.properties → allow-nether</code></small></span>
+          <input class="preset-value" type="text" value="false" aria-label="allow-nether value">
+        </label>
+        <label class="config-preset">
+          <input type="checkbox" checked data-config="properties" data-key="level-type">
+          <span class="config-preset-copy"><strong>Flat world</strong><small><code>server.properties → level-type</code></small></span>
+          <input class="preset-value" type="text" value="minecraft:flat" aria-label="level-type value">
+        </label>
+      </div>
+    </div>
+
+    <div class="settings-grid custom-config-grid mb-4">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Custom server.properties</div>
+            <div class="text-muted text-sm mt-1">One-line key/value entries.</div>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" data-add-config="properties">Add value</button>
+        </div>
+        <div class="card-body custom-config-rows" id="custom-properties"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Custom bukkit.yml</div>
+            <div class="text-muted text-sm mt-1">Use dotted paths such as <code>settings.shutdown-message</code>.</div>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" data-add-config="bukkit">Add value</button>
+        </div>
+        <div class="card-body custom-config-rows" id="custom-bukkit"></div>
+      </div>
+    </div>
+
+    <div class="new-server-submit">
+      <div class="text-muted text-sm" id="new-server-progress"></div>
+      <button type="submit" class="btn btn-primary" id="new-server-submit-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M12 5v14M5 12h14"/></svg>
+        Create Server
+      </button>
+    </div>
+  </form>
+</div>
+
+<script src="/static/js/new-server.js?v=1"></script>
+{{end}}

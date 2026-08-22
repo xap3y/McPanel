@@ -27,7 +27,7 @@ type wsMsg struct {
 
 func (a *API) ConsoleWS(w http.ResponseWriter, r *http.Request) {
 	name := r.PathValue("name")
-	if !mcserver.IsKnownServer(a.MCRoot, name) {
+	if !mcserver.IsKnownServer(a.MCRoot, name, a.ServerSubfolders()) {
 		http.Error(w, "unknown server", http.StatusNotFound)
 		return
 	}

@@ -33,11 +33,15 @@ func NewManager(root, screenPrefix, logDir string) *Manager {
 }
 
 func (m *Manager) SessionName(server string) string {
-	return m.screenPrefix + server
+	return m.screenPrefix + strings.ReplaceAll(server, "/", "_")
 }
 
 func (m *Manager) LogPath(server string) string {
-	return filepath.Join(m.logDir, server+".log")
+	return filepath.Join(m.logDir, strings.ReplaceAll(server, "/", "_")+".log")
+}
+
+func (m *Manager) screenRCPath(server string) string {
+	return filepath.Join(m.logDir, strings.ReplaceAll(server, "/", "_")+".screenrc")
 }
 
 // StartedAt returns the time we started the given server (zero if unknown / started outside panel).
@@ -81,8 +85,13 @@ func (m *Manager) Start(server, serverDir string, s Settings) error {
 	}
 
 	// Write a temporary .screenrc for this server to set the logfile and 256 colors
-	rcPath := filepath.Join(m.logDir, server+".screenrc")
-	os.WriteFile(rcPath, []byte(fmt.Sprintf("logfile %s\nlogfile flush 0\nterm screen-256color\n", m.LogPath(server))), 0o644)
+	// Server names may contain a configured group prefix (for example
+	// "folia/1.21.11"). Keep runtime files flat, just as LogPath does;
+	// otherwise the missing log subdirectory prevents screen from starting.
+	rcPath := m.screenRCPath(server)
+	if err := os.WriteFile(rcPath, []byte(fmt.Sprintf("logfile %s\nlogfile flush 0\nterm screen-256color\n", m.LogPath(server))), 0o644); err != nil {
+		return fmt.Errorf("write screen configuration: %w", err)
+	}
 
 	jar, err := ResolveServerJar(serverDir, s.ServerJar)
 	if err != nil {

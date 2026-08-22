@@ -76,3 +76,7 @@ CREATE TABLE IF NOT EXISTS custom_projects (
   dir VARCHAR(1024) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS global_settings (
+  setting_key VARCHAR(128) PRIMARY KEY,
+  setting_value TEXT
+) ENGINE=InnoDB;

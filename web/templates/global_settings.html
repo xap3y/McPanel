@@ -1,0 +1,96 @@
+{{define "title"}}Global Settings — MCPanel{{end}}
+{{define "sidebar-servers"}}
+{{range .AllServers}}
+<a href="/servers/{{pathEscape .Name}}" class="nav-item status-{{lower .Status}}">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+    <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+  </svg>
+  <span class="truncate">{{.Name}}</span>
+  <span class="nav-dot"></span>
+</a>
+{{end}}
+{{end}}
+
+{{define "content"}}
+<div class="topbar">
+  <span class="topbar-title">Global Settings</span>
+</div>
+<div class="page-content global-settings-page">
+  <form id="global-settings-form" class="card global-settings-card">
+    <div class="card-header global-settings-header">
+      <div>
+        <div class="card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h6l2 2h10v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 7V5a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v2"/></svg>
+          Server group folders
+        </div>
+        <div class="text-muted text-sm mt-1">Organize servers into collapsible folders in the sidebar and deployment picker.</div>
+      </div>
+    </div>
+    <div class="card-body global-settings-body">
+      <div id="subfolder-inputs" class="subfolder-input-list"></div>
+      <button type="button" class="subfolder-add-btn" id="add-subfolder-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Add server group
+      </button>
+      <div class="field-hint subfolder-hint">Folder names are relative to your configured Minecraft root.</div>
+    </div>
+    <div class="global-settings-footer">
+      <span class="text-muted text-sm" id="global-settings-status">Changes apply after saving.</span>
+      <button type="submit" class="btn btn-primary">Save Settings</button>
+    </div>
+  </form>
+</div>
+<script>
+const existing = "{{.Subfolders}}".split(',').map(s=>s.trim()).filter(Boolean);
+const container = document.getElementById('subfolder-inputs');
+
+function addInput(val = '') {
+  const div = document.createElement('div');
+  div.className = 'subfolder-input-row';
+  const icon = document.createElement('span');
+  icon.className = 'subfolder-row-icon';
+  icon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h6l2 2h10v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>';
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'subfolder-input';
+  input.value = val;
+  input.placeholder = 'Folder name, e.g. folia';
+  input.autocomplete = 'off';
+  const remove = document.createElement('button');
+  remove.type = 'button';
+  remove.className = 'subfolder-remove-btn';
+  remove.title = 'Remove folder';
+  remove.setAttribute('aria-label', 'Remove folder');
+  remove.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+  remove.addEventListener('click', () => div.remove());
+  div.append(icon, input, remove);
+  container.appendChild(div);
+  if (!val) input.focus();
+}
+
+if (existing.length === 0) addInput('');
+else existing.forEach(addInput);
+
+document.getElementById('add-subfolder-btn').addEventListener('click', () => addInput());
+
+document.getElementById('global-settings-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const inputs = [...document.querySelectorAll('.subfolder-input')].map(el => el.value.trim()).filter(Boolean);
+  const r = await fetch('/settings', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      Subfolders: inputs,
+      _csrf: window.CSRF
+    })
+  });
+  if (r.ok) {
+    toast('Settings saved', 'success');
+    setTimeout(() => location.reload(), 1000);
+  } else {
+    toast('Save failed', 'error');
+  }
+});
+</script>
+{{end}}

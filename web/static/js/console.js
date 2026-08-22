@@ -150,7 +150,7 @@ function appendLine(raw) {
 
 function connect() {
   const proto = location.protocol === 'https:' ? 'wss' : 'ws';
-  ws = new WebSocket(`${proto}://${location.host}/ws/console/${window.SERVER_NAME}`);
+  ws = new WebSocket(`${proto}://${location.host}/ws/console/${encodeURIComponent(window.SERVER_NAME)}`);
 
   ws.onopen = () => {
     appendLine('\x1b[2m[panel] Connected to console\x1b[0m');

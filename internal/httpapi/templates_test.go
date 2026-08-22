@@ -26,9 +26,63 @@ func TestProjectPageRendersPastDeployTargets(t *testing.T) {
 		t.Fatalf("render project page: %v", err)
 	}
 	page := out.String()
-	for _, expected := range []string{"Build Profiles", "Add Custom Command", "artifact-picker", "target-checkbox", "project.js?v=5"} {
+	for _, expected := range []string{"Build Profiles", "Add Custom Command", "artifact-select", "target-checkbox", "deploy-restart-btn", "server-context-menu", "data-server-menu-action=\"rename\"", "style.css?v=15", "project.js?v=7"} {
 		if !strings.Contains(page, expected) {
 			t.Errorf("rendered page is missing %q", expected)
 		}
+	}
+}
+
+func TestNewServerPageRendersCreationOptions(t *testing.T) {
+	var out bytes.Buffer
+	err := newServerTpl.ExecuteTemplate(&out, "layout", map[string]any{
+		"Groups":     []string{"folia"},
+		"AllServers": []sidebarServer{},
+		"CSRF":       "test-token",
+		"ActiveNav":  "new-server",
+	})
+	if err != nil {
+		t.Fatalf("render new server page: %v", err)
+	}
+	page := out.String()
+	for _, expected := range []string{"Create Server", "Server JAR URL", "folia", "settings.allow-end", "view-distance", "online-mode", "allow-nether", "level-type", "new-server.js?v=1"} {
+		if !strings.Contains(page, expected) {
+			t.Errorf("rendered page is missing %q", expected)
+		}
+	}
+}
+
+func TestValidServerDirectoryName(t *testing.T) {
+	for _, name := range []string{"1.21.11", "folia-test", "server_2"} {
+		if !validServerDirectoryName(name) {
+			t.Errorf("expected %q to be valid", name)
+		}
+	}
+	for _, name := range []string{"", ".hidden", "../escape", "two/levels", "has space"} {
+		if validServerDirectoryName(name) {
+			t.Errorf("expected %q to be invalid", name)
+		}
+	}
+}
+
+func TestServerPageRendersEmbeddedMonacoEditor(t *testing.T) {
+	var out bytes.Buffer
+	err := serverTpl.ExecuteTemplate(&out, "layout", map[string]any{
+		"Name":       "folia/1.21.11",
+		"AllServers": []sidebarServer{},
+		"CSRF":       "test-token",
+		"ActiveNav":  "server-folia/1.21.11",
+	})
+	if err != nil {
+		t.Fatalf("render server page: %v", err)
+	}
+	page := out.String()
+	for _, expected := range []string{"file-editor-workspace", "monaco-editor", "editor-back-btn", "editor-save-btn", "vendor/monaco/vs/loader.js", "server.js?v=9"} {
+		if !strings.Contains(page, expected) {
+			t.Errorf("rendered page is missing %q", expected)
+		}
+	}
+	if strings.Contains(page, "editor-modal") {
+		t.Error("server page still renders the old floating editor modal")
 	}
 }

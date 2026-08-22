@@ -178,7 +178,7 @@ func (a *API) DeployProject(w http.ResponseWriter, r *http.Request) {
 
 	results := map[string]string{}
 	for _, serverName := range targets {
-		if !mcserver.IsKnownServer(a.MCRoot, serverName) {
+		if !mcserver.IsKnownServer(a.MCRoot, serverName, a.ServerSubfolders()) {
 			results[serverName] = "unknown server"
 			continue
 		}
