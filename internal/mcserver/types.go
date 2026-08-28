@@ -18,6 +18,7 @@ type Settings struct {
 	ServerJar       string
 	ServerArgs      []string
 	VelocityEnabled bool
+	ServerPort      int
 }
 
 type Server struct {

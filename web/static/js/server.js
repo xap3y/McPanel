@@ -27,6 +27,13 @@ async function loadServerStatus() {
     const status = s.status || 'OFFLINE';
     serverSubtitle.innerHTML = `<span class="badge badge-${status.toLowerCase()}">${status}</span>${s.uptime ? ' · ' + s.uptime : ''}${s.ram ? ' · ' + s.ram : ''}${s.cpu ? ' · ' + s.cpu + '% CPU' : ''}`;
     renderTopbarActions(status);
+    const health = {cpu: s.cpu ? s.cpu + '%' : '—', memory: s.ram || '—', disk: s.disk || '—', uptime: s.uptime || '—', tps: s.tps || '—', players: s.players || '—'};
+    Object.entries(health).forEach(([key, value]) => {
+      const el = document.getElementById('health-' + key);
+      if (el) el.textContent = value;
+    });
+    const command = document.getElementById('startup-command');
+    if (command && s.command) command.textContent = s.command;
 
     // Update left sidebar dot
     const navItem = document.querySelector(`.sidebar-nav a[href="/servers/${encodeURIComponent(SERVER_NAME)}"]`);
@@ -524,7 +531,7 @@ async function loadPlugins() {
     row.innerHTML = `
       <span class="badge ${p.enabled ? 'badge-online' : 'badge-offline'}">${p.enabled ? 'ENABLED' : 'DISABLED'}</span>
       <span class="plugin-name ${p.enabled ? '' : 'disabled'}">${escHtml(p.name)}</span>
-      <span class="plugin-note text-mono">*.jar${p.enabled?'':'.d'}</span>
+      <span class="plugin-note text-mono">${formatPluginSize(p.sizeBytes)} · ${p.enabled ? '.jar' : '.jar.d'}</span>
       <div class="plugin-actions">
         <button class="btn ${p.enabled ? 'btn-danger' : 'btn-success'} btn-sm" data-plugin-action="toggle">
           ${p.enabled ? 'Disable' : 'Enable'}
@@ -580,6 +587,12 @@ async function loadPlugins() {
   });
 }
 
+function formatPluginSize(bytes) {
+  const size = Number(bytes) || 0;
+  if (size >= 1024 * 1024) return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+  return `${Math.max(1, Math.round(size / 1024))} KB`;
+}
+
 // ── Settings ───────────────────────────────────────────────────────────────
 async function loadSettings() {
   const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/settings`);
@@ -590,6 +603,7 @@ async function loadSettings() {
   document.getElementById('s-xmx').value  = s.Xmx || '';
   document.getElementById('s-jvmargs').value    = (s.JVMArgs || []).join('\n');
   document.getElementById('s-jar').value        = s.ServerJar || '';
+  document.getElementById('s-port').value       = s.ServerPort || 25565;
   document.getElementById('s-serverargs').value = (s.ServerArgs || []).join('\n');
 
   const vtoggle = document.getElementById('velocity-toggle');
@@ -604,6 +618,7 @@ document.getElementById('settings-form').addEventListener('submit', async (e) =>
     JavaPath: f.JavaPath.value, Xms: f.Xms.value, Xmx: f.Xmx.value,
     JVMArgs:  f.JVMArgsText.value.split('\n').filter(Boolean),
     ServerJar: f.ServerJar.value,
+    ServerPort: Number(f.ServerPort.value),
     ServerArgs: f.ServerArgsText.value.split('\n').filter(Boolean),
   };
   const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/settings`, {
@@ -612,6 +627,12 @@ document.getElementById('settings-form').addEventListener('submit', async (e) =>
   });
   if (r.ok) toast('Settings saved — restart for changes to apply', 'success');
   else toast('Save failed', 'error');
+});
+
+document.getElementById('copy-startup-command')?.addEventListener('click', async () => {
+  const command = document.getElementById('startup-command').textContent;
+  await navigator.clipboard.writeText(command);
+  toast('Startup command copied', 'success');
 });
 
 document.getElementById('velocity-toggle').addEventListener('change', async (e) => {

@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 
@@ -23,11 +24,11 @@ var tplFuncs = template.FuncMap{
 	"lower": func(v interface{}) string {
 		return strings.ToLower(fmt.Sprintf("%v", v))
 	},
-	"basename":  filepath.Base,
+	"basename":   filepath.Base,
 	"pathEscape": url.PathEscape,
-	"fmtRAM":    fmtRAM,
-	"fmtUptime": fmtUptime,
-	"fmtTime":   fmtRelTime,
+	"fmtRAM":     fmtRAM,
+	"fmtUptime":  fmtUptime,
+	"fmtTime":    fmtRelTime,
 }
 
 func fmtRAM(bytes uint64) string {
@@ -272,6 +273,12 @@ func (a *API) ServerStatusAPI(w http.ResponseWriter, r *http.Request) {
 	uptime := ""
 	ramStr := ""
 	cpuStr := ""
+	totalDisk := cachedDirectorySize(mcserver.ServerDir(a.MCRoot, name))
+	command, commandErr := a.Screen.CommandPreview(mcserver.ServerDir(a.MCRoot, name), settings.Load(a.DB, name))
+	if commandErr != nil {
+		command = commandErr.Error()
+	}
+	tps, players := observableServerStats(a.Screen.LogPath(name))
 	if running {
 		st = "ONLINE"
 		startedAt := a.Screen.StartedAt(name)
@@ -290,12 +297,48 @@ func (a *API) ServerStatusAPI(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]any{
-		"status": st,
-		"pid":    pid,
-		"uptime": uptime,
-		"ram":    ramStr,
-		"cpu":    cpuStr,
+		"status":  st,
+		"pid":     pid,
+		"uptime":  uptime,
+		"ram":     ramStr,
+		"cpu":     cpuStr,
+		"disk":    fmtRAM(totalDisk),
+		"tps":     tps,
+		"players": players,
+		"command": command,
 	})
+}
+
+var (
+	tpsLinePattern    = regexp.MustCompile(`(?i)TPS(?: from last 1m, 5m, 15m)?:?\s*([0-9*.]+)`)
+	playerLinePattern = regexp.MustCompile(`(?i)There are (\d+) of a max(?: of)? (\d+) players online`)
+)
+
+func observableServerStats(logPath string) (tps, players string) {
+	data, err := os.ReadFile(logPath)
+	if err != nil {
+		return "", ""
+	}
+	if len(data) > 256<<10 {
+		data = data[len(data)-(256<<10):]
+	}
+	lines := strings.Split(string(data), "\n")
+	for i := len(lines) - 1; i >= 0; i-- {
+		if tps == "" {
+			if match := tpsLinePattern.FindStringSubmatch(lines[i]); len(match) > 1 {
+				tps = strings.TrimPrefix(match[1], "*")
+			}
+		}
+		if players == "" {
+			if match := playerLinePattern.FindStringSubmatch(lines[i]); len(match) > 2 {
+				players = match[1] + "/" + match[2]
+			}
+		}
+		if tps != "" && players != "" {
+			break
+		}
+	}
+	return tps, players
 }
 
 // ── Projects page ─────────────────────────────────────────────────────────

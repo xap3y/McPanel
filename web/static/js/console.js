@@ -113,8 +113,10 @@ const cmdInput    = document.getElementById('cmd-input');
 const scrollBtn   = document.getElementById('autoscroll-btn');
 
 let autoscroll = true;
-let cmdHistory = [];
-let histIdx    = -1;
+const historyKey = `mcpanel.commandHistory.${window.SERVER_NAME}`;
+const snippetsKey = 'mcpanel.commandSnippets';
+let cmdHistory = (() => { try { return JSON.parse(localStorage.getItem(historyKey)) || []; } catch (_) { return []; } })();
+let histIdx    = cmdHistory.length;
 let ws         = null;
 
 function updateScrollBtn() {
@@ -139,8 +141,11 @@ scrollBtn.addEventListener('click', () => {
 function appendLine(raw) {
   const span = document.createElement('span');
   span.className = 'console-line';
+  span.dataset.raw = raw.toLowerCase();
+  span.dataset.level = /\b(error|severe|exception|fatal)\b/i.test(raw) ? 'error' : /\bwarn(?:ing)?\b/i.test(raw) ? 'warn' : 'info';
   span.innerHTML = ansiToHtml(raw) + '\n';
   consoleEl.appendChild(span);
+  applyConsoleFilters();
   if (autoscroll) consoleEl.scrollTop = consoleEl.scrollHeight;
   // Trim old lines
   while (consoleEl.childElementCount > 3000) {
@@ -185,6 +190,8 @@ cmdInput.addEventListener('keydown', (e) => {
       appendLine('\x1b[31m[panel] Not connected\x1b[0m');
     }
     cmdHistory.push(cmd);
+    cmdHistory = [...new Set(cmdHistory.slice(-199).concat(cmd))];
+    localStorage.setItem(historyKey, JSON.stringify(cmdHistory));
     histIdx = cmdHistory.length;
     cmdInput.value = '';
   } else if (e.key === 'ArrowUp') {
@@ -197,6 +204,43 @@ cmdInput.addEventListener('keydown', (e) => {
     else { histIdx = cmdHistory.length; cmdInput.value = ''; }
   }
 });
+
+const consoleSearch = document.getElementById('console-search');
+const consoleLevel = document.getElementById('console-level');
+function applyConsoleFilters() {
+  const query = (consoleSearch?.value || '').trim().toLowerCase();
+  const level = consoleLevel?.value || 'all';
+  consoleEl.querySelectorAll('.console-line').forEach(line => {
+    line.hidden = !!query && !line.dataset.raw.includes(query) || level !== 'all' && line.dataset.level !== level;
+  });
+}
+consoleSearch?.addEventListener('input', applyConsoleFilters);
+consoleLevel?.addEventListener('change', applyConsoleFilters);
+
+const snippetSelect = document.getElementById('console-snippets');
+function loadSnippets() {
+  let snippets = [];
+  try { snippets = JSON.parse(localStorage.getItem(snippetsKey)) || []; } catch (_) {}
+  snippetSelect.innerHTML = '<option value="">Command snippets…</option>';
+  snippets.forEach(command => snippetSelect.add(new Option(command, command)));
+}
+snippetSelect?.addEventListener('change', () => {
+  if (snippetSelect.value) {
+    cmdInput.value = snippetSelect.value;
+    cmdInput.focus();
+    snippetSelect.value = '';
+  }
+});
+document.getElementById('save-snippet-btn')?.addEventListener('click', () => {
+  const command = cmdInput.value.trim();
+  if (!command) return;
+  let snippets = [];
+  try { snippets = JSON.parse(localStorage.getItem(snippetsKey)) || []; } catch (_) {}
+  if (!snippets.includes(command)) snippets.push(command);
+  localStorage.setItem(snippetsKey, JSON.stringify(snippets.slice(-30)));
+  loadSnippets();
+});
+loadSnippets();
 
 // ── Ctrl-C button ──────────────────────────────────────────────────────────
 const ctrlcBtn = document.getElementById('ctrlc-btn');

@@ -40,12 +40,16 @@ func NewRouter(a *API) http.Handler {
 	mux.HandleFunc("GET /servers/new", a.requireAuth(a.NewServerPage))
 	mux.HandleFunc("POST /api/servers", a.requireAuth(a.requireCSRF(a.CreateServer)))
 	mux.HandleFunc("POST /api/servers/manage", a.requireAuth(a.requireCSRF(a.ManageServer)))
+	mux.HandleFunc("POST /api/servers/bulk", a.requireAuth(a.requireCSRF(a.BulkServerAction)))
+	mux.HandleFunc("GET /api/servers/statuses", a.requireAuth(a.AllServerStatusesAPI))
 	mux.HandleFunc("GET /servers/{name}", a.requireAuth(a.ServerPage))
 	mux.HandleFunc("POST /api/servers/{name}/{action}", a.requireAuth(a.requireCSRF(a.ServerAction)))
 	mux.HandleFunc("GET /api/servers/{name}/status", a.requireAuth(a.ServerStatusAPI))
 	mux.HandleFunc("GET /api/servers/{name}/screen-name", a.requireAuth(a.ScreenNameAPI))
 	mux.HandleFunc("GET /api/servers/{name}/info", a.requireAuth(a.ServerInfoAPI))
+	mux.HandleFunc("GET /api/servers/{name}/log", a.requireAuth(a.ServerLogDownload))
 	mux.HandleFunc("GET /ws/console/{name}", a.requireAuth(a.ConsoleWS))
+	mux.HandleFunc("GET /ws/server-statuses", a.requireAuth(a.ServerStatusesWS))
 
 	// File manager
 	mux.HandleFunc("GET /api/servers/{name}/files", a.requireAuth(a.ListFiles))

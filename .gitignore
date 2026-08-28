@@ -1,3 +1,8 @@
 build.sh
 .idea
 data/logs/
+mcpanel.log
+mcpanel
+db.sqlite3
+.DS_STORE
+test_*.go

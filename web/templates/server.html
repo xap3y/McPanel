@@ -46,7 +46,22 @@
 <!-- Tab: Console -->
 <div class="tab-pane active" id="tab-console">
   <div class="tab-content-inner" style="padding-bottom:0">
+    <div class="server-health-strip" id="server-health-strip">
+      <div><span>CPU</span><strong id="health-cpu">—</strong></div>
+      <div><span>Memory</span><strong id="health-memory">—</strong></div>
+      <div><span>Disk</span><strong id="health-disk">—</strong></div>
+      <div><span>Uptime</span><strong id="health-uptime">—</strong></div>
+      <div><span>TPS</span><strong id="health-tps" title="Available after a TPS result appears in the server log">—</strong></div>
+      <div><span>Players</span><strong id="health-players" title="Available after a player-list result appears in the server log">—</strong></div>
+    </div>
     <div class="console-wrap">
+      <div class="console-toolbar">
+        <input type="search" id="console-search" placeholder="Search console…" aria-label="Search console">
+        <select id="console-level" aria-label="Filter log level"><option value="all">All levels</option><option value="error">Errors</option><option value="warn">Warnings</option><option value="info">Info</option></select>
+        <select id="console-snippets" aria-label="Saved command snippets"><option value="">Command snippets…</option></select>
+        <button class="btn btn-secondary btn-sm" type="button" id="save-snippet-btn">Save command</button>
+        <a class="btn btn-ghost btn-sm" href="/api/servers/{{pathEscape .Name}}/log">Download log</a>
+      </div>
       <div class="console-output" id="console-output"></div>
       <div class="console-input-row">
         <span class="console-prompt">›</span>
@@ -162,9 +177,18 @@
             <input id="s-jar" name="ServerJar" type="text" placeholder="paper.jar">
           </div>
           <div class="field">
+            <label for="s-port">Server port</label>
+            <input id="s-port" name="ServerPort" type="number" min="1" max="65535" placeholder="25565">
+            <div class="field-hint">Updates <code>server.properties</code>; restart required.</div>
+          </div>
+          <div class="field">
             <label for="s-serverargs">Server arguments</label>
             <textarea id="s-serverargs" name="ServerArgsText" placeholder="nogui" style="min-height:60px"></textarea>
           </div>
+        </div>
+        <div class="startup-preview">
+          <div class="flex items-center justify-between gap-2"><label>Startup command preview</label><button type="button" class="btn btn-ghost btn-sm" id="copy-startup-command">Copy</button></div>
+          <code id="startup-command">Loading…</code>
         </div>
       </form>
 
@@ -200,6 +224,6 @@ window.SERVER_NAME = {{.Name}};
 const CSRF = window.CSRF;
 </script>
 <script src="/static/vendor/monaco/vs/loader.js"></script>
-<script src="/static/js/console.js?v=2"></script>
-<script src="/static/js/server.js?v=9"></script>
+<script src="/static/js/console.js?v=3"></script>
+<script src="/static/js/server.js?v=11"></script>
 {{end}}

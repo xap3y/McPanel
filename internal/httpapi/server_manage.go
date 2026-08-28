@@ -10,12 +10,14 @@ import (
 
 	"mcpanel/internal/fsutil"
 	"mcpanel/internal/mcserver"
+	"mcpanel/internal/settings"
 )
 
 type manageServerRequest struct {
 	Action  string `json:"action"`
 	Name    string `json:"name"`
 	NewName string `json:"newName"`
+	Group   string `json:"group"`
 }
 
 func (a *API) ServerInfoAPI(w http.ResponseWriter, r *http.Request) {
@@ -44,7 +46,7 @@ func (a *API) ManageServer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if running, _ := a.Screen.IsRunning(req.Name); running {
-		http.Error(w, "stop the server before renaming or deleting it", http.StatusConflict)
+		http.Error(w, "stop the server before renaming, moving, cloning, or deleting it", http.StatusConflict)
 		return
 	}
 
@@ -53,9 +55,70 @@ func (a *API) ManageServer(w http.ResponseWriter, r *http.Request) {
 		a.renameServer(w, req)
 	case "delete":
 		a.deleteServer(w, req.Name)
+	case "move":
+		a.moveServer(w, req)
+	case "clone":
+		a.cloneServer(w, req)
 	default:
 		http.Error(w, "unknown server management action", http.StatusBadRequest)
 	}
+}
+
+func (a *API) validTargetGroup(group string) bool {
+	if group == "" {
+		return true
+	}
+	for _, configured := range a.ServerSubfolders() {
+		if group == configured {
+			return true
+		}
+	}
+	return false
+}
+
+func serverNameInGroup(base, group string) string {
+	if group == "" {
+		return base
+	}
+	return group + "/" + base
+}
+
+func (a *API) moveServer(w http.ResponseWriter, req manageServerRequest) {
+	group := strings.TrimSpace(req.Group)
+	if !a.validTargetGroup(group) {
+		http.Error(w, "unknown server group", http.StatusBadRequest)
+		return
+	}
+	req.NewName = filepath.Base(filepath.FromSlash(req.Name))
+	a.relocateServer(w, req, serverNameInGroup(req.NewName, group))
+}
+
+func (a *API) cloneServer(w http.ResponseWriter, req manageServerRequest) {
+	newBase := strings.TrimSpace(req.NewName)
+	group := strings.TrimSpace(req.Group)
+	if !validServerDirectoryName(newBase) || !a.validTargetGroup(group) {
+		http.Error(w, "invalid clone name or group", http.StatusBadRequest)
+		return
+	}
+	newServerName := serverNameInGroup(newBase, group)
+	targetDir, err := fsutil.SafeJoin(a.MCRoot, filepath.FromSlash(newServerName))
+	if err != nil {
+		http.Error(w, "invalid destination path", http.StatusBadRequest)
+		return
+	}
+	if _, err := os.Stat(targetDir); !errors.Is(err, os.ErrNotExist) {
+		http.Error(w, "a server with that name already exists", http.StatusConflict)
+		return
+	}
+	if err := copyDirectory(mcserver.ServerDir(a.MCRoot, req.Name), targetDir); err != nil {
+		_ = os.RemoveAll(targetDir)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if a.DB != nil {
+		_ = settings.Save(a.DB, newServerName, settings.Load(a.DB, req.Name))
+	}
+	writeServerManagementResult(w, newServerName)
 }
 
 func (a *API) renameServer(w http.ResponseWriter, req manageServerRequest) {
@@ -72,6 +135,10 @@ func (a *API) renameServer(w http.ResponseWriter, req manageServerRequest) {
 	if group != "" {
 		newServerName = group + "/" + newBase
 	}
+	a.relocateServer(w, req, newServerName)
+}
+
+func (a *API) relocateServer(w http.ResponseWriter, req manageServerRequest, newServerName string) {
 	if newServerName == req.Name {
 		writeServerManagementResult(w, newServerName)
 		return

@@ -29,6 +29,22 @@ let buildWS      = null;
 let buildRunning = false;
 let buildStart   = null;
 let timerInt     = null;
+let projectButtonSnapshot = null;
+
+function lockProjectButtons() {
+  if (projectButtonSnapshot) return;
+  const buttons = [...document.querySelectorAll('.main button')];
+  projectButtonSnapshot = buttons.map(button => ({button, disabled: button.disabled}));
+  buttons.forEach(button => button.disabled = true);
+  document.querySelector('.project-page')?.setAttribute('aria-busy', 'true');
+}
+
+function unlockProjectButtons() {
+  if (!projectButtonSnapshot) return;
+  projectButtonSnapshot.forEach(({button, disabled}) => button.disabled = disabled);
+  projectButtonSnapshot = null;
+  document.querySelector('.project-page')?.removeAttribute('aria-busy');
+}
 
 function setBuildRunning(running) {
   buildRunning = running;
@@ -62,7 +78,7 @@ function connectBuildWS(onFinished) {
   const proto = location.protocol === 'https:' ? 'wss' : 'ws';
   buildWS = new WebSocket(`${proto}://${location.host}/ws/build/${PROJECT_NAME}`);
 
-  buildWS.onmessage = (evt) => {
+  buildWS.onmessage = async (evt) => {
     try {
       const msg = JSON.parse(evt.data);
       if (msg.type === 'line') appendBuildLine(msg.data);
@@ -79,7 +95,11 @@ function connectBuildWS(onFinished) {
           setBadge(success ? 'success' : 'failed', success ? 'SUCCESS' : 'FAILED');
           refreshHistory();
           if (success) loadArtifacts();
-          if (onFinished) onFinished(success);
+          if (success && onFinished) await onFinished(success);
+          else {
+            unlockProjectButtons();
+            if (onFinished) await onFinished(success);
+          }
         }
       }
     } catch(e) {}
@@ -89,6 +109,7 @@ function connectBuildWS(onFinished) {
     if (buildRunning) {
       setBuildRunning(false);
       buildStatusTx.textContent = 'Disconnected';
+      unlockProjectButtons();
     }
   };
 }
@@ -97,7 +118,8 @@ function setBadge(type, label) {
   buildStatusBg.innerHTML = `<span class="badge badge-${type}">${label}</span>`;
 }
 
-async function startBuild(profile) {
+async function startBuild(profile, onFinished = null) {
+  lockProjectButtons();
   try {
     buildConsole.innerHTML = '';
     buildStatusTx.textContent = 'Starting build…';
@@ -110,16 +132,18 @@ async function startBuild(profile) {
       toast('Could not start build: ' + txt, 'error');
       buildStatusTx.textContent = 'Failed to start';
       setBadge('failed','FAILED');
+      unlockProjectButtons();
       return false;
     }
     setBuildRunning(true);
-    connectBuildWS();
+    connectBuildWS(onFinished);
     return true;
   } catch (err) {
     console.error('Could not start build', err);
     toast('Could not reach the build API. Reload the page and try again.', 'error');
     buildStatusTx.textContent = 'Build request failed';
     setBadge('failed','FAILED');
+    unlockProjectButtons();
     return false;
   }
 }
@@ -130,21 +154,47 @@ async function doDeploy(restart) {
   buildStatusTx.textContent = restart ? 'Deploying + restarting…' : 'Deploying…';
   const artifact = document.getElementById('artifact-select').value;
   const url = `/api/projects/${PROJECT_NAME}/deploy${restart ? '?restart=true' : ''}`;
-  const r = await projectAPI(url, 'POST', { targets, artifact });
-  const data = await r.json().catch(()=>({}));
-  const results = Object.entries(data);
-  const allOk = results.every(([,v]) => v.startsWith('deployed'));
-  if (allOk) toast((restart ? 'Deployed and restarted: ' : 'Deployed to: ') + targets.join(', '), 'success');
-  else {
-    results.forEach(([srv, msg]) => toast(`${srv}: ${msg}`, msg.startsWith('deployed') ? 'success' : 'error'));
+  const loadingToast = toast(
+    restart ? `Deploying and restarting ${targets.join(', ')}…` : `Deploying to ${targets.join(', ')}…`,
+    'loading',
+    {persistent:true}
+  );
+  lockProjectButtons();
+
+  try {
+    const r = await projectAPI(url, 'POST', { targets, artifact });
+    const data = await r.json().catch(()=>({}));
+    if (!r.ok) throw new Error(data.error || 'Deployment failed');
+    const results = Object.entries(data);
+    const allOk = results.length > 0 && results.every(([, message]) =>
+      restart ? message === 'deployed, restarted' : message === 'deployed'
+    );
+    if (allOk) {
+      updateToast(
+        loadingToast,
+        restart ? `${targets.join(', ')}: deployed and restarted` : `${targets.join(', ')}: deployed`,
+        'success'
+      );
+    } else {
+      const failures = results
+        .filter(([, message]) => restart ? message !== 'deployed, restarted' : message !== 'deployed')
+        .map(([server, message]) => `${server}: ${message}`);
+      updateToast(loadingToast, failures.join(' · ') || 'Deployment failed', 'error', 7000);
+    }
+    buildStatusTx.textContent = allOk ? (restart ? 'Deployed + restarted' : 'Deployed') : 'Partial deploy';
+    refreshHistory();
+    return allOk;
+  } catch (error) {
+    updateToast(loadingToast, error.message || 'Deployment failed', 'error', 7000);
+    buildStatusTx.textContent = 'Deployment failed';
+    return false;
+  } finally {
+    unlockProjectButtons();
   }
-  buildStatusTx.textContent = allOk ? (restart ? 'Deployed + restarted' : 'Deployed') : 'Partial deploy';
-  refreshHistory();
-  return allOk;
 }
 
 function selectedTargets() {
-  return Array.from(document.querySelectorAll('.target-cb:checked')).map(cb => cb.value);
+  return Array.from(document.querySelectorAll('#deploy-targets .target-cb:checked')).map(cb => cb.value);
 }
 
 // Keep deploy targets navigable when servers are arranged in group folders.
@@ -204,7 +254,7 @@ function updateTargetGroupCounts() {
 groupDeployTargets();
 
 // Deploy target checkboxes + localStorage persistence
-document.querySelectorAll('.deploy-target-item').forEach(item => {
+document.querySelectorAll('#deploy-targets .deploy-target-item').forEach(item => {
   const cb = item.querySelector('input[type=checkbox]');
   cb.addEventListener('change', () => {
     item.classList.toggle('checked', cb.checked);
@@ -216,7 +266,7 @@ document.querySelectorAll('.deploy-target-item').forEach(item => {
 // Restore persisted target checkboxes (overrides server defaults if saved)
 const savedTargets = lsLoad('targets', null);
 if (savedTargets !== null) {
-  document.querySelectorAll('.target-cb').forEach(cb => {
+  document.querySelectorAll('#deploy-targets .target-cb').forEach(cb => {
     const checked = savedTargets.includes(cb.value);
     cb.checked = checked;
     cb.closest('.deploy-target-item')?.classList.toggle('checked', checked);
@@ -243,6 +293,7 @@ cancelBtn.addEventListener('click', async () => {
   await fetch(`/api/projects/${PROJECT_NAME}/cancel`, {method:'POST',headers:{'X-CSRF-Token':CSRF}});
   toast('Build cancelled', 'info');
   setBuildRunning(false);
+  unlockProjectButtons();
 });
 
 document.getElementById('deploy-btn').addEventListener('click', () => doDeploy(false));
@@ -250,16 +301,12 @@ document.getElementById('deploy-restart-btn').addEventListener('click', () => do
 
 document.getElementById('build-deploy-btn').addEventListener('click', async () => {
   const profile = profileSelect.value;
-  const ok = await startBuild(profile);
-  if (!ok) return;
-  connectBuildWS(async (success) => { if (success) await doDeploy(false); });
+  await startBuild(profile, async (success) => { if (success) await doDeploy(false); });
 });
 
 document.getElementById('bdr-btn').addEventListener('click', async () => {
   const profile = profileSelect.value;
-  const ok = await startBuild(profile);
-  if (!ok) return;
-  connectBuildWS(async (success) => { if (success) await doDeploy(true); });
+  await startBuild(profile, async (success) => { if (success) await doDeploy(true); });
 });
 
 // ── Build Profiles ────────────────────────────────────────────────────────

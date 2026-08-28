@@ -42,11 +42,20 @@
     </div>
 
     {{if .Servers}}
+    <div class="bulk-server-toolbar">
+      <label><input type="checkbox" id="select-all-servers"> Select all</label>
+      <span id="bulk-selection-count">0 selected</span>
+      <button class="btn btn-success btn-sm" data-bulk-action="start" disabled>Start</button>
+      <button class="btn btn-secondary btn-sm" data-bulk-action="restart" disabled>Restart</button>
+      <button class="btn btn-danger btn-sm" data-bulk-action="stop" disabled>Stop</button>
+      <button class="btn btn-secondary btn-sm" data-bulk-action="backup" disabled>Back up</button>
+      <button class="btn btn-danger btn-sm" data-bulk-action="delete" disabled>Delete</button>
+    </div>
     <div class="server-grid" id="server-grid">
       {{range .Servers}}
       <div class="server-card {{lower .Status}}" data-server="{{.Name}}">
         <div class="server-card-header">
-          <a href="/servers/{{pathEscape .Name}}" class="server-card-name">{{.Name}}</a>
+          <label class="server-card-select"><input type="checkbox" class="server-bulk-checkbox" value="{{.Name}}"><a href="/servers/{{pathEscape .Name}}" class="server-card-name">{{.Name}}</a></label>
           <span class="badge badge-{{lower .Status}}" id="card-badge-{{.Name}}">{{.Status}}</span>
         </div>
         <div class="server-card-meta">
@@ -66,6 +75,9 @@
             <span class="stat-label">PID</span>
             <span class="stat-value" id="card-pid-{{.Name}}">—</span>
           </div>
+          <div class="stat-item"><span class="stat-label">Disk</span><span class="stat-value" id="card-disk-{{.Name}}">—</span></div>
+          <div class="stat-item"><span class="stat-label">TPS</span><span class="stat-value" id="card-tps-{{.Name}}">—</span></div>
+          <div class="stat-item"><span class="stat-label">Players</span><span class="stat-value" id="card-players-{{.Name}}">—</span></div>
         </div>
         <div class="server-card-actions" id="card-actions-{{.Name}}">
           <a href="/servers/{{pathEscape .Name}}" class="btn btn-secondary btn-sm">View</a>
@@ -149,11 +161,17 @@ async function pollServerStats() {
       const uptimeEl = document.getElementById('card-uptime-' + name);
       const pidEl    = document.getElementById('card-pid-'    + name);
       const badgeEl  = document.getElementById('card-badge-'  + name);
+      const diskEl = document.getElementById('card-disk-' + name);
+      const tpsEl = document.getElementById('card-tps-' + name);
+      const playersEl = document.getElementById('card-players-' + name);
       if (ramEl)    { ramEl.textContent    = s.ram    || '—'; ramEl.classList.toggle('highlight', !!s.ram); }
       if (cpuEl)    { cpuEl.textContent    = s.cpu    ? s.cpu + '%' : '—'; cpuEl.classList.toggle('highlight', !!s.cpu); }
       if (uptimeEl) { uptimeEl.textContent = s.uptime || '—'; }
       if (pidEl)    { pidEl.textContent    = s.pid    || '—'; }
       if (badgeEl)  { badgeEl.textContent  = s.status; badgeEl.className = 'badge badge-' + s.status.toLowerCase(); }
+      if (diskEl) diskEl.textContent = s.disk || '—';
+      if (tpsEl) tpsEl.textContent = s.tps || '—';
+      if (playersEl) playersEl.textContent = s.players || '—';
     } catch(_) {}
   }
 }
@@ -183,5 +201,26 @@ document.querySelectorAll('button[data-action]').forEach(btn => {
 });
 
 document.getElementById('refresh-btn').addEventListener('click', () => location.reload());
+
+const bulkChecks = [...document.querySelectorAll('.server-bulk-checkbox')];
+function updateBulkToolbar() {
+  const selected = bulkChecks.filter(input => input.checked);
+  document.getElementById('bulk-selection-count').textContent = `${selected.length} selected`;
+  document.querySelectorAll('[data-bulk-action]').forEach(button => button.disabled = selected.length === 0);
+  document.getElementById('select-all-servers').checked = selected.length === bulkChecks.length && bulkChecks.length > 0;
+}
+bulkChecks.forEach(input => input.addEventListener('change', updateBulkToolbar));
+document.getElementById('select-all-servers')?.addEventListener('change', event => {
+  bulkChecks.forEach(input => input.checked = event.target.checked);
+  updateBulkToolbar();
+});
+document.querySelectorAll('[data-bulk-action]').forEach(button => button.addEventListener('click', async () => {
+  const names = bulkChecks.filter(input => input.checked).map(input => input.value);
+  if (button.dataset.bulkAction === 'delete' && !confirm(`Permanently delete ${names.length} selected server(s) and all of their files?`)) return;
+  button.disabled = true;
+  const response = await fetch('/api/servers/bulk', {method:'POST', headers:{'Content-Type':'application/json','X-CSRF-Token':window.CSRF}, body:JSON.stringify({names, action:button.dataset.bulkAction})});
+  if (response.ok) { toast(`Bulk ${button.dataset.bulkAction} completed`, 'success'); setTimeout(() => location.reload(), 800); }
+  else { toast((await response.text()).trim(), 'error'); updateBulkToolbar(); }
+}));
 </script>
 {{end}}

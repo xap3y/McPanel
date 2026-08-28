@@ -8,8 +8,9 @@ import (
 )
 
 type PluginInfo struct {
-	Name    string `json:"name"`
-	Enabled bool   `json:"enabled"`
+	Name      string `json:"name"`
+	Enabled   bool   `json:"enabled"`
+	SizeBytes int64  `json:"sizeBytes"`
 }
 
 func ListPlugins(serverDir string) ([]PluginInfo, error) {
@@ -27,11 +28,15 @@ func ListPlugins(serverDir string) ([]PluginInfo, error) {
 			continue
 		}
 		name := e.Name()
+		var size int64
+		if info, infoErr := e.Info(); infoErr == nil {
+			size = info.Size()
+		}
 		switch {
 		case strings.HasSuffix(name, ".jar.d"):
-			out = append(out, PluginInfo{Name: strings.TrimSuffix(name, ".d"), Enabled: false})
+			out = append(out, PluginInfo{Name: strings.TrimSuffix(name, ".d"), Enabled: false, SizeBytes: size})
 		case strings.HasSuffix(name, ".jar"):
-			out = append(out, PluginInfo{Name: name, Enabled: true})
+			out = append(out, PluginInfo{Name: name, Enabled: true, SizeBytes: size})
 		}
 	}
 	return out, nil

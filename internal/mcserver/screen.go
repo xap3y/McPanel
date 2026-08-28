@@ -10,6 +10,29 @@ import (
 	"time"
 )
 
+func shellQuote(value string) string {
+	if value != "" && !strings.ContainsAny(value, " \t\n'\"\\$`!&;|<>*?()[]{}") {
+		return value
+	}
+	return "'" + strings.ReplaceAll(value, "'", "'\\''") + "'"
+}
+
+// CommandPreview returns the Java command that Start will execute.
+func (m *Manager) CommandPreview(serverDir string, s Settings) (string, error) {
+	jar, err := ResolveServerJar(serverDir, s.ServerJar)
+	if err != nil {
+		return "", err
+	}
+	args := []string{s.JavaPath, "-Xms" + s.Xms, "-Xmx" + s.Xmx}
+	args = append(args, s.JVMArgs...)
+	args = append(args, "-jar", jar)
+	args = append(args, s.ServerArgs...)
+	for i := range args {
+		args[i] = shellQuote(args[i])
+	}
+	return strings.Join(args, " "), nil
+}
+
 type Manager struct {
 	root         string
 	screenPrefix string

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="/static/css/style.css?v=15">
+  <link rel="stylesheet" href="/static/css/style.css?v=17">
   <script>window.CSRF = {{.CSRF}};</script>
 </head>
 <body>
@@ -25,6 +25,10 @@
 
     <nav class="sidebar-nav">
       <div class="sidebar-section">Servers</div>
+      <div class="sidebar-server-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="sidebar-server-search" placeholder="Find server…" aria-label="Find server">
+      </div>
       <a href="/servers/new" class="nav-item sidebar-create-server {{if eq .ActiveNav "new-server"}}active{{end}}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>
@@ -84,6 +88,14 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/></svg>
     Copy path
   </button>
+  <button type="button" class="server-context-item" data-server-menu-action="favorite" role="menuitem">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15 9 22 9 17 14 19 22 12 17 5 22 7 14 2 9 9 9"/></svg>
+    Toggle favorite
+  </button>
+  <button type="button" class="server-context-item" data-server-menu-action="clone" role="menuitem">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+    Clone server
+  </button>
   <div class="server-context-separator"></div>
   <button type="button" class="server-context-item" data-server-menu-action="start" role="menuitem">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="7 4 20 12 7 20 7 4"/></svg>
@@ -118,17 +130,31 @@
 <script>
 // ── Global utilities ──────────────────────────────────────────
 
-function toast(msg, type='info') {
-  const icons = {
-    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
-    error:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
-    info:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
-  };
+const toastIcons = {
+  success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  error:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+  info:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+  loading: '<svg class="toast-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-6.2-8.56"/></svg>',
+};
+
+function toast(msg, type='info', options={}) {
   const el = document.createElement('div');
   el.className = `toast ${type}`;
-  el.innerHTML = `${icons[type]||icons.info} <span>${msg}</span>`;
+  el.innerHTML = `${toastIcons[type]||toastIcons.info} <span></span>`;
+  el.querySelector('span').textContent = msg;
   document.getElementById('toast-container').appendChild(el);
-  setTimeout(() => el.remove(), 4000);
+  if (!options.persistent) el._toastTimer = setTimeout(() => el.remove(), options.timeout || 4000);
+  return el;
+}
+
+function updateToast(el, msg, type='info', timeout=4000) {
+  if (!el || !el.isConnected) return toast(msg, type, {timeout});
+  clearTimeout(el._toastTimer);
+  el.className = `toast ${type}`;
+  el.innerHTML = `${toastIcons[type]||toastIcons.info} <span></span>`;
+  el.querySelector('span').textContent = msg;
+  if (timeout > 0) el._toastTimer = setTimeout(() => el.remove(), timeout);
+  return el;
 }
 
 async function api(url, method='GET', body=null) {
@@ -146,13 +172,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const servers = [...container.querySelectorAll('a.nav-item:not(.sidebar-create-server)')].filter(el => el.getAttribute('href') && el.getAttribute('href').startsWith('/servers/'));
   if (servers.length === 0) return;
 
+  let favorites = [];
+  try { favorites = JSON.parse(localStorage.getItem('mcpanel.serverFavorites')) || []; } catch (_) {}
+
   const groups = new Map();
   servers.forEach(el => {
     const nameSpan = el.querySelector('.truncate');
     if (!nameSpan) return;
     const name = nameSpan.textContent;
+    el.dataset.serverName = name;
+    el.draggable = true;
     const parts = name.split('/');
-    const group = parts.length > 1 ? parts.shift() : 'Root';
+    const originalGroup = parts.length > 1 ? parts.shift() : 'Root';
+    const group = favorites.includes(name) ? '★ Favorites' : originalGroup;
     nameSpan.textContent = parts.join('/') || name;
     if (!groups.has(group)) groups.set(group, []);
     groups.get(group).push(el);
@@ -168,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     header.className = 'sidebar-folder-header nav-item';
     header.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg><span class="truncate"></span>';
     header.querySelector('.truncate').textContent = folder;
+    header.dataset.serverGroup = folder === 'Root' ? '' : folder;
     const content = document.createElement('div');
     content.className = 'sidebar-folder-content';
     els.forEach(el => content.appendChild(el));
@@ -181,12 +214,43 @@ document.addEventListener('DOMContentLoaded', () => {
       const current = wrapper.classList.toggle('open');
       localStorage.setItem(stateKey, current);
     });
+    if (folder !== '★ Favorites') {
+      header.addEventListener('dragover', event => { event.preventDefault(); wrapper.classList.add('drag-target'); });
+      header.addEventListener('dragleave', () => wrapper.classList.remove('drag-target'));
+      header.addEventListener('drop', async event => {
+        event.preventDefault();
+        wrapper.classList.remove('drag-target');
+        const name = event.dataTransfer.getData('text/server-name');
+        if (!name) return;
+        const response = await fetch('/api/servers/manage', {
+          method:'POST', headers:{'Content-Type':'application/json','X-CSRF-Token':window.CSRF},
+          body:JSON.stringify({action:'move', name, group:header.dataset.serverGroup})
+        });
+        if (response.ok) location.reload();
+        else toast((await response.text()).trim(), 'error');
+      });
+    }
     wrapper.appendChild(header);
     wrapper.appendChild(content);
     fragment.appendChild(wrapper);
   }
   servers.forEach(el => { if (el.parentElement === container) container.removeChild(el); });
   serversHeader.after(fragment);
+  servers.forEach(link => link.addEventListener('dragstart', event => event.dataTransfer.setData('text/server-name', link.dataset.serverName)));
+
+  document.getElementById('sidebar-server-search')?.addEventListener('input', event => {
+    const query = event.target.value.trim().toLowerCase();
+    document.querySelectorAll('.sidebar-folder').forEach(folder => {
+      let visible = 0;
+      folder.querySelectorAll('.sidebar-folder-content > a').forEach(link => {
+        const match = !query || link.dataset.serverName.toLowerCase().includes(query);
+        link.hidden = !match;
+        if (match) visible++;
+      });
+      folder.hidden = visible === 0;
+      if (query && visible) folder.classList.add('open');
+    });
+  });
 });
 
 // Server right-click context menu
@@ -293,6 +357,28 @@ serverContextMenu.addEventListener('click', async event => {
       closeServerContextMenu();
       return;
     }
+    if (action === 'favorite') {
+      let favorites = [];
+      try { favorites = JSON.parse(localStorage.getItem('mcpanel.serverFavorites')) || []; } catch (_) {}
+      favorites = favorites.includes(name) ? favorites.filter(item => item !== name) : favorites.concat(name);
+      localStorage.setItem('mcpanel.serverFavorites', JSON.stringify(favorites));
+      location.reload();
+      return;
+    }
+    if (action === 'clone') {
+      const currentBase = name.split('/').pop();
+      const newName = prompt('Name for cloned server:', currentBase + '-copy');
+      if (!newName) return;
+      const currentGroup = name.includes('/') ? name.split('/')[0] : '';
+      const response = await fetch('/api/servers/manage', {
+        method:'POST', headers:{'Content-Type':'application/json','X-CSRF-Token':window.CSRF},
+        body:JSON.stringify({action:'clone', name, newName, group:currentGroup})
+      });
+      if (!response.ok) throw new Error((await response.text()).trim());
+      const result = await response.json();
+      location.assign(`/servers/${encodeURIComponent(result.name)}`);
+      return;
+    }
     if (action === 'copy-path') {
       const response = await fetch(`/api/servers/${encodeURIComponent(name)}/info`);
       if (!response.ok) throw new Error(await response.text());
@@ -356,6 +442,25 @@ serverContextMenu.addEventListener('click', async event => {
 });
 
 applyServerHighlights();
+
+function applySidebarStatuses(statuses) {
+  document.querySelectorAll('.sidebar-nav a[data-server-name]').forEach(link => {
+    const status = (statuses[link.dataset.serverName] || 'OFFLINE').toLowerCase();
+    link.classList.remove('status-online', 'status-offline', 'status-crashed');
+    link.classList.add('status-' + status);
+  });
+}
+
+function connectSidebarStatuses() {
+  const protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+  const socket = new WebSocket(`${protocol}://${location.host}/ws/server-statuses`);
+  socket.onmessage = event => {
+    try { applySidebarStatuses(JSON.parse(event.data)); } catch (_) {}
+  };
+  socket.onclose = () => setTimeout(connectSidebarStatuses, 1500);
+  socket.onerror = () => socket.close();
+}
+connectSidebarStatuses();
 
 </script>
 </body>
