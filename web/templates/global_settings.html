@@ -28,6 +28,24 @@
       </div>
     </div>
     <div class="card-body global-settings-body">
+	  <div class="field" style="max-width:440px;margin-bottom:22px">
+		<label for="default-build-java-home">Default Java for builds</label>
+		<select id="default-build-java-home">
+		  <option value="/usr/lib/jvm/java-8-openjdk/jre" {{if eq .DefaultBuildJavaHome "/usr/lib/jvm/java-8-openjdk/jre"}}selected{{end}}>Java 8</option>
+		  <option value="/usr/lib/jvm/java-11-openjdk" {{if eq .DefaultBuildJavaHome "/usr/lib/jvm/java-11-openjdk"}}selected{{end}}>Java 11</option>
+		  <option value="/usr/lib/jvm/java-17-openjdk" {{if eq .DefaultBuildJavaHome "/usr/lib/jvm/java-17-openjdk"}}selected{{end}}>Java 17</option>
+		  <option value="/usr/lib/jvm/java-21-openjdk" {{if eq .DefaultBuildJavaHome "/usr/lib/jvm/java-21-openjdk"}}selected{{end}}>Java 21</option>
+		</select>
+      <div class="field-hint">Used by builds unless a project chooses its own Java version.</div>
+	  </div>
+	  <div class="field" style="max-width:440px;margin-bottom:22px">
+		<label for="root-proxy-server">Root proxy server</label>
+		<select id="root-proxy-server">
+		  <option value="">No root proxy selected</option>
+		  {{range .AllServers}}<option value="{{.Name}}" {{if eq .Name $.RootProxyServer}}selected{{end}}>{{.Name}}</option>{{end}}
+		</select>
+		<div class="field-hint">Velocity support copies this server's <code>forwarding.secret</code> to Paper servers.</div>
+	  </div>
       <div id="subfolder-inputs" class="subfolder-input-list"></div>
       <button type="button" class="subfolder-add-btn" id="add-subfolder-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
@@ -82,6 +100,8 @@ document.getElementById('global-settings-form').addEventListener('submit', async
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       Subfolders: inputs,
+	  DefaultBuildJavaHome: document.getElementById('default-build-java-home').value,
+	  RootProxyServer: document.getElementById('root-proxy-server').value,
       _csrf: window.CSRF
     })
   });

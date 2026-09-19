@@ -26,7 +26,7 @@ func TestProjectPageRendersPastDeployTargets(t *testing.T) {
 		t.Fatalf("render project page: %v", err)
 	}
 	page := out.String()
-	for _, expected := range []string{"Build Profiles", "Add Custom Command", "artifact-select", "target-checkbox", "deploy-restart-btn", "server-context-menu", "data-server-menu-action=\"rename\"", "style.css?v=17", "project.js?v=10"} {
+	for _, expected := range []string{"Build Profiles", "Add Custom Command", "artifact-select", "target-checkbox", "deploy-restart-btn", "server-context-menu", "data-server-menu-action=\"rename\"", "ps-java-home", "project-back-link", "style.css?v=22", "project.js?v=11"} {
 		if !strings.Contains(page, expected) {
 			t.Errorf("rendered page is missing %q", expected)
 		}
@@ -94,7 +94,7 @@ func TestServerPageRendersEmbeddedMonacoEditor(t *testing.T) {
 		t.Fatalf("render server page: %v", err)
 	}
 	page := out.String()
-	for _, expected := range []string{"file-editor-workspace", "monaco-editor", "editor-back-btn", "editor-save-btn", "health-disk", "s-port", "startup-command", "console-search", "console.js?v=3", "vendor/monaco/vs/loader.js", "server.js?v=11"} {
+	for _, expected := range []string{"file-editor-workspace", "file-tree-list", "monaco-editor", "editor-back-btn", "editor-save-btn", "health-disk", "s-port", "startup-command", "console-search", "copy-plugin-modal", "plugin-upload-btn", "console.js?v=4", "vendor/monaco/vs/loader.js", "server.js?v=15"} {
 		if !strings.Contains(page, expected) {
 			t.Errorf("rendered page is missing %q", expected)
 		}

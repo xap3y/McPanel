@@ -64,7 +64,9 @@ func NewRouter(a *API) http.Handler {
 
 	// Plugins
 	mux.HandleFunc("GET /api/servers/{name}/plugins", a.requireAuth(a.ListPlugins))
+	mux.HandleFunc("POST /api/servers/{name}/plugins/upload", a.requireAuth(a.requireCSRF(a.UploadPlugin)))
 	mux.HandleFunc("POST /api/servers/{name}/plugins/{plugin}/toggle", a.requireAuth(a.requireCSRF(a.TogglePlugin)))
+	mux.HandleFunc("POST /api/servers/{name}/plugins/{plugin}/copy", a.requireAuth(a.requireCSRF(a.CopyPlugin)))
 	mux.HandleFunc("POST /api/servers/{name}/plugins/{plugin}/delete", a.requireAuth(a.requireCSRF(a.DeletePlugin)))
 
 	// Global Settings

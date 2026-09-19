@@ -397,14 +397,15 @@ func (a *API) ProjectPage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	projectTpl.ExecuteTemplate(w, "layout", map[string]any{
-		"Name":            name,
-		"Servers":         serverNames,
-		"AllServers":      a.allServersForSidebar(),
-		"Profiles":        profiles,
-		"Settings":        ps,
-		"CSRF":            sessionFrom(r).CSRF,
-		"ActiveNav":       "projects",
-		"IsDefaultTarget": func(s string) bool { return defaultTargets[s] },
+		"Name":                 name,
+		"Servers":              serverNames,
+		"AllServers":           a.allServersForSidebar(),
+		"Profiles":             profiles,
+		"Settings":             ps,
+		"DefaultBuildJavaHome": settings.LoadGlobal(a.DB).DefaultBuildJavaHome,
+		"CSRF":                 sessionFrom(r).CSRF,
+		"ActiveNav":            "projects",
+		"IsDefaultTarget":      func(s string) bool { return defaultTargets[s] },
 	})
 }
 

@@ -611,18 +611,34 @@ a:hover { color: var(--accent-hover); }
 .tab-pane { display: none; }
 .tab-pane.active { display: block; }
 
+/* The server console is a fixed-height workspace.  Let its log area consume
+   only the space left after the health strip and command controls so the
+   command row cannot be pushed below the viewport. */
+.tab-pane#tab-console.active {
+  height: calc(100vh - var(--header-h) - 44px);
+  overflow: hidden;
+}
+
+.tab-pane#tab-console .tab-content-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
 /* ============================================================
    Console
    ============================================================ */
 .console-wrap {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - var(--header-h) - 44px - 48px);
-  min-height: 300px;
+  flex: 1;
+  min-height: 0;
 }
 
 .console-output {
   flex: 1;
+  min-height: 0;
   background: hsl(222, 16%, 6%);
   border: 1px solid var(--border-subtle);
   border-radius: var(--r-lg) var(--r-lg) 0 0;
@@ -705,6 +721,7 @@ a:hover { color: var(--accent-hover); }
   overflow: hidden;
   background: var(--bg-surface);
 }
+.file-manager[hidden] { display: none; }
 
 .fm-toolbar {
   display: flex;
@@ -801,30 +818,24 @@ a:hover { color: var(--accent-hover); }
 
 /* Embedded Monaco file editor */
 .file-editor-workspace {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  width: 100vw;
-  height: 100vh;
-  height: 100dvh;
+  height: calc(100vh - var(--header-h) - 44px - 48px);
   min-width: 0;
-  min-height: 0;
-  border: 0;
-  border-radius: 0;
+  min-height: 300px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
   overflow: hidden;
-  background: hsl(222, 16%, 6%);
+  background: var(--bg-surface);
   display: flex;
   flex-direction: column;
 }
 .file-editor-workspace[hidden] { display: none; }
-body.file-editor-open { overflow: hidden; }
 
 .file-editor-toolbar {
   display: flex;
   align-items: center;
   gap: 12px;
-  min-height: 54px;
-  padding: max(8px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) 8px max(14px, env(safe-area-inset-left));
+  min-height: 48px;
+  padding: 8px 12px;
   background: var(--bg-raised);
   border-bottom: 1px solid var(--border-subtle);
   flex-shrink: 0;
@@ -847,6 +858,53 @@ body.file-editor-open { overflow: hidden; }
   font-size: 11px;
 }
 .file-editor-dirty.modified { color: hsl(42, 90%, 62%); }
+.file-editor-layout { display: flex; flex: 1; min-height: 0; }
+.file-tree {
+  width: 250px;
+  flex: 0 0 250px;
+  min-width: 0;
+  overflow-y: auto;
+  background: var(--bg-raised);
+  border-right: 1px solid var(--border-subtle);
+}
+.file-tree-title {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 10px 12px;
+  background: var(--bg-raised);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.file-tree-list { padding: 6px; }
+.file-tree-node { display: block; }
+.file-tree-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 29px;
+  padding: 4px 7px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+.file-tree-item:hover { background: var(--bg-overlay); color: var(--text-primary); }
+.file-tree-item.active { background: var(--accent-subtle); color: var(--accent); }
+.file-tree-item.file-muted { color: var(--text-disabled); cursor: default; }
+.file-tree-icon { width: 14px; flex: 0 0 14px; color: hsl(42, 90%, 62%); text-align: center; }
+.file-tree-item.file .file-tree-icon { color: var(--text-muted); }
+.file-tree-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-tree-children { margin-left: 10px; padding-left: 7px; border-left: 1px solid var(--border-subtle); }
 .monaco-editor-shell { position: relative; flex: 1 1 auto; width: 100%; min-width: 0; min-height: 0; overflow: hidden; }
 #monaco-editor { position: absolute; inset: 0; }
 .editor-loading {
@@ -877,6 +935,21 @@ body.file-editor-open { overflow: hidden; }
   min-height: 0;
   border-radius: 0;
 }
+
+.project-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 30px;
+  padding: 4px 7px 4px 2px;
+  border-radius: var(--r-sm);
+  color: var(--text-muted);
+  font-size: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.project-back-link:hover { color: var(--text-primary); background: var(--bg-overlay); }
+.project-back-link svg { width: 15px; height: 15px; }
 
 /* ============================================================
    Plugin List
@@ -954,6 +1027,48 @@ body.file-editor-open { overflow: hidden; }
   font-size: 11px;
   color: var(--text-muted);
   margin-top: -2px;
+}
+
+/* Shared checkbox control for the panel's native form fields. */
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  flex: 0 0 16px;
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+  background: var(--bg-overlay);
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+input[type="checkbox"]:hover {
+  border-color: var(--accent-border);
+}
+
+input[type="checkbox"]:checked {
+  border-color: var(--accent);
+  background-color: var(--accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m3.25 8.25 2.5 2.5 5-5' fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 12px;
+}
+
+input[type="checkbox"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
+input[type="checkbox"]:active {
+  transform: scale(0.92);
+}
+
+input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 input[type="text"],
@@ -1572,7 +1687,6 @@ select option { background: var(--bg-raised); }
 .startup-preview code { display: block; padding: 11px 12px; overflow-x: auto; border: 1px solid var(--border-subtle); border-radius: var(--r-md); background: var(--bg-base); color: var(--text-secondary); font-family: var(--font-mono); font-size: 11px; white-space: pre; }
 .bulk-server-toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 8px 10px; border: 1px solid var(--border-subtle); border-radius: var(--r-md); background: var(--bg-surface); }
 .bulk-server-toolbar label { display: flex; align-items: center; gap: 7px; margin-right: auto; color: var(--text-secondary); font-size: 12px; }
-.bulk-server-toolbar input, .server-card-select input { accent-color: var(--accent); }
 #bulk-selection-count { color: var(--text-muted); font-size: 11px; }
 .server-card-select { display: flex; align-items: center; min-width: 0; gap: 8px; }
 .server-card-select .server-card-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
@@ -1637,7 +1751,7 @@ select option { background: var(--bg-raised); }
   gap: 10px;
   cursor: pointer;
 }
-.config-checkbox input { width: 16px; height: 16px; accent-color: var(--accent); }
+.config-checkbox input { width: 16px; height: 16px; }
 .config-checkbox span { display: flex; flex-direction: column; gap: 3px; }
 .config-checkbox strong { font-size: 13px; color: var(--text-primary); }
 .config-checkbox small { font-size: 11px; color: var(--text-muted); font-weight: 400; }
@@ -1652,7 +1766,7 @@ select option { background: var(--bg-raised); }
   border-radius: var(--r-md);
   background: var(--bg-raised);
 }
-.config-preset > input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--accent); }
+.config-preset > input[type=checkbox] { width: 16px; height: 16px; }
 .config-preset-copy { display: flex; flex-direction: column; min-width: 0; gap: 2px; }
 .config-preset-copy strong { font-size: 13px; font-weight: 500; }
 .config-preset-copy small { color: var(--text-muted); font-size: 11px; }
@@ -1799,6 +1913,7 @@ select option { background: var(--bg-raised); }
   .global-settings-footer .btn { justify-content: center; }
   .server-health-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .console-toolbar { grid-template-columns: minmax(0, 1fr) 110px; }
+  .file-tree { width: 190px; flex-basis: 190px; }
   .bulk-server-toolbar { align-items: stretch; flex-wrap: wrap; }
 }
 

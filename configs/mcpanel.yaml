@@ -3,14 +3,14 @@ server:
   port: 8090
 
 minecraft:
-  root: /Users/sky/Documents/mcs
+  root: /home/xap3y/Desktop/MinecraftPluginTester/MCS
 
 projects:
-  root: /Users/sky/Documents/code/Bukkit
+  root: /home/xap3y/Desktop/code/Bukkit
 
 runtime:
   screenPrefix: mcpanel-
   logDir: ./data/logs
 
 database:
-  dsn: "xap3y:145060Wer#@tcp(127.0.0.1:3306)/mcpanel?parseTime=true&loc=Local"
+  dsn: "xap3y-skola:145060Wer#@tcp(127.0.0.1:3306)/mcpanel?parseTime=true&loc=Local"

@@ -489,6 +489,8 @@ async function loadProjectSettingsUI() {
     const ps = await r.json();
     const baEl = document.getElementById('ps-buildargs');
     if (baEl && ps.BuildArgs) baEl.value = ps.BuildArgs;
+	const javaEl = document.getElementById('ps-java-home');
+	if (javaEl) javaEl.value = ps.BuildJavaHome || '';
   } catch(_) {}
 }
 
@@ -497,11 +499,13 @@ document.getElementById('project-settings-form').addEventListener('submit', asyn
   const f = e.target;
   const targets = selectedTargets();
   const buildArgs = f.BuildArgs?.value || '';
+	const buildJavaHome = f.BuildJavaHome?.value || '';
   const r = await projectAPI(`/api/projects/${PROJECT_NAME}/settings`, 'POST', {
     ArtifactGlob: "*.jar",
     DeploymentFilename: f.DeploymentFilename.value,
     DeployTargets: targets,
     BuildArgs: buildArgs,
+	BuildJavaHome: buildJavaHome,
   });
   if (r.ok) toast('Settings saved', 'success');
   else toast('Save failed', 'error');

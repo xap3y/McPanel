@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"mcpanel/internal/mcserver"
+	"mcpanel/internal/project"
 	"mcpanel/internal/settings"
 )
 
@@ -92,11 +93,34 @@ func (a *API) VelocityToggle(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "unknown server", http.StatusNotFound)
 		return
 	}
-	var body struct{ Enable bool }
-	json.NewDecoder(r.Body).Decode(&body)
+	var body struct {
+		Enable bool
+	}
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		http.Error(w, "invalid request", http.StatusBadRequest)
+		return
+	}
 
 	dir := mcserver.ServerDir(a.MCRoot, name)
-	if err := mcserver.SetVelocity(dir, body.Enable); err != nil {
+	secret := ""
+	if body.Enable {
+		rootProxy := settings.LoadGlobal(a.DB).RootProxyServer
+		if rootProxy == "" {
+			http.Error(w, "select a root proxy server in Global Settings first", http.StatusBadRequest)
+			return
+		}
+		if !mcserver.IsKnownServer(a.MCRoot, rootProxy, a.ServerSubfolders()) {
+			http.Error(w, "configured root proxy server no longer exists", http.StatusBadRequest)
+			return
+		}
+		var err error
+		secret, err = mcserver.ForwardingSecret(mcserver.ServerDir(a.MCRoot, rootProxy))
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+	}
+	if err := mcserver.SetVelocity(dir, body.Enable, secret); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -115,13 +139,27 @@ var globalSettingsTpl = parseTpl("web/templates/layout.html", "web/templates/glo
 func (a *API) GlobalSettingsPage(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		var req struct {
-			Subfolders []string
+			Subfolders           []string
+			DefaultBuildJavaHome string
+			RootProxyServer      string
 		}
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		g := settings.GlobalSettings{Subfolders: req.Subfolders}
+		if err := project.ValidateBuildJavaHome(req.DefaultBuildJavaHome); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		if req.RootProxyServer != "" && !mcserver.IsKnownServer(a.MCRoot, req.RootProxyServer, req.Subfolders) {
+			http.Error(w, "root proxy server must be an existing server", http.StatusBadRequest)
+			return
+		}
+		g := settings.GlobalSettings{
+			Subfolders:           req.Subfolders,
+			DefaultBuildJavaHome: req.DefaultBuildJavaHome,
+			RootProxyServer:      req.RootProxyServer,
+		}
 		if err := settings.SaveGlobal(a.DB, g); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -132,9 +170,11 @@ func (a *API) GlobalSettingsPage(w http.ResponseWriter, r *http.Request) {
 
 	g := settings.LoadGlobal(a.DB)
 	globalSettingsTpl.ExecuteTemplate(w, "layout", map[string]any{
-		"Subfolders": strings.Join(g.Subfolders, ", "),
-		"AllServers": a.allServersForSidebar(),
-		"CSRF":       sessionFrom(r).CSRF,
-		"ActiveNav":  "settings",
+		"Subfolders":           strings.Join(g.Subfolders, ", "),
+		"DefaultBuildJavaHome": g.DefaultBuildJavaHome,
+		"RootProxyServer":      g.RootProxyServer,
+		"AllServers":           a.allServersForSidebar(),
+		"CSRF":                 sessionFrom(r).CSRF,
+		"ActiveNav":            "settings",
 	})
 }

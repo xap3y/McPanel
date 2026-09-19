@@ -2,8 +2,26 @@ package project
 
 import (
 	"database/sql"
+	"fmt"
 	"strings"
 )
+
+var BuildJavaHomes = map[string]string{
+	"/usr/lib/jvm/java-8-openjdk/jre": "Java 8",
+	"/usr/lib/jvm/java-11-openjdk":    "Java 11",
+	"/usr/lib/jvm/java-17-openjdk":    "Java 17",
+	"/usr/lib/jvm/java-21-openjdk":    "Java 21",
+}
+
+func ValidateBuildJavaHome(home string) error {
+	if home == "" {
+		return nil
+	}
+	if _, ok := BuildJavaHomes[home]; !ok {
+		return fmt.Errorf("unsupported Java home")
+	}
+	return nil
+}
 
 type BuildProfile struct {
 	ID          int
@@ -71,13 +89,14 @@ type ProjectSettings struct {
 	ArtifactGlob       string   `json:"ArtifactGlob"`
 	DeploymentFilename string   `json:"DeploymentFilename"` // empty = keep original artifact filename
 	DeployTargets      []string `json:"DeployTargets"`
-	BuildArgs          string   `json:"BuildArgs"` // extra CLI args appended to build command
+	BuildArgs          string   `json:"BuildArgs"`     // extra CLI args appended to build command
+	BuildJavaHome      string   `json:"BuildJavaHome"` // empty = global default
 }
 
 func LoadProjectSettings(db *sql.DB, projectName string) ProjectSettings {
-	var glob, destFilename, targets, buildArgs sql.NullString
-	err := db.QueryRow(`SELECT artifact_glob, deployment_filename, deploy_targets, COALESCE(build_args,'') FROM project_settings WHERE project_name = ?`, projectName).
-		Scan(&glob, &destFilename, &targets, &buildArgs)
+	var glob, destFilename, targets, buildArgs, buildJavaHome sql.NullString
+	err := db.QueryRow(`SELECT artifact_glob, deployment_filename, deploy_targets, COALESCE(build_args,''), COALESCE(build_java_home,'') FROM project_settings WHERE project_name = ?`, projectName).
+		Scan(&glob, &destFilename, &targets, &buildArgs, &buildJavaHome)
 	ps := ProjectSettings{ArtifactGlob: "*.jar"}
 	if err == nil {
 		if glob.Valid {
@@ -92,11 +111,17 @@ func LoadProjectSettings(db *sql.DB, projectName string) ProjectSettings {
 		if buildArgs.Valid {
 			ps.BuildArgs = buildArgs.String
 		}
+		if buildJavaHome.Valid {
+			ps.BuildJavaHome = buildJavaHome.String
+		}
 	}
 	return ps
 }
 
 func SaveProjectSettings(db *sql.DB, projectName string, ps ProjectSettings) error {
+	if err := ValidateBuildJavaHome(ps.BuildJavaHome); err != nil {
+		return err
+	}
 	var destNull interface{}
 	if ps.DeploymentFilename != "" {
 		destNull = ps.DeploymentFilename
@@ -105,14 +130,17 @@ func SaveProjectSettings(db *sql.DB, projectName string, ps ProjectSettings) err
 	if ps.BuildArgs != "" {
 		buildArgsNull = ps.BuildArgs
 	}
+	var buildJavaHomeNull interface{}
+	if ps.BuildJavaHome != "" {
+		buildJavaHomeNull = ps.BuildJavaHome
+	}
 	_, err := db.Exec(`
-		INSERT INTO project_settings (project_name, artifact_glob, deployment_filename, deploy_targets, build_args)
-		VALUES (?, ?, ?, ?, ?)
-		ON DUPLICATE KEY UPDATE artifact_glob=VALUES(artifact_glob), deployment_filename=VALUES(deployment_filename), deploy_targets=VALUES(deploy_targets), build_args=VALUES(build_args)`,
-		projectName, ps.ArtifactGlob, destNull, strings.Join(ps.DeployTargets, ","), buildArgsNull)
+		INSERT INTO project_settings (project_name, artifact_glob, deployment_filename, deploy_targets, build_args, build_java_home)
+		VALUES (?, ?, ?, ?, ?, ?)
+		ON DUPLICATE KEY UPDATE artifact_glob=VALUES(artifact_glob), deployment_filename=VALUES(deployment_filename), deploy_targets=VALUES(deploy_targets), build_args=VALUES(build_args), build_java_home=VALUES(build_java_home)`,
+		projectName, ps.ArtifactGlob, destNull, strings.Join(ps.DeployTargets, ","), buildArgsNull, buildJavaHomeNull)
 	return err
 }
-
 
 func splitLines(s string) []string {
 	if s == "" {

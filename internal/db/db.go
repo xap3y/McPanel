@@ -40,6 +40,7 @@ func migrate(db *sql.DB) error {
 	// Column-level migrations for existing databases (ALTER TABLE IF NOT EXISTS column is MySQL 8+)
 	alterations := []string{
 		`ALTER TABLE project_settings ADD COLUMN IF NOT EXISTS build_args TEXT`,
+		`ALTER TABLE project_settings ADD COLUMN IF NOT EXISTS build_java_home VARCHAR(512)`,
 		`ALTER TABLE build_profiles ADD COLUMN IF NOT EXISTS build_args TEXT`,
 	}
 	for _, alt := range alterations {
@@ -47,7 +48,6 @@ func migrate(db *sql.DB) error {
 	}
 	return nil
 }
-
 
 func splitStatements(s string) []string {
 	var out []string

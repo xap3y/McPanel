@@ -118,6 +118,26 @@ const snippetsKey = 'mcpanel.commandSnippets';
 let cmdHistory = (() => { try { return JSON.parse(localStorage.getItem(historyKey)) || []; } catch (_) { return []; } })();
 let histIdx    = cmdHistory.length;
 let ws         = null;
+let serverRunning = false;
+
+function outputLimit() {
+  return serverRunning ? 100 : 200;
+}
+
+function trimConsoleHistory() {
+  const limit = outputLimit();
+  while (consoleEl.childElementCount > limit) {
+    consoleEl.removeChild(consoleEl.firstChild);
+  }
+}
+
+// server.js polls the status API and tells the console whenever the server
+// starts or stops. A start immediately drops any retained offline output to
+// the active 100-line limit; subsequent lines evict one old line at a time.
+window.addEventListener('server-status', (event) => {
+  serverRunning = event.detail?.status === 'ONLINE';
+  trimConsoleHistory();
+});
 
 function updateScrollBtn() {
   scrollBtn.textContent = autoscroll ? '⬇ Auto' : '⬆ Paused';
@@ -147,10 +167,7 @@ function appendLine(raw) {
   consoleEl.appendChild(span);
   applyConsoleFilters();
   if (autoscroll) consoleEl.scrollTop = consoleEl.scrollHeight;
-  // Trim old lines
-  while (consoleEl.childElementCount > 3000) {
-    consoleEl.removeChild(consoleEl.firstChild);
-  }
+  trimConsoleHistory();
 }
 
 function connect() {

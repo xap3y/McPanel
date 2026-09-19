@@ -108,9 +108,9 @@
     </div>
     <div class="file-editor-workspace" id="file-editor-workspace" hidden>
       <div class="file-editor-toolbar">
-        <button class="btn btn-ghost btn-sm" id="editor-back-btn" type="button" title="Back to files">
+        <button class="btn btn-ghost btn-sm" id="editor-back-btn" type="button" title="Back to file browser">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          Files
+          Browser
         </button>
         <div class="file-editor-title">
           <span class="editor-filename" id="editor-filename"></span>
@@ -118,10 +118,16 @@
         </div>
         <button class="btn btn-primary btn-sm" id="editor-save-btn" type="button">Save</button>
       </div>
-      <div class="monaco-editor-shell">
-        <div class="editor-loading" id="editor-loading">Loading Monaco Editor…</div>
-        <div id="monaco-editor"></div>
-        <textarea class="editor-fallback" id="editor-fallback" spellcheck="false" hidden></textarea>
+      <div class="file-editor-layout">
+        <aside class="file-tree" aria-label="Server files">
+          <div class="file-tree-title">Server files</div>
+          <div class="file-tree-list" id="file-tree-list"></div>
+        </aside>
+        <div class="monaco-editor-shell">
+          <div class="editor-loading" id="editor-loading">Loading Monaco Editor…</div>
+          <div id="monaco-editor"></div>
+          <textarea class="editor-fallback" id="editor-fallback" spellcheck="false" hidden></textarea>
+        </div>
       </div>
     </div>
     <!-- hidden file input -->
@@ -137,10 +143,37 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/></svg>
         Plugins
       </div>
-      <span class="text-muted text-sm" id="plugin-count"></span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="text-muted text-sm" id="plugin-count"></span>
+        <button class="btn btn-primary btn-sm" id="plugin-upload-btn" type="button">Upload plugin</button>
+        <input type="file" id="plugin-upload-input" accept=".jar,application/java-archive" hidden>
+      </div>
     </div>
     <p class="text-muted text-sm mb-4">Enabling or disabling takes effect after server restart.</p>
     <div class="plugin-list" id="plugin-list"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="copy-plugin-modal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="copy-plugin-title">
+  <div class="modal-dialog" style="max-width:440px">
+    <div class="modal-header">
+      <span class="modal-title" id="copy-plugin-title">Copy plugin to server</span>
+      <button class="modal-close" id="copy-plugin-close" type="button" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <p class="text-muted text-sm" id="copy-plugin-description"></p>
+      <div class="field mt-3">
+        <label for="copy-plugin-destination">Destination server</label>
+        <select id="copy-plugin-destination">
+          {{range .AllServers}}{{if ne .Name $.Name}}<option value="{{.Name}}">{{.Name}}</option>{{end}}{{end}}
+        </select>
+      </div>
+      <p class="field-hint mt-2">The plugin file is copied as-is. Existing files are never replaced.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" id="copy-plugin-cancel" type="button">Cancel</button>
+      <button class="btn btn-primary btn-sm" id="copy-plugin-confirm" type="button">Copy plugin</button>
+    </div>
   </div>
 </div>
 
@@ -224,6 +257,6 @@ window.SERVER_NAME = {{.Name}};
 const CSRF = window.CSRF;
 </script>
 <script src="/static/vendor/monaco/vs/loader.js"></script>
-<script src="/static/js/console.js?v=3"></script>
-<script src="/static/js/server.js?v=11"></script>
+<script src="/static/js/console.js?v=4"></script>
+<script src="/static/js/server.js?v=15"></script>
 {{end}}

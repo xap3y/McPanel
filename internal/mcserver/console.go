@@ -9,7 +9,9 @@ import (
 	"github.com/fsnotify/fsnotify"
 )
 
-const ringSize = 1000
+// Keep a modest offline console history. The web console applies the tighter
+// active-server limit while it is receiving live output.
+const ringSize = 200
 
 type Hub struct {
 	mu        sync.Mutex

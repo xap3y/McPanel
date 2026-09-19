@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS project_settings (
   deployment_filename VARCHAR(256),
   deploy_targets TEXT,
   build_args TEXT,
+  build_java_home VARCHAR(512),
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 

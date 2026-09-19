@@ -25,6 +25,7 @@ async function loadServerStatus() {
     if (!r.ok) return;
     const s = await r.json();
     const status = s.status || 'OFFLINE';
+    window.dispatchEvent(new CustomEvent('server-status', {detail: {status}}));
     serverSubtitle.innerHTML = `<span class="badge badge-${status.toLowerCase()}">${status}</span>${s.uptime ? ' · ' + s.uptime : ''}${s.ram ? ' · ' + s.ram : ''}${s.cpu ? ' · ' + s.cpu + '% CPU' : ''}`;
     renderTopbarActions(status);
     const health = {cpu: s.cpu ? s.cpu + '%' : '—', memory: s.ram || '—', disk: s.disk || '—', uptime: s.uptime || '—', tps: s.tps || '—', players: s.players || '—'};
@@ -128,6 +129,7 @@ const fmList       = document.getElementById('fm-list');
 const fmBreadcrumb = document.getElementById('fm-breadcrumb');
 const fmUpBtn      = document.getElementById('fm-up-btn');
 const fmFileInput  = document.getElementById('fm-file-input');
+const fileTreeList = document.getElementById('file-tree-list');
 
 fmUpBtn.addEventListener('click', () => {
   const parts = currentFMPath.split('/').filter(Boolean);
@@ -202,10 +204,84 @@ function fmTime(unix) {
 }
 
 const TEXT_EXTS = new Set(['yml','yaml','properties','json','toml','conf','txt','md','log','xml','cfg','ini','sh','bat','py','js','ts','java','gradle','kts']);
+const EDITABLE_FILENAMES = new Set(['forwarding.secret', '.console_history']);
 
 function isTextFile(name) {
+  if (EDITABLE_FILENAMES.has(name.toLowerCase())) return true;
   const ext = name.split('.').pop().toLowerCase();
   return TEXT_EXTS.has(ext);
+}
+
+async function loadFileTree() {
+  fileTreeList.innerHTML = '<div class="text-muted text-sm" style="padding:8px">Loading…</div>';
+  await appendFileTreeBranch('', fileTreeList);
+  highlightFileTree();
+}
+
+async function appendFileTreeBranch(path, container) {
+  const response = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/files?path=${encodeURIComponent(path)}`);
+  if (!response.ok) {
+    container.innerHTML = '<div class="text-muted text-sm" style="padding:8px">Could not load files</div>';
+    return;
+  }
+
+  const entries = await response.json() || [];
+  container.replaceChildren();
+  const sorted = [...entries].sort((left, right) => {
+    if (left.isDir !== right.isDir) return left.isDir ? -1 : 1;
+    return left.name.localeCompare(right.name);
+  });
+
+  sorted.forEach(entry => {
+    const entryPath = path ? `${path}/${entry.name}` : entry.name;
+    const node = document.createElement('div');
+    node.className = 'file-tree-node';
+
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = `file-tree-item ${entry.isDir ? 'folder' : 'file'}`;
+    item.dataset.path = entryPath;
+
+    const icon = document.createElement('span');
+    icon.className = 'file-tree-icon';
+    icon.textContent = entry.isDir ? '›' : '•';
+
+    const label = document.createElement('span');
+    label.className = 'file-tree-label';
+    label.textContent = entry.name;
+    item.append(icon, label);
+    node.appendChild(item);
+
+    if (entry.isDir) {
+      const children = document.createElement('div');
+      children.className = 'file-tree-children';
+      children.hidden = true;
+      node.appendChild(children);
+      item.addEventListener('click', async () => {
+        const expanded = !children.hidden;
+        children.hidden = expanded;
+        icon.textContent = expanded ? '›' : '⌄';
+        if (!expanded && !children.dataset.loaded) {
+          children.dataset.loaded = 'true';
+          await appendFileTreeBranch(entryPath, children);
+        }
+      });
+    } else if (isTextFile(entry.name)) {
+      item.addEventListener('click', () => openFileEditor(entryPath, entry.name));
+    } else {
+      item.classList.add('file-muted');
+      item.disabled = true;
+    }
+    container.appendChild(node);
+  });
+}
+
+function highlightFileTree() {
+  fileTreeList.querySelectorAll('.file-tree-item.active').forEach(item => {
+    item.classList.remove('active');
+  });
+  const active = fileTreeList.querySelector(`.file-tree-item[data-path="${CSS.escape(editorPath || '')}"]`);
+  active?.classList.add('active');
 }
 
 async function loadFiles(path) {
@@ -315,6 +391,9 @@ async function loadFiles(path) {
 }
 
 async function openFileEditor(path, filename) {
+  if (editorPath && editorPath !== path && editorDirty && !confirm('Discard unsaved changes?')) {
+    return;
+  }
   const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/files/read?path=${encodeURIComponent(path)}`);
   if (!r.ok) { toast('Cannot open file (too large or binary)', 'error'); return; }
   const content = await r.text();
@@ -324,7 +403,10 @@ async function openFileEditor(path, filename) {
   document.getElementById('editor-filename').textContent = path;
   document.getElementById('file-manager').hidden = true;
   document.getElementById('file-editor-workspace').hidden = false;
-  document.body.classList.add('file-editor-open');
+  if (!fileTreeList.children.length) {
+    await loadFileTree();
+  }
+  highlightFileTree();
   updateEditorDirtyStatus();
   await mountMonacoEditor(content, filename || path.split('/').pop());
 }
@@ -474,7 +556,6 @@ function closeFileEditor() {
   editorDirty = false;
   document.getElementById('file-editor-workspace').hidden = true;
   document.getElementById('file-manager').hidden = false;
-  document.body.classList.remove('file-editor-open');
   loadFiles(currentFMPath);
 }
 
@@ -505,6 +586,40 @@ function escHtml(s) {
 }
 
 // ── Plugins ────────────────────────────────────────────────────────────────
+const pluginUploadBtn = document.getElementById('plugin-upload-btn');
+const pluginUploadInput = document.getElementById('plugin-upload-input');
+
+pluginUploadBtn?.addEventListener('click', () => pluginUploadInput?.click());
+pluginUploadInput?.addEventListener('change', async () => {
+  const [file] = pluginUploadInput.files;
+  if (!file) return;
+  if (!file.name.toLowerCase().endsWith('.jar')) {
+    toast('Plugins must be .jar files', 'error');
+    pluginUploadInput.value = '';
+    return;
+  }
+
+  const form = new FormData();
+  form.append('file', file);
+  pluginUploadBtn.disabled = true;
+  const originalLabel = pluginUploadBtn.textContent;
+  pluginUploadBtn.textContent = 'Uploading…';
+  try {
+    const response = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/plugins/upload`, {
+      method: 'POST', headers: {'X-CSRF-Token': CSRF}, body: form
+    });
+    if (!response.ok) throw new Error(await response.text());
+    toast(`${file.name} uploaded`, 'success');
+    loadPlugins();
+  } catch (error) {
+    toast(`Upload failed: ${error.message || 'Unknown error'}`, 'error');
+  } finally {
+    pluginUploadBtn.disabled = false;
+    pluginUploadBtn.textContent = originalLabel;
+    pluginUploadInput.value = '';
+  }
+});
+
 async function loadPlugins() {
   const r = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/plugins`);
   if (!r.ok) return;
@@ -533,6 +648,7 @@ async function loadPlugins() {
       <span class="plugin-name ${p.enabled ? '' : 'disabled'}">${escHtml(p.name)}</span>
       <span class="plugin-note text-mono">${formatPluginSize(p.sizeBytes)} · ${p.enabled ? '.jar' : '.jar.d'}</span>
       <div class="plugin-actions">
+        <button class="btn btn-ghost btn-sm" data-plugin-action="copy" title="Copy to another server">Copy to…</button>
         <button class="btn ${p.enabled ? 'btn-danger' : 'btn-success'} btn-sm" data-plugin-action="toggle">
           ${p.enabled ? 'Disable' : 'Enable'}
         </button>
@@ -545,6 +661,7 @@ async function loadPlugins() {
       </div>`;
 
     const toggleBtn = row.querySelector('[data-plugin-action="toggle"]');
+    const copyBtn = row.querySelector('[data-plugin-action="copy"]');
     const restartBtn = row.querySelector('[data-plugin-action="restart"]');
     const deleteBtn = row.querySelector('[data-plugin-action="delete"]');
 
@@ -566,6 +683,7 @@ async function loadPlugins() {
     }
 
     toggleBtn.addEventListener('click', () => doToggle(false));
+    copyBtn.addEventListener('click', () => openCopyPluginModal(p));
     restartBtn.addEventListener('click', () => doToggle(true));
     deleteBtn.addEventListener('click', async () => {
       if (!confirm(`Permanently delete plugin "${p.name}"?\n\nThis removes the JAR from this server.`)) return;
@@ -586,6 +704,50 @@ async function loadPlugins() {
     list.appendChild(row);
   });
 }
+
+let pluginToCopy = null;
+const copyPluginModal = document.getElementById('copy-plugin-modal');
+const copyPluginDestination = document.getElementById('copy-plugin-destination');
+
+function closeCopyPluginModal() {
+  copyPluginModal.style.display = 'none';
+  pluginToCopy = null;
+}
+
+function openCopyPluginModal(plugin) {
+  if (!copyPluginDestination.options.length) {
+    toast('No other server is available to receive this plugin', 'info');
+    return;
+  }
+  pluginToCopy = plugin;
+  document.getElementById('copy-plugin-description').textContent = `Copy ${plugin.name} to another server.`;
+  copyPluginModal.style.display = 'flex';
+  copyPluginDestination.focus();
+}
+
+document.getElementById('copy-plugin-close').addEventListener('click', closeCopyPluginModal);
+document.getElementById('copy-plugin-cancel').addEventListener('click', closeCopyPluginModal);
+copyPluginModal.addEventListener('click', event => {
+  if (event.target === copyPluginModal) closeCopyPluginModal();
+});
+document.getElementById('copy-plugin-confirm').addEventListener('click', async () => {
+  if (!pluginToCopy) return;
+  const button = document.getElementById('copy-plugin-confirm');
+  const destination = copyPluginDestination.value;
+  button.disabled = true;
+  const response = await fetch(`/api/servers/${encodeURIComponent(SERVER_NAME)}/plugins/${encodeURIComponent(pluginToCopy.name)}/copy`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'X-CSRF-Token': CSRF},
+    body: JSON.stringify({destination, enabled: pluginToCopy.enabled})
+  });
+  button.disabled = false;
+  if (response.ok) {
+    toast(`${pluginToCopy.name} copied to ${destination}`, 'success');
+    closeCopyPluginModal();
+  } else {
+    toast('Copy failed: ' + await response.text(), 'error');
+  }
+});
 
 function formatPluginSize(bytes) {
   const size = Number(bytes) || 0;

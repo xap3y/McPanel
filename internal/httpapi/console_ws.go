@@ -39,7 +39,13 @@ func (a *API) ConsoleWS(w http.ResponseWriter, r *http.Request) {
 	defer conn.Close()
 
 	hub := a.Console.HubFor(name)
-	for _, line := range hub.Snapshot() {
+	history := hub.Snapshot()
+	// A running server starts its console with the most recent 100 lines.
+	// The normal (stopped) console history remains 200 lines.
+	if running, _ := a.Screen.IsRunning(name); running && len(history) > 100 {
+		history = history[len(history)-100:]
+	}
+	for _, line := range history {
 		if conn.WriteJSON(map[string]string{"type": "line", "data": line}) != nil {
 			return
 		}

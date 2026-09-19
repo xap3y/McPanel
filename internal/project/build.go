@@ -5,12 +5,12 @@ import (
 	"database/sql"
 	"fmt"
 	"io"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"sync"
 )
-
 
 type BuildStatus string
 
@@ -93,7 +93,7 @@ func (r *Runner) LiveBuild(projectName string) (*Build, bool) {
 	return b, ok
 }
 
-func (r *Runner) Start(projectDir, projectName string, profile BuildProfile) (*Build, error) {
+func (r *Runner) Start(projectDir, projectName string, profile BuildProfile, javaHome string) (*Build, error) {
 	r.mu.Lock()
 	if _, ok := r.active[projectName]; ok {
 		r.mu.Unlock()
@@ -124,6 +124,9 @@ func (r *Runner) Start(projectDir, projectName string, profile BuildProfile) (*B
 		}
 	}
 	cmd.Dir = projectDir
+	if javaHome != "" {
+		cmd.Env = buildEnvironment(javaHome)
+	}
 
 	stdout, _ := cmd.StdoutPipe()
 	stderr, _ := cmd.StderrPipe()
@@ -168,6 +171,23 @@ func (r *Runner) Start(projectDir, projectName string, profile BuildProfile) (*B
 	}()
 
 	return b, nil
+}
+
+func buildEnvironment(javaHome string) []string {
+	env := os.Environ()
+	filtered := make([]string, 0, len(env)+2)
+	path := ""
+	for _, entry := range env {
+		if strings.HasPrefix(entry, "PATH=") {
+			path = strings.TrimPrefix(entry, "PATH=")
+			continue
+		}
+		if strings.HasPrefix(entry, "JAVA_HOME=") {
+			continue
+		}
+		filtered = append(filtered, entry)
+	}
+	return append(filtered, "JAVA_HOME="+javaHome, "PATH="+filepath.Join(javaHome, "bin")+string(os.PathListSeparator)+path)
 }
 
 func (r *Runner) Cancel(projectName string) error {

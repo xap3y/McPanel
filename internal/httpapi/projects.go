@@ -12,6 +12,7 @@ import (
 
 	"mcpanel/internal/mcserver"
 	"mcpanel/internal/project"
+	"mcpanel/internal/settings"
 )
 
 func (a *API) BuildProfilesAPI(w http.ResponseWriter, r *http.Request) {
@@ -84,7 +85,18 @@ func (a *API) StartBuild(w http.ResponseWriter, r *http.Request) {
 	}
 
 	dir := project.ProjectDirDB(a.ProjectsRoot, name, a.DB)
-	if _, err := a.Builder.Start(dir, name, *chosen); err != nil {
+	ps := project.LoadProjectSettings(a.DB, name)
+	// Build settings apply to whichever build profile is selected.
+	chosen.BuildArgs = ps.BuildArgs
+	javaHome := ps.BuildJavaHome
+	if javaHome == "" {
+		javaHome = settings.LoadGlobal(a.DB).DefaultBuildJavaHome
+	}
+	if err := project.ValidateBuildJavaHome(javaHome); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	if _, err := a.Builder.Start(dir, name, *chosen, javaHome); err != nil {
 		http.Error(w, err.Error(), http.StatusConflict)
 		return
 	}
